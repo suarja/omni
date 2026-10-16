@@ -1,0 +1,23 @@
+{
+  "name": "pstack",
+  "version": "0.2.0",
+  "description": "A selective Codex adapter for pstack's writing, architecture, workflow, and engineering-principle skills.",
+  "author": {
+    "name": "Acme"
+  },
+  "homepage": "https://github.com/poteto/plugins/tree/main/pstack",
+  "repository": "https://github.com/acme/claude-plugins",
+  "license": "MIT",
+  "keywords": ["writing", "editing", "architecture", "engineering", "workflows", "unslop"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "pstack",
+    "shortDescription": "Portable pstack engineering toolkit",
+    "longDescription": "A selective Codex adapter for pstack's unslop, code-understanding, architecture, auditable-workflow, adversarial-review, and engineering-principle skills. Cursor-specific routers and model configuration are omitted.",
+    "developerName": "Acme",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://github.com/poteto/plugins",
+    "defaultPrompt": "Use the smallest relevant pstack skill to make this engineering or writing task clearer, simpler, and verifiable."
+  }
+}

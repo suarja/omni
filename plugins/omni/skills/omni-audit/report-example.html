@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills audit: acme-app</title>
+<style>
+  :root {
+    --bg: #f7f6f2; --card: #ffffff; --ink: #1d1d1b; --muted: #6b6a65; --line: #e4e2db;
+    --identity: #3d5afe; --identity-bg: #eef1ff; --roles: #8a5a00; --roles-bg: #fff6e0;
+    --safe: #1e7a3c; --safe-bg: #e9f6ee; --chip: #f0efe9; --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161614; --card: #1f1f1c; --ink: #ecebe6; --muted: #a09e97; --line: #33322e;
+      --identity: #8fa2ff; --identity-bg: #23284a; --roles: #e8b44f; --roles-bg: #3a2f17;
+      --safe: #6fd08f; --safe-bg: #17331f; --chip: #2a2a26;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system, "DM Sans", system-ui, sans-serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 24px; margin: 0 0 4px; font-weight: 600; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .meta b { color: var(--ink); font-weight: 500; }
+  .scope { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin: 20px 0 28px; }
+  .scope div { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 13px; color: var(--muted); }
+  .scope strong { display: block; font-size: 20px; color: var(--ink); font-weight: 600; }
+  h2 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 28px 0 10px; font-weight: 600; }
+  .finding { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: grid; grid-template-columns: 34px 1fr; gap: 4px 12px; }
+  .num { grid-row: span 4; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 14px; }
+  .identity .num { background: var(--identity-bg); color: var(--identity); }
+  .roles .num { background: var(--roles-bg); color: var(--roles); }
+  .title { font-weight: 600; }
+  .title code { font: 600 14px var(--mono); }
+  .evidence { font-size: 13px; color: var(--muted); }
+  .evidence code { font: 12px var(--mono); background: var(--chip); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+  .proposal { margin-top: 6px; font-size: 14px; }
+  .proposal::before { content: "Proposal · "; color: var(--muted); }
+  .tags { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 12px; border-radius: 999px; padding: 2px 9px; background: var(--chip); color: var(--muted); }
+  .tag.safe { background: var(--safe-bg); color: var(--safe); }
+  .tag.verb { border: 1px solid var(--line); background: transparent; color: var(--ink); }
+  .next { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-top: 28px; }
+  .next ol { margin: 8px 0 0; padding-left: 20px; }
+  footer { margin-top: 24px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Skills audit: acme-app</h1>
+  <div class="meta">Fictional example · by <b>Example agent model</b> · <b>no writes</b>: skills and assignments stay unchanged until exact effects are accepted</div>
+  <section class="scope" aria-label="What was read">
+    <div><strong>24</strong>skills in acme-app</div>
+    <div><strong>8</strong>read in full; others: descriptions only</div>
+    <div><strong>36</strong>marketplace skills, descriptions</div>
+    <div><strong>1</strong>unavailable project excluded: sandbox-app</div>
+  </section>
+  <h2>Identity</h2>
+  <article class="finding identity">
+    <div class="num">1</div>
+    <div class="title"><code>interface-review</code>, same name, different content</div>
+    <div class="evidence">Project <code>.agents/skills/interface-review</code>, 86 lines, “Review interface states”. Marketplace <code>design/skills/interface-review</code>, 62 lines, “Check component accessibility”. Folder hashes differ.</div>
+    <div class="proposal">Compare the steps, then improve the marketplace skill or rename the project skill.</div>
+    <div class="tags"><span class="tag verb">improve</span><span class="tag">uncertain: steps not compared in full</span></div>
+  </article>
+  <article class="finding identity">
+    <div class="num">2</div>
+    <div class="title"><code>query-checks</code>, an unlinked local copy</div>
+    <div class="evidence">Project <code>.agents/skills/query-checks</code>, 47 lines. Marketplace <code>data/skills/query-checks</code>, 51 lines. Both names match; complete folder hashes differ. No Omni binding.</div>
+    <div class="proposal">Read both versions before capturing the local changes or assigning the marketplace version.</div>
+    <div class="tags"><span class="tag verb">improve</span></div>
+  </article>
+  <article class="finding identity">
+    <div class="num">3</div>
+    <div class="title"><code>release-note</code>, two origins</div>
+    <div class="evidence">Project source <code>fictional-org/toolkit</code>, path <code>skills/release-note</code>. Marketplace <code>delivery/skills/release-note</code>. These are separate origins.</div>
+    <div class="proposal">Keep the project-specific release rules distinct until both bodies have been read.</div>
+    <div class="tags"><span class="tag verb">keep</span><span class="tag">uncertain: descriptions only</span></div>
+  </article>
+  <article class="finding identity">
+    <div class="num">4</div>
+    <div class="title"><code>test-guide</code>, a stale binding</div>
+    <div class="evidence">The binding points to <code>.agents/skills/test-guide</code>. The project copy is missing. The project itself is available.</div>
+    <div class="proposal">Retire the stale binding, or reinstall the skill if it is still needed. Review the exact effects first.</div>
+    <div class="tags"><span class="tag safe">safe: no existing copy overwritten</span><span class="tag verb">retire</span></div>
+  </article>
+  <h2>Roles</h2>
+  <article class="finding roles">
+    <div class="num">5</div>
+    <div class="title"><code>plan-interview</code> and <code>decision-interview</code>, related triggers</div>
+    <div class="evidence">18 and 32 lines, read in full. Both ask about plan risks. <code>decision-interview</code> also records accepted decisions.</div>
+    <div class="proposal">Merge the common interview steps while retaining the decision-recording constraint. Reassignment and retirement are separate previews.</div>
+    <div class="tags"><span class="tag verb">merge</span></div>
+  </article>
+  <article class="finding roles">
+    <div class="num">6</div>
+    <div class="title">Work coordination split across two skills</div>
+    <div class="evidence"><code>task-routing</code>, 78 lines, project rules. <code>work-review</code>, 64 lines, reusable review procedure. Both bodies were read.</div>
+    <div class="proposal">Group the reusable procedure in the delivery plugin. Keep acme-app ownership rules in the project.</div>
+    <div class="tags"><span class="tag verb">group</span><span class="tag">uncertain: other projects not read</span></div>
+  </article>
+  <section class="next">
+    <strong>Do first</strong>
+    <ol>
+      <li>4: inspect the stale binding and choose retire or reinstall.</li>
+      <li>1: compare the two meanings of one skill name.</li>
+      <li>5: prepare the merge and its separate assignment effects.</li>
+    </ol>
+  </section>
+  <footer>Fictional data. Eight bodies read, others use descriptions only. sandbox-app was unavailable and not read. No content cap was reached. Each proposal needs an Omni preview, accepted exact effects and a receipt. No writes during this audit.</footer>
+</main>
+</body>
+</html>

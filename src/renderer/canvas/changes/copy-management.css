@@ -1,0 +1,84 @@
+.copy-management-workbench { --copy-management-inset: var(--canvas-sheet-inset); }
+.copy-management-header { flex: 0 0 auto; }
+.copy-management-header h2 { overflow-wrap: anywhere; }
+.copy-management-body { display: grid; align-content: start; gap: 15px; }
+.copy-management-body > p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+.copy-management-selectors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.canvas-select-field { display: grid; min-width: 0; gap: 6px; color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.canvas-select-field > span:first-child { overflow-wrap: anywhere; }
+.canvas-select-control { position: relative; display: block; min-width: 0; }
+.canvas-select-control select, .canvas-select-field input {
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  padding: 0 34px 0 12px;
+  color: var(--canvas-ink);
+  background: linear-gradient(180deg, var(--canvas-sheet-paper), var(--canvas-sheet-inset));
+  border: 1px solid var(--canvas-sheet-rule);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 var(--canvas-surface), 0 1px 2px var(--canvas-control-shadow);
+  font: inherit;
+  text-overflow: ellipsis;
+}
+.canvas-select-control select { appearance: none; cursor: pointer; }
+.canvas-select-control select:hover:enabled { border-color: var(--canvas-sheet-edge); }
+.canvas-select-control > svg { position: absolute; top: 50%; right: 11px; color: var(--canvas-muted); pointer-events: none; transform: translateY(-50%); }
+.canvas-select-control select:focus-visible, .canvas-select-field input:focus-visible {
+  outline: 2px solid var(--canvas-project);
+  outline-offset: 2px;
+}
+.canvas-select-control select:disabled, .canvas-select-field input:disabled { color: var(--canvas-muted); opacity: .65; cursor: default; }
+.copy-management-single, .copy-management-consequence, .copy-management-recovery > p,
+.copy-management-unavailable > p, .copy-management-preview-state > p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+.copy-management-unavailable, .copy-management-preview-state { display: grid; justify-items: start; gap: 9px; padding: 12px; background: var(--canvas-warning-fill); border: 1px solid var(--canvas-warning); border-radius: 8px; }
+.copy-management-unavailable .changes-secondary:focus-visible,
+.copy-management-footer button:focus-visible { outline: 2px solid var(--canvas-project); outline-offset: 2px; }
+.copy-management-footer { display: grid; flex: 0 0 auto; gap: 12px; max-height: 42%; overflow: auto; padding: 0; background: transparent; border: 0; }
+.copy-management-decision { display: grid; gap: 8px; }
+.copy-management-consequence { padding-left: 1px; }
+.copy-management-required-choice { display: grid; gap: 9px; }
+.copy-management-required-choice > p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.45; }
+.copy-management-recovery { display: grid; justify-items: start; gap: 8px; }
+.copy-management-footer-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.copy-management-footer-actions .changes-secondary { margin-right: auto; }
+.copy-management-effects { display: grid; align-content: start; gap: 12px; }
+.copy-management-effects h3 { margin: 0; font-size: var(--canvas-section); font-weight: 600; }
+.copy-management-effects > p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+.copy-management-effects dl { display: grid; gap: 10px; margin: 0; }
+.copy-management-effects dl > div { display: grid; grid-template-columns: minmax(105px, .35fr) minmax(0, 1fr); gap: 10px; padding-bottom: 4px; }
+.copy-management-effects dt { color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.copy-management-effects dd { min-width: 0; margin: 0; font-size: var(--canvas-meta); line-height: 1.45; overflow-wrap: anywhere; }
+.copy-management-effects code, .copy-management-local-result code { color: var(--canvas-ink); font: var(--canvas-meta)/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+.copy-management-details { color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.copy-management-details > summary, .copy-management-local-result summary { width: fit-content; cursor: pointer; }
+.copy-management-details dl { margin-top: 10px; }
+.copy-management-effects .changes-file > .copy-management-details { padding: 10px 12px; }
+.copy-management-result .changes-result { margin: 0; }
+.copy-management-local-result { display: grid; align-content: start; gap: 11px; }
+.copy-management-local-result h3, .copy-management-local-result p { margin: 0; }
+.copy-management-local-result p { color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+.copy-management-local-result details { display: grid; gap: 7px; color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.copy-management-local-result details code { color: var(--canvas-ink); }
+@media (max-width: 680px) {
+  .copy-management-footer { max-height: 46%; padding-right: 13px; padding-left: 13px; }
+  .copy-management-selectors { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 420px) {
+  .copy-management-effects dl > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .copy-management-footer-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .copy-management-footer-actions .changes-secondary { margin-right: 0; }
+  .copy-management-footer-actions button { min-width: 0; }
+}
+@media (pointer: coarse) {
+  .canvas-select-control select, .canvas-select-field input { min-height: 44px; font-size: var(--canvas-body); }
+  .copy-management-footer-actions button { min-height: 44px; }
+}
+
+.copy-management-result { display: grid; gap: 14px; }
+.copy-management-result > p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+.copy-management-result-mark { display: flex; align-items: center; gap: 9px; font-size: var(--canvas-section); }
+.copy-management-result-mark svg { color: var(--canvas-project); }
+.copy-management-details .changes-provenance { flex-wrap: wrap; }
+.copy-management-details .changes-provenance code { overflow-wrap: anywhere; white-space: normal; }
+.copy-management-workbench code { color: var(--canvas-ink); background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.copy-management-result .changes-result { padding: 12px 0 0; background: transparent; border: 0; box-shadow: none; }

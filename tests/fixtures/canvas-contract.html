@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Synthetic canvas contract</title>
+  <!-- Fixed geometry and glyphs for contract tests. No application data or interactions. -->
+  <!-- prettier-ignore -->
+  <style>
+:root{--node-w:264px;--node-h:72px;--radius:10px;--float-border:#e2e6e2;--faint:#a3a9ac;--skill:#997535;}
+.node{position:absolute;width:var(--node-w);min-height:var(--node-h);display:flex;align-items:center;gap:12px;padding:10px 40px 10px 12px;border:1px solid var(--float-border);border-radius:var(--radius);background:linear-gradient(180deg,#fff,#fbfbf8);box-shadow:inset 0 1px 0 #fff,0 1px 3px #2833280d;text-align:left}
+.node.center{box-shadow:0 0 0 3px #e3e9f3,0 1px 3px #2833280d;border-color:#c9d3e2}
+.tile{width:34px;height:34px;flex:none;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--tone) 12%,#fff);color:var(--tone)}
+.ntitle{font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.ninfo{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:28px;height:28px;border:0;border-radius:6px;background:transparent;color:var(--faint);display:grid;place-items:center}
+</style>
+  <!-- prettier-ignore -->
+  <button data-nav="workspace"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></svg></button>
+  <!-- prettier-ignore -->
+  <button data-sheet="inbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 13 7 5h10l2 8v6H5z"/></svg></button>
+  <!-- prettier-ignore -->
+  <button data-sheet="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12a8 8 0 1 0 2.3-5.6L4 8.7"/><path d="M4 4v4.7h4.7M12 8v4l3 2"/></svg></button>
+  <!-- prettier-ignore -->
+  <button data-sheet="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 0 0-2-1.2L14 3h-4l-.6 2.6a7 7 0 0 0-2 1.2l-2.3-.9-2 3.4 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-.9a7 7 0 0 0 2 1.2L10 21h4l.6-2.6a7 7 0 0 0 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></button>
+  <!-- prettier-ignore -->
+  <script>
+const icons = {
+  marketplace: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9h16l-1.5-4h-13zM5 9v10h14V9M9 13h6"/></svg>',
+  external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 4h6v6M20 4l-8 8M18 14v5H5V6h5"/></svg>',
+  project: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h7l2 2h9v10H3z"/></svg>',
+  skill: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg>',
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h3"/></svg>',
+  group: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>',
+  warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17v.5"/></svg>',
+};
+</script>
+</html>

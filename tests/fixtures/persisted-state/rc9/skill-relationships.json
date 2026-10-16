@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "revision": 1,
+  "skills": [
+    {
+      "skillId": "33333333-3333-4333-8333-333333333333",
+      "label": "release-check",
+      "evidence": "individual",
+      "locations": [
+        {
+          "projectId": "11111111-1111-4111-8111-111111111111",
+          "harnessId": "claude-code",
+          "folderPath": ".claude/skills/release-check"
+        }
+      ]
+    }
+  ],
+  "uses": [
+    {
+      "skillId": "33333333-3333-4333-8333-333333333333",
+      "bindingId": "binding-one",
+      "location": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "harnessId": "claude-code",
+        "folderPath": ".claude/skills/release-check"
+      },
+      "source": {
+        "sourceId": "22222222-2222-4222-8222-222222222222",
+        "packageId": "plugins/release-tools",
+        "artifactPath": "skills/release-check"
+      },
+      "baseRevisionId": "44444444-4444-4444-8444-444444444444",
+      "baseUnavailable": true
+    }
+  ]
+}

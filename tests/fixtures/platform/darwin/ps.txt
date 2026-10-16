@@ -1,0 +1,42 @@
+  PID  PPID  %CPU     ELAPSED STARTED                         RSS STAT ARGS
+    1     0   1.2 04-11:49:28 Thu Sep 10 00:46:51 2026      15440 Ss /sbin/launchd
+  319     1   2.0 04-11:49:11 Thu Sep 10 00:47:08 2026      13968 Ss /usr/libexec/logd
+  321     1   0.0 04-11:49:11 Thu Sep 10 00:47:08 2026       7248 Ss /usr/libexec/UserEventAgent (System)
+  392     1   3.2 04-11:49:10 Thu Sep 10 00:47:09 2026      29760 Ss /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer -daemon
+  614     1   0.0 04-11:49:08 Thu Sep 10 00:47:11 2026      11056 Ss /System/Library/CoreServices/Dock.app/Contents/MacOS/Dock
+  619     1   0.0 04-11:49:08 Thu Sep 10 00:47:11 2026      36272 Ss /System/Library/CoreServices/Finder.app/Contents/MacOS/Finder
+  822     1   0.0 04-11:49:02 Thu Sep 10 00:47:17 2026       6560 Ss /opt/homebrew/bin/watchman --foreground --logfile=/Users/example/.local/state/watchman/example-state/log --log-level=1 --sockname=/Users/example/.local/state/watchman/example-state/sock
+ 1145     1   0.0 04-11:48:57 Thu Sep 10 00:47:22 2026       4464 Ss /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport -s mdworker-bundle -c MDSImporterBundleFinder -m com.apple.metadata.mdbulkimport
+ 2210  1900   0.0 03-08:12:44 Fri Sep 11 03:11:20 2026       9840 S /Applications/Utilities/Terminal.app/Contents/MacOS/Terminal
+ 8420  8390   0.0    22:15:06 Sun Sep 13 13:22:19 2026      21312 S /Applications/Cursor.app/Contents/Frameworks/Cursor Helper (Renderer).app/Contents/MacOS/Cursor Helper (Renderer) --type=renderer --lang=en-US
+ 9401  9390   0.0       09:04 Mon Sep 14 12:26:15 2026      31264 S cursor-agent --resume session-anonymized-1 --workspace /Users/example/App/project-a
+ 9775     1   0.0       14:39 Mon Sep 14 12:21:40 2026      12480 S /Users/example/App/project-b/node_modules/.bin/electron-vite dev
+ 9792  9775   0.0       14:39 Mon Sep 14 12:21:40 2026      66224 S node /Users/example/App/project-b/node_modules/.bin/../electron-vite/bin/electron-vite.js dev -- --remote-debugging-port=9334
+ 9798  9792   0.0       14:39 Mon Sep 14 12:21:40 2026      11376 S /Users/example/App/project-b/node_modules/.pnpm/@esbuild+darwin-arm64@0.25.12/node_modules/@esbuild/darwin-arm64/bin/esbuild --service=0.25.12 --ping
+ 9824  9792   0.0       14:39 Mon Sep 14 12:21:40 2026      88624 S /Users/example/App/project-b/node_modules/.pnpm/electron@36.9.5/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron . --remote-debugging-port=9334
+ 9829  9824   0.0       14:38 Mon Sep 14 12:21:41 2026      57456 S /Users/example/App/project-b/node_modules/.pnpm/electron@36.9.5/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (GPU).app/Contents/MacOS/Electron Helper (GPU) --type=gpu-process --user-data-dir=/Users/example/Library/Application Support/omni-desktop
+ 9830  9824   0.0       14:38 Mon Sep 14 12:21:41 2026      39328 S /Users/example/App/project-b/node_modules/.pnpm/electron@36.9.5/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService
+14002 14000   0.0    03:41:02 Mon Sep 14 09:36:19 2026       9040 S opencode --project /Users/example/App/project-c
+15712 15600   0.0 03-03:30:33 Fri Sep 11 09:05:46 2026        560 S /Applications/Claude.app/Contents/Helpers/disclaimer -- /Users/example/Library/Application Support/Claude/claude-code/2.1.260/claude.app/Contents/MacOS/claude --output-format stream-json --model claude-opus-5
+15713 15712   0.5 03-03:30:33 Fri Sep 11 09:05:46 2026     116848 S /Users/example/Library/Application Support/Claude/claude-code/2.1.260/claude.app/Contents/MacOS/claude --output-format stream-json --verbose --input-format stream-json --model claude-opus-5 --permission-mode auto
+16040 15713 95.4       02:14   Mon Sep 14 11:15:33 2026      50320 R+ node (vitest 1)
+16041 15713 95.1       02:14   Mon Sep 14 11:15:33 2026      50112 R+ node (vitest 1)
+21306     1   0.0 04-09:28:55 Thu Sep 10 03:07:24 2026       4624 Ss /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/152.0.7977.83/Helpers/browser_crashpad_handler --monitor-self --database=/Users/example/Library/Application Support/Codex/Crashpad
+21312 21298   1.0 04-09:28:55 Thu Sep 10 03:07:24 2026      38480 S /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/152.0.7977.83/Helpers/Codex (Service).app/Contents/MacOS/Codex (Service) --type=gpu-process --user-data-dir=/Users/example/Library/Application Support/Codex
+21441 21298   0.0 04-09:28:52 Thu Sep 10 03:07:27 2026      39376 S /Applications/ChatGPT.app/Contents/Resources/codex -c features.code_mode_host=true app-server --analytics-default-enabled
+21585 21298   0.0 04-09:28:45 Thu Sep 10 03:07:34 2026      17712 S /Users/example/.codex/computer-use/Codex Computer Use.app/Contents/MacOS/SkyComputerUseService
+21746     1   0.0 04-09:28:39 Thu Sep 10 03:07:40 2026       4896 Ss /Applications/ChatGPT.app/Contents/Frameworks/Sparkle.framework/Versions/B/Autoupdate com.openai.codex /Users/example example
+25270 25070   0.0 02-05:13:28 Sat Sep 12 07:22:51 2026      19040 S /Users/example/.vscode/extensions/openai.chatgpt-26.908.40401-darwin-arm64/bin/macos-aarch64/codex -c features.code_mode_host=true app-server --analytics-default-enabled
+30021 30000   0.0       01:02   Mon Sep 14 12:37:41 2026      41200 S codex exec --brief /Users/example/App/project-d
+30022 30021 12.4       01:02   Mon Sep 14 12:37:41 2026      20480 S node -e omni-sim-runaway
+36615 36600   0.0    14:47:04 Sun Sep 13 21:49:15 2026        576 S /Applications/Claude.app/Contents/Helpers/disclaimer -- /usr/bin/sandbox-exec -f /Applications/Claude.app/Contents/Resources/claude-ios-sim.sb -D USER_HOME=/Users/example
+36616 36615   1.9    14:47:04 Sun Sep 13 21:49:15 2026      20144 S /Applications/Claude.app/Contents/Helpers/Claude iOS Sim.app/Contents/MacOS/claude-ios-sim
+39557     1   0.0 04-11:48:22 Thu Sep 10 00:47:57 2026      21600 S /Applications/Claude.app/Contents/MacOS/Claude
+52827 52800   0.0    03:35:53 Mon Sep 14 09:00:26 2026       1712 S /bin/zsh -c source /Users/example/.claude/shell-snapshots/snapshot-zsh-anonymized.sh
+60011 60000   0.0       00:12   Mon Sep 14 12:48:05 2026      18320 S pnpm run build
+60012 60011  91.0       00:11   Mon Sep 14 12:48:06 2026      95360 R+ vitest --run
+60100     1   0.0 01-02:00:00 Sat Sep 13 10:48:05 2026       6120 Ss /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+60101     1   0.0 01-02:00:00 Sat Sep 13 10:48:05 2026       4800 Ss /System/Library/CoreServices/NotificationCenter.app/Contents/MacOS/NotificationCenter
+60200     1   0.0    00:45:12 Mon Sep 14 12:03:12 2026      13760 Ss /usr/sbin/cfprefsd daemon
+60201     1   0.0    00:45:12 Mon Sep 14 12:03:12 2026       9280 Ss /usr/libexec/trustd --agent
+60300 60290   0.0    00:05:44 Mon Sep 14 12:42:40 2026       6480 S /System/Library/PrivateFrameworks/GameCenterFoundation.framework/Versions/A/XPCServices/com.apple.gamed.xpc/Contents/MacOS/com.apple.gamed

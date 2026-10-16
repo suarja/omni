@@ -1,0 +1,28 @@
+.canvas-copy-location { display: grid; flex: 0 0 auto; gap: 10px; padding: 16px; }
+.canvas-copy-location label { display: grid; gap: 6px; color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.canvas-copy-location-label { color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.canvas-copy-location select { min-width: 0; width: 100%; }
+.canvas-copy-location select:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
+.canvas-copy-location-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.canvas-copy-location code { display: block; min-width: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; overflow-wrap: anywhere; }
+.canvas-copy-location-actions .canvas-secondary-button { flex: 0 0 auto; }
+.canvas-skill-adoption { display: grid; gap: 12px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--canvas-rule); }
+.canvas-skill-adoption h3 { margin: 0; color: var(--canvas-ink); font-size: var(--canvas-body); }
+.canvas-skill-adoption label { display: grid; gap: 6px; color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.canvas-skill-adoption select { min-width: 0; width: 100%; }
+.canvas-skill-adoption select:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
+.canvas-skill-adoption p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+.canvas-skill-adoption-message { display: grid; gap: 8px; }
+.canvas-skill-variant { display: grid; gap: 12px; margin-top: 20px; padding: 16px; background: var(--canvas-sheet-paper); border-left: 3px solid var(--canvas-plugin); }
+.canvas-skill-variant p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+.canvas-skill-variant label { display: grid; gap: 6px; color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.canvas-skill-variant input, .canvas-skill-variant select { min-width: 0; width: 100%; }
+.canvas-skill-variant input:focus-visible, .canvas-skill-variant select:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
+.canvas-variant-origin { display: grid; gap: 8px; margin-top: 16px; padding: 12px; background: var(--canvas-sheet-paper); border-left: 3px solid var(--canvas-plugin); }
+.canvas-variant-origin h3 { margin: 0; color: var(--canvas-ink); font-size: var(--canvas-meta); }
+.canvas-variant-origin dl { display: grid; gap: 8px; margin: 0; }
+.canvas-variant-origin dt { color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.canvas-variant-origin dd { min-width: 0; margin: 2px 0 0; overflow-wrap: anywhere; font-size: var(--canvas-meta); }
+.canvas-variant-origin code { font: inherit; }
+.canvas-variant-origin p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.5; }
+@media (max-width: 500px) { .canvas-copy-location-actions { align-items: stretch; flex-direction: column; } }

@@ -1,0 +1,852 @@
+{
+  "description": "Recorded real coordinator effects; the visual adapter rejects writes.",
+  "capture": {
+    "intent": {
+      "kind": "reconcile",
+      "request": {
+        "choice": "keep-variant",
+        "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+        "locations": [
+          {
+            "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+            "harnessId": "codex",
+            "folderPath": ".agents/skills/demo"
+          }
+        ],
+        "destination": {
+          "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+          "packageId": "packages/tools",
+          "skillKey": "demo-personal"
+        }
+      }
+    },
+    "preview": {
+      "status": "ready",
+      "intentId": "eaebcf4f-1f75-4fcd-8890-623c363bd1fb",
+      "planId": "af209e24-fcf5-5de2-a1a4-0c3090c47acc",
+      "effectFingerprint": "5835076575a89bef448fd80fd85acc7e71091655fcdeb60114c3f9cf554a4245",
+      "scope": {
+        "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+        "packageId": "packages/tools",
+        "artifactPath": "skills/demo-personal",
+        "targets": [
+          {
+            "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+            "harnessId": "codex"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "stepId": "af209e24-fcf5-5de2-a1a4-0c3090c47acc",
+          "scope": {
+            "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+            "packageId": "packages/tools",
+            "artifactPath": "skills/demo-personal",
+            "targets": [
+              {
+                "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                "harnessId": "codex"
+              }
+            ]
+          },
+          "plan": {
+            "planId": "af209e24-fcf5-5de2-a1a4-0c3090c47acc",
+            "kind": "capture-skill",
+            "displayTarget": "packages/tools/skills/demo-personal",
+            "actions": [
+              {
+                "kind": "create-directory",
+                "relativePath": "packages/tools/skills/demo-personal"
+              },
+              {
+                "kind": "create-directory",
+                "relativePath": "packages/tools/skills/demo-personal/assets"
+              },
+              {
+                "kind": "create-directory",
+                "relativePath": "packages/tools/skills/demo-personal/support"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": "packages/tools/skills/demo-personal/assets/first.bin",
+                "byteLength": 3,
+                "afterHash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": "packages/tools/skills/demo-personal/notes.md",
+                "byteLength": 34,
+                "afterHash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": "packages/tools/skills/demo-personal/SKILL.md",
+                "byteLength": 26,
+                "afterHash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": "packages/tools/skills/demo-personal/support/payload.bin",
+                "byteLength": 4,
+                "afterHash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": "packages/tools/omni.plugin.json",
+                "byteLength": 1811,
+                "beforeHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d",
+                "afterHash": "065cdd3cf51022b31672cc8839e8581bec395e201f997d68977c93f391769556",
+                "manifest": true,
+                "diff": "--- packages/tools/omni.plugin.json (current)\n+++ packages/tools/omni.plugin.json (proposed)\n@@ -1,1 +1,56 @@\n-{\"format\":\"omni.plugin/1\",\"id\":\"tools\",\"name\":\"Tools\",\"version\":\"0.1.0\",\"artifacts\":[]}\n+{\n+  \"format\": \"omni.plugin/1\",\n+  \"id\": \"tools\",\n+  \"name\": \"Tools\",\n+  \"version\": \"0.1.0\",\n+  \"artifacts\": [\n+    {\n+      \"kind\": \"skill\",\n+      \"path\": \"skills/demo-personal\",\n+      \"variantOrigin\": {\n+        \"schemaVersion\": 1,\n+        \"variantId\": \"53bad0ca-ffa2-5550-a7c3-d8f8c8de883e\",\n+        \"forkOf\": \"3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af\",\n+        \"capturedAt\": \"2026-10-09T08:57:14.216Z\",\n+        \"capturedFrom\": {\n+          \"location\": {\n+            \"projectId\": \"39ada7de-ecb8-41d8-9dc3-433d3bfcbd72\",\n+            \"harnessId\": \"codex\",\n+            \"folderPath\": \".agents/skills/demo\"\n+          },\n+          \"revision\": {\n+            \"algorithm\": \"omni-tree-v1\",\n+            \"hash\": \"45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7\",\n+            \"files\": [\n+              {\n+                \"path\": \"assets/first.bin\",\n+                \"hash\": \"a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f\",\n+                \"byteLength\": 3\n+              },\n+              {\n+                \"path\": \"notes.md\",\n+                \"hash\": \"809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230\",\n+                \"byteLength\": 34\n+              },\n+              {\n+                \"path\": \"SKILL.md\",\n+                \"hash\": \"9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab\",\n+                \"byteLength\": 26\n+              },\n+              {\n+                \"path\": \"support/payload.bin\",\n+                \"hash\": \"651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8\",\n+                \"byteLength\": 4\n+              }\n+            ]\n+          }\n+        },\n+        \"approvedSource\": {\n+          \"sourceId\": \"4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497\",\n+          \"packageId\": \"packages/tools\",\n+          \"artifactPath\": \"skills/demo\"\n+        }\n+      }\n+    }\n+  ]\n+}\n"
+              }
+            ],
+            "git": {
+              "mode": "disabled",
+              "warnings": []
+            }
+          },
+          "bindingEffects": [],
+          "files": [
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/assets/first.bin",
+              "change": "add",
+              "byteLength": 3,
+              "summary": "Binary file; complete byte length and hash are shown.",
+              "afterHash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/notes.md",
+              "change": "add",
+              "byteLength": 34,
+              "diff": "--- packages/tools/skills/demo-personal/notes.md (absent)\n+++ packages/tools/skills/demo-personal/notes.md (captured copy)\n@@ -1,0 +1,1 @@\n+Local orchestration instructions.\n",
+              "afterHash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/SKILL.md",
+              "change": "add",
+              "byteLength": 26,
+              "diff": "--- packages/tools/skills/demo-personal/SKILL.md (absent)\n+++ packages/tools/skills/demo-personal/SKILL.md (captured copy)\n@@ -1,0 +1,4 @@\n+---\n+name: demo\n+---\n+# Demo\n",
+              "afterHash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/support/payload.bin",
+              "change": "add",
+              "byteLength": 4,
+              "summary": "Binary file; complete byte length and hash are shown.",
+              "afterHash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/omni.plugin.json",
+              "change": "change",
+              "byteLength": 1811,
+              "diff": "--- packages/tools/omni.plugin.json (current)\n+++ packages/tools/omni.plugin.json (proposed)\n@@ -1,1 +1,56 @@\n-{\"format\":\"omni.plugin/1\",\"id\":\"tools\",\"name\":\"Tools\",\"version\":\"0.1.0\",\"artifacts\":[]}\n+{\n+  \"format\": \"omni.plugin/1\",\n+  \"id\": \"tools\",\n+  \"name\": \"Tools\",\n+  \"version\": \"0.1.0\",\n+  \"artifacts\": [\n+    {\n+      \"kind\": \"skill\",\n+      \"path\": \"skills/demo-personal\",\n+      \"variantOrigin\": {\n+        \"schemaVersion\": 1,\n+        \"variantId\": \"53bad0ca-ffa2-5550-a7c3-d8f8c8de883e\",\n+        \"forkOf\": \"3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af\",\n+        \"capturedAt\": \"2026-10-09T08:57:14.216Z\",\n+        \"capturedFrom\": {\n+          \"location\": {\n+            \"projectId\": \"39ada7de-ecb8-41d8-9dc3-433d3bfcbd72\",\n+            \"harnessId\": \"codex\",\n+            \"folderPath\": \".agents/skills/demo\"\n+          },\n+          \"revision\": {\n+            \"algorithm\": \"omni-tree-v1\",\n+            \"hash\": \"45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7\",\n+            \"files\": [\n+              {\n+                \"path\": \"assets/first.bin\",\n+                \"hash\": \"a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f\",\n+                \"byteLength\": 3\n+              },\n+              {\n+                \"path\": \"notes.md\",\n+                \"hash\": \"809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230\",\n+                \"byteLength\": 34\n+              },\n+              {\n+                \"path\": \"SKILL.md\",\n+                \"hash\": \"9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab\",\n+                \"byteLength\": 26\n+              },\n+              {\n+                \"path\": \"support/payload.bin\",\n+                \"hash\": \"651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8\",\n+                \"byteLength\": 4\n+              }\n+            ]\n+          }\n+        },\n+        \"approvedSource\": {\n+          \"sourceId\": \"4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497\",\n+          \"packageId\": \"packages/tools\",\n+          \"artifactPath\": \"skills/demo\"\n+        }\n+      }\n+    }\n+  ]\n+}\n",
+              "beforeHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d",
+              "afterHash": "065cdd3cf51022b31672cc8839e8581bec395e201f997d68977c93f391769556"
+            }
+          ],
+          "variantCaptureEvidence": {
+            "request": {
+              "choice": "keep-variant",
+              "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "locations": [
+                {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                }
+              ],
+              "destination": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "skillKey": "demo-personal"
+              }
+            },
+            "storeRevision": 2,
+            "record": {
+              "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "label": "demo",
+              "evidence": "observed-equivalence",
+              "locations": [
+                {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "claude-code",
+                  "folderPath": ".claude/skills/demo"
+                },
+                {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                }
+              ],
+              "reference": {
+                "algorithm": "omni-tree-v1",
+                "hash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+                "files": [
+                  {
+                    "path": "notes.md",
+                    "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                    "byteLength": 14
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            },
+            "binding": {
+              "bindingId": "ef690e34-bab7-5b36-8e4b-d9c060a9aac7",
+              "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "packageId": "packages/tools",
+              "artifactPath": "skills/demo",
+              "kind": "skill",
+              "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+              "harnessId": "codex",
+              "boundHash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+              "ownedHash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+              "createdAt": "2026-10-09T08:57:14.031Z"
+            },
+            "use": {
+              "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "bindingId": "ef690e34-bab7-5b36-8e4b-d9c060a9aac7",
+              "location": {
+                "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                "harnessId": "codex",
+                "folderPath": ".agents/skills/demo"
+              },
+              "source": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo"
+              },
+              "baseRevisionId": "53257eb5-f677-5c8d-b24c-6c20258b7ff9"
+            },
+            "local": {
+              "rootIdentity": "1df1fb420c542215287583f6ef898759f4ec0643a795ab927247e994f3ecfd09",
+              "revision": {
+                "algorithm": "omni-tree-v1",
+                "hash": "45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7",
+                "files": [
+                  {
+                    "path": "assets/first.bin",
+                    "hash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f",
+                    "byteLength": 3
+                  },
+                  {
+                    "path": "notes.md",
+                    "hash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230",
+                    "byteLength": 34
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            },
+            "destination": {
+              "source": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo-personal"
+              },
+              "rootIdentity": "fabe70d00b1d58a0d18708d69bb563f6c81ded685555d21b3d85d7b594c33ff8",
+              "packageRoot": "packages/tools",
+              "manifest": {
+                "relativePath": "packages/tools/omni.plugin.json",
+                "beforeHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d"
+              },
+              "absent": true
+            },
+            "origin": {
+              "schemaVersion": 1,
+              "variantId": "53bad0ca-ffa2-5550-a7c3-d8f8c8de883e",
+              "forkOf": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "capturedAt": "2026-10-09T08:57:14.216Z",
+              "capturedFrom": {
+                "location": {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                },
+                "revision": {
+                  "algorithm": "omni-tree-v1",
+                  "hash": "45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7",
+                  "files": [
+                    {
+                      "path": "assets/first.bin",
+                      "hash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f",
+                      "byteLength": 3
+                    },
+                    {
+                      "path": "notes.md",
+                      "hash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230",
+                      "byteLength": 34
+                    },
+                    {
+                      "path": "SKILL.md",
+                      "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                      "byteLength": 26
+                    },
+                    {
+                      "path": "support/payload.bin",
+                      "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                      "byteLength": 4
+                    }
+                  ]
+                }
+              },
+              "approvedSource": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "intentId": "eaebcf4f-1f75-4fcd-8890-623c363bd1fb",
+      "operationId": "eaebcf4f-1f75-4fcd-8890-623c363bd1fb",
+      "status": "applied",
+      "source": {
+        "status": "updated",
+        "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497"
+      },
+      "targets": [],
+      "receiptIds": [
+        "af209e24-fcf5-5de2-a1a4-0c3090c47acc"
+      ],
+      "receipts": [
+        {
+          "operationId": "af209e24-fcf5-5de2-a1a4-0c3090c47acc",
+          "kind": "capture-skill",
+          "status": "applied",
+          "appliedAt": "2026-10-09T08:57:14.589Z",
+          "displayTarget": "packages/tools/skills/demo-personal",
+          "actions": [
+            {
+              "kind": "create-directory",
+              "relativePath": "packages/tools/skills/demo-personal",
+              "status": "applied"
+            },
+            {
+              "kind": "create-directory",
+              "relativePath": "packages/tools/skills/demo-personal/assets",
+              "status": "applied"
+            },
+            {
+              "kind": "create-directory",
+              "relativePath": "packages/tools/skills/demo-personal/support",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": "packages/tools/skills/demo-personal/assets/first.bin",
+              "byteLength": 3,
+              "afterHash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": "packages/tools/skills/demo-personal/notes.md",
+              "byteLength": 34,
+              "afterHash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": "packages/tools/skills/demo-personal/SKILL.md",
+              "byteLength": 26,
+              "afterHash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": "packages/tools/skills/demo-personal/support/payload.bin",
+              "byteLength": 4,
+              "afterHash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": "packages/tools/omni.plugin.json",
+              "byteLength": 1811,
+              "beforeHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d",
+              "afterHash": "065cdd3cf51022b31672cc8839e8581bec395e201f997d68977c93f391769556",
+              "manifest": true,
+              "diff": "--- packages/tools/omni.plugin.json (current)\n+++ packages/tools/omni.plugin.json (proposed)\n@@ -1,1 +1,56 @@\n-{\"format\":\"omni.plugin/1\",\"id\":\"tools\",\"name\":\"Tools\",\"version\":\"0.1.0\",\"artifacts\":[]}\n+{\n+  \"format\": \"omni.plugin/1\",\n+  \"id\": \"tools\",\n+  \"name\": \"Tools\",\n+  \"version\": \"0.1.0\",\n+  \"artifacts\": [\n+    {\n+      \"kind\": \"skill\",\n+      \"path\": \"skills/demo-personal\",\n+      \"variantOrigin\": {\n+        \"schemaVersion\": 1,\n+        \"variantId\": \"53bad0ca-ffa2-5550-a7c3-d8f8c8de883e\",\n+        \"forkOf\": \"3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af\",\n+        \"capturedAt\": \"2026-10-09T08:57:14.216Z\",\n+        \"capturedFrom\": {\n+          \"location\": {\n+            \"projectId\": \"39ada7de-ecb8-41d8-9dc3-433d3bfcbd72\",\n+            \"harnessId\": \"codex\",\n+            \"folderPath\": \".agents/skills/demo\"\n+          },\n+          \"revision\": {\n+            \"algorithm\": \"omni-tree-v1\",\n+            \"hash\": \"45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7\",\n+            \"files\": [\n+              {\n+                \"path\": \"assets/first.bin\",\n+                \"hash\": \"a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f\",\n+                \"byteLength\": 3\n+              },\n+              {\n+                \"path\": \"notes.md\",\n+                \"hash\": \"809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230\",\n+                \"byteLength\": 34\n+              },\n+              {\n+                \"path\": \"SKILL.md\",\n+                \"hash\": \"9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab\",\n+                \"byteLength\": 26\n+              },\n+              {\n+                \"path\": \"support/payload.bin\",\n+                \"hash\": \"651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8\",\n+                \"byteLength\": 4\n+              }\n+            ]\n+          }\n+        },\n+        \"approvedSource\": {\n+          \"sourceId\": \"4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497\",\n+          \"packageId\": \"packages/tools\",\n+          \"artifactPath\": \"skills/demo\"\n+        }\n+      }\n+    }\n+  ]\n+}\n",
+              "status": "applied"
+            }
+          ],
+          "git": {
+            "mode": "disabled"
+          },
+          "registered": null,
+          "source": {
+            "kind": "source",
+            "id": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+            "relativePath": "packages/tools"
+          },
+          "files": [
+            {
+              "relativePath": "packages/tools/skills/demo-personal/assets/first.bin",
+              "contentHash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f"
+            },
+            {
+              "relativePath": "packages/tools/skills/demo-personal/notes.md",
+              "contentHash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230"
+            },
+            {
+              "relativePath": "packages/tools/skills/demo-personal/SKILL.md",
+              "contentHash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab"
+            },
+            {
+              "relativePath": "packages/tools/skills/demo-personal/support/payload.bin",
+              "contentHash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8"
+            }
+          ],
+          "manifests": [
+            {
+              "relativePath": "packages/tools/omni.plugin.json",
+              "beforeHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d",
+              "afterHash": "065cdd3cf51022b31672cc8839e8581bec395e201f997d68977c93f391769556"
+            }
+          ],
+          "createdDirectories": [
+            "packages/tools/skills/demo-personal",
+            "packages/tools/skills/demo-personal/assets",
+            "packages/tools/skills/demo-personal/support"
+          ],
+          "capture": {
+            "intentId": "eaebcf4f-1f75-4fcd-8890-623c363bd1fb",
+            "stepId": "af209e24-fcf5-5de2-a1a4-0c3090c47acc"
+          }
+        }
+      ],
+      "issues": [],
+      "recoveryAvailable": true,
+      "capture": {
+        "choice": "keep-variant",
+        "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+        "variantId": "53bad0ca-ffa2-5550-a7c3-d8f8c8de883e",
+        "location": {
+          "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+          "harnessId": "codex",
+          "folderPath": ".agents/skills/demo"
+        },
+        "destination": {
+          "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+          "packageId": "packages/tools",
+          "artifactPath": "skills/demo-personal"
+        },
+        "status": "applied"
+      }
+    }
+  },
+  "restore": {
+    "intent": {
+      "kind": "restore",
+      "operationId": "eaebcf4f-1f75-4fcd-8890-623c363bd1fb"
+    },
+    "preview": {
+      "status": "ready",
+      "intentId": "3ffdb721-0127-4262-8ef0-9b6ed66f237f",
+      "planId": "7f9a02e8-fdc1-59a9-9f38-7543002f650a",
+      "effectFingerprint": "375520e4d3c7fb1cea7d81ca6cee31f601ca6aa8095ef36580676818d2e399e7",
+      "scope": {
+        "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+        "packageId": "packages/tools",
+        "artifactPath": "skills/demo-personal",
+        "targets": [
+          {
+            "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+            "harnessId": "codex"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "stepId": "7f9a02e8-fdc1-59a9-9f38-7543002f650a",
+          "scope": {
+            "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+            "packageId": "packages/tools",
+            "artifactPath": "skills/demo-personal",
+            "targets": [
+              {
+                "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                "harnessId": "codex"
+              }
+            ]
+          },
+          "plan": {
+            "planId": "7f9a02e8-fdc1-59a9-9f38-7543002f650a",
+            "kind": "restore-apply",
+            "displayTarget": "packages/tools/skills/demo-personal",
+            "actions": [
+              {
+                "kind": "delete-file",
+                "relativePath": "packages/tools/skills/demo-personal/assets/first.bin",
+                "byteLength": 3,
+                "beforeHash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f"
+              },
+              {
+                "kind": "delete-file",
+                "relativePath": "packages/tools/skills/demo-personal/notes.md",
+                "byteLength": 34,
+                "beforeHash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230"
+              },
+              {
+                "kind": "delete-file",
+                "relativePath": "packages/tools/skills/demo-personal/SKILL.md",
+                "byteLength": 26,
+                "beforeHash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab"
+              },
+              {
+                "kind": "delete-file",
+                "relativePath": "packages/tools/skills/demo-personal/support/payload.bin",
+                "byteLength": 4,
+                "beforeHash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": "packages/tools/omni.plugin.json",
+                "byteLength": 87,
+                "beforeHash": "065cdd3cf51022b31672cc8839e8581bec395e201f997d68977c93f391769556",
+                "afterHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d",
+                "manifest": true
+              }
+            ],
+            "git": {
+              "mode": "disabled",
+              "warnings": []
+            }
+          },
+          "bindingEffects": [],
+          "files": [
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/assets/first.bin",
+              "change": "delete",
+              "byteLength": 3,
+              "diff": "binary file differs",
+              "beforeHash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/notes.md",
+              "change": "delete",
+              "byteLength": 34,
+              "diff": "--- packages/tools/skills/demo-personal/notes.md\n+++ packages/tools/skills/demo-personal/notes.md (removed)\n@@ -1,1 +1,0 @@\n-Local orchestration instructions.\n",
+              "beforeHash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/SKILL.md",
+              "change": "delete",
+              "byteLength": 26,
+              "diff": "--- packages/tools/skills/demo-personal/SKILL.md\n+++ packages/tools/skills/demo-personal/SKILL.md (removed)\n@@ -1,4 +1,0 @@\n----\n-name: demo\n----\n-# Demo\n",
+              "beforeHash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/skills/demo-personal/support/payload.bin",
+              "change": "delete",
+              "byteLength": 4,
+              "diff": "binary file differs",
+              "beforeHash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8"
+            },
+            {
+              "rootId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "relativePath": "packages/tools/omni.plugin.json",
+              "change": "change",
+              "byteLength": 87,
+              "diff": "--- packages/tools/omni.plugin.json\n+++ packages/tools/omni.plugin.json\n@@ -1,56 +1,1 @@\n-{\n-  \"format\": \"omni.plugin/1\",\n-  \"id\": \"tools\",\n-  \"name\": \"Tools\",\n-  \"version\": \"0.1.0\",\n-  \"artifacts\": [\n-    {\n-      \"kind\": \"skill\",\n-      \"path\": \"skills/demo-personal\",\n-      \"variantOrigin\": {\n-        \"schemaVersion\": 1,\n-        \"variantId\": \"53bad0ca-ffa2-5550-a7c3-d8f8c8de883e\",\n-        \"forkOf\": \"3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af\",\n-        \"capturedAt\": \"2026-10-09T08:57:14.216Z\",\n-        \"capturedFrom\": {\n-          \"location\": {\n-            \"projectId\": \"39ada7de-ecb8-41d8-9dc3-433d3bfcbd72\",\n-            \"harnessId\": \"codex\",\n-            \"folderPath\": \".agents/skills/demo\"\n-          },\n-          \"revision\": {\n-            \"algorithm\": \"omni-tree-v1\",\n-            \"hash\": \"45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7\",\n-            \"files\": [\n-              {\n-                \"path\": \"assets/first.bin\",\n-                \"hash\": \"a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f\",\n-                \"byteLength\": 3\n-              },\n-              {\n-                \"path\": \"notes.md\",\n-                \"hash\": \"809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230\",\n-                \"byteLength\": 34\n-              },\n-              {\n-                \"path\": \"SKILL.md\",\n-                \"hash\": \"9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab\",\n-                \"byteLength\": 26\n-              },\n-              {\n-                \"path\": \"support/payload.bin\",\n-                \"hash\": \"651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8\",\n-                \"byteLength\": 4\n-              }\n-            ]\n-          }\n-        },\n-        \"approvedSource\": {\n-          \"sourceId\": \"4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497\",\n-          \"packageId\": \"packages/tools\",\n-          \"artifactPath\": \"skills/demo\"\n-        }\n-      }\n-    }\n-  ]\n-}\n+{\"format\":\"omni.plugin/1\",\"id\":\"tools\",\"name\":\"Tools\",\"version\":\"0.1.0\",\"artifacts\":[]}\n",
+              "beforeHash": "065cdd3cf51022b31672cc8839e8581bec395e201f997d68977c93f391769556",
+              "afterHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d"
+            }
+          ],
+          "variantCaptureEvidence": {
+            "request": {
+              "choice": "keep-variant",
+              "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "locations": [
+                {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                }
+              ],
+              "destination": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "skillKey": "demo-personal"
+              }
+            },
+            "storeRevision": 2,
+            "record": {
+              "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "label": "demo",
+              "evidence": "observed-equivalence",
+              "locations": [
+                {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "claude-code",
+                  "folderPath": ".claude/skills/demo"
+                },
+                {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                }
+              ],
+              "reference": {
+                "algorithm": "omni-tree-v1",
+                "hash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+                "files": [
+                  {
+                    "path": "notes.md",
+                    "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                    "byteLength": 14
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            },
+            "binding": {
+              "bindingId": "ef690e34-bab7-5b36-8e4b-d9c060a9aac7",
+              "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+              "packageId": "packages/tools",
+              "artifactPath": "skills/demo",
+              "kind": "skill",
+              "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+              "harnessId": "codex",
+              "boundHash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+              "ownedHash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+              "createdAt": "2026-10-09T08:57:14.031Z"
+            },
+            "use": {
+              "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "bindingId": "ef690e34-bab7-5b36-8e4b-d9c060a9aac7",
+              "location": {
+                "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                "harnessId": "codex",
+                "folderPath": ".agents/skills/demo"
+              },
+              "source": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo"
+              },
+              "baseRevisionId": "53257eb5-f677-5c8d-b24c-6c20258b7ff9"
+            },
+            "local": {
+              "rootIdentity": "1df1fb420c542215287583f6ef898759f4ec0643a795ab927247e994f3ecfd09",
+              "revision": {
+                "algorithm": "omni-tree-v1",
+                "hash": "45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7",
+                "files": [
+                  {
+                    "path": "assets/first.bin",
+                    "hash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f",
+                    "byteLength": 3
+                  },
+                  {
+                    "path": "notes.md",
+                    "hash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230",
+                    "byteLength": 34
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            },
+            "destination": {
+              "source": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo-personal"
+              },
+              "rootIdentity": "fabe70d00b1d58a0d18708d69bb563f6c81ded685555d21b3d85d7b594c33ff8",
+              "packageRoot": "packages/tools",
+              "manifest": {
+                "relativePath": "packages/tools/omni.plugin.json",
+                "beforeHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d"
+              },
+              "absent": true
+            },
+            "origin": {
+              "schemaVersion": 1,
+              "variantId": "53bad0ca-ffa2-5550-a7c3-d8f8c8de883e",
+              "forkOf": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+              "capturedAt": "2026-10-09T08:57:14.216Z",
+              "capturedFrom": {
+                "location": {
+                  "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                },
+                "revision": {
+                  "algorithm": "omni-tree-v1",
+                  "hash": "45643d75eb66b4277adc6bb529bb1549b34690ac58637317925da1dfe26aafc7",
+                  "files": [
+                    {
+                      "path": "assets/first.bin",
+                      "hash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f",
+                      "byteLength": 3
+                    },
+                    {
+                      "path": "notes.md",
+                      "hash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230",
+                      "byteLength": 34
+                    },
+                    {
+                      "path": "SKILL.md",
+                      "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                      "byteLength": 26
+                    },
+                    {
+                      "path": "support/payload.bin",
+                      "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                      "byteLength": 4
+                    }
+                  ]
+                }
+              },
+              "approvedSource": {
+                "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "intentId": "3ffdb721-0127-4262-8ef0-9b6ed66f237f",
+      "operationId": "3ffdb721-0127-4262-8ef0-9b6ed66f237f",
+      "status": "restored",
+      "source": {
+        "status": "restored",
+        "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497"
+      },
+      "targets": [],
+      "receiptIds": [
+        "8710d690-770a-5f79-9bf8-a361d5e49662"
+      ],
+      "receipts": [
+        {
+          "operationId": "8710d690-770a-5f79-9bf8-a361d5e49662",
+          "kind": "restore-apply",
+          "status": "applied",
+          "appliedAt": "2026-10-09T08:57:15.300Z",
+          "displayTarget": "packages/tools/skills/demo-personal",
+          "actions": [
+            {
+              "kind": "delete-file",
+              "relativePath": "packages/tools/skills/demo-personal/assets/first.bin",
+              "byteLength": 3,
+              "beforeHash": "a9642ea34328505649c8d899f7e02e6cbd48929a8deb0a14084992b865edb85f",
+              "status": "applied"
+            },
+            {
+              "kind": "delete-file",
+              "relativePath": "packages/tools/skills/demo-personal/notes.md",
+              "byteLength": 34,
+              "beforeHash": "809cd98aa91d7ca3f2d1dd57d3472027f15c3a0dd9ef5ace81792797e5e18230",
+              "status": "applied"
+            },
+            {
+              "kind": "delete-file",
+              "relativePath": "packages/tools/skills/demo-personal/SKILL.md",
+              "byteLength": 26,
+              "beforeHash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+              "status": "applied"
+            },
+            {
+              "kind": "delete-file",
+              "relativePath": "packages/tools/skills/demo-personal/support/payload.bin",
+              "byteLength": 4,
+              "beforeHash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": "packages/tools/omni.plugin.json",
+              "byteLength": 87,
+              "beforeHash": "065cdd3cf51022b31672cc8839e8581bec395e201f997d68977c93f391769556",
+              "afterHash": "9bf52ed1098634a554f620de0f9eb8fc82731d9ce22600ee964ab6279c22281d",
+              "manifest": true,
+              "status": "applied"
+            }
+          ],
+          "git": {
+            "mode": "disabled"
+          },
+          "registered": null,
+          "source": {
+            "kind": "source",
+            "id": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+            "relativePath": "skills/demo-personal"
+          },
+          "restores": "eaebcf4f-1f75-4fcd-8890-623c363bd1fb"
+        }
+      ],
+      "issues": [],
+      "recoveryAvailable": false,
+      "capture": {
+        "choice": "keep-variant",
+        "skillId": "3e1d51d1-8715-4cf1-b64d-ac76ff6ad6af",
+        "variantId": "53bad0ca-ffa2-5550-a7c3-d8f8c8de883e",
+        "location": {
+          "projectId": "39ada7de-ecb8-41d8-9dc3-433d3bfcbd72",
+          "harnessId": "codex",
+          "folderPath": ".agents/skills/demo"
+        },
+        "destination": {
+          "sourceId": "4c4529ea-7fc3-4e2d-8ecf-a9b1fc5cd497",
+          "packageId": "packages/tools",
+          "artifactPath": "skills/demo-personal"
+        },
+        "status": "restored"
+      }
+    }
+  }
+}

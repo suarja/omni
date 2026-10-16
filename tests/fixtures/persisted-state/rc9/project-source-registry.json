@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "revision": 2,
+  "projects": [
+    {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "displayName": "Release project",
+      "locator": {
+        "kind": "local-directory",
+        "canonicalPath": "/synthetic/release-project"
+      },
+      "createdAt": "2026-10-11T10:00:00.000Z"
+    }
+  ],
+  "sources": [
+    {
+      "id": "22222222-2222-4222-8222-222222222222",
+      "displayName": "Release marketplace",
+      "locator": {
+        "kind": "local-directory",
+        "canonicalPath": "/synthetic/release-marketplace"
+      },
+      "ownership": "personal",
+      "createdAt": "2026-10-11T10:00:00.000Z"
+    }
+  ]
+}

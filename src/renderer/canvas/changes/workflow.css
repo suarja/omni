@@ -1,0 +1,21 @@
+.changes-workflow .changes-body > div { display: grid; gap: 16px; }
+.changes-workflow .changes-body > div[hidden] { display: none; }
+.changes-workflow .changes-body { min-width: 0; margin: 0; border: 0; }
+.changes-workflow .ui-card { margin: 0; }
+.changes-workflow .changes-actions { flex-wrap: wrap; }
+.changes-workflow .changes-header h2 { font-size: var(--font-size-section); }
+.changes-workflow .changes-note { font-size: var(--font-size-meta); }
+.changes-workflow .changes-header p { white-space: normal; }
+.changes-workflow-notice { flex: 0 0 auto; padding: 12px 20px; }
+.compatibility-files h3, .compatibility-effects h3 { margin: 0 0 14px; font-size: var(--canvas-meta); font-weight: 600; }
+.compatibility-file { padding: 12px 0; border-bottom: 1px solid var(--canvas-rule); }
+.compatibility-file header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.compatibility-file header code { flex: 1; overflow-wrap: anywhere; font: var(--canvas-meta)/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.compatibility-file header small { color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.compatibility-file-controls { margin: 10px 0 0; flex-wrap: wrap; }
+.compatibility-file-controls > div { flex-wrap: wrap; }
+.compatibility-diff-toggle { padding: 4px 0; color: var(--canvas-muted); border: 0; background: transparent; font: inherit; cursor: pointer; }
+.compatibility-diff-toggle:focus-visible { outline: 2px solid var(--canvas-focus-edge); outline-offset: 3px; }
+.compatibility-manifests { display: grid; gap: 6px; overflow-wrap: anywhere; font-size: var(--canvas-meta); }
+.compatibility-effect { padding: 12px 0; border-bottom: 1px solid var(--canvas-rule); }
+.compatibility-effect strong { font-size: var(--canvas-meta); }

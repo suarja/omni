@@ -1,0 +1,14 @@
+{
+  "name": "@omni/academy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Offline Academy content for Omni Desktop and the future omni-academy site.",
+  "engines": {
+    "node": ">=23"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

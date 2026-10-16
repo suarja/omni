@@ -1,0 +1,19 @@
+{
+  "name": "example-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:mobile": "bun run --cwd apps/mobile start"
+  },
+  "dependencies": {
+    "convex": "^1.42.3"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.10"
+  }
+}

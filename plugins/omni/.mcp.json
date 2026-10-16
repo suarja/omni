@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "omni": {
+      "command": "node",
+      "args": ["scripts/omni-mcp.mjs"],
+      "env": {
+        "OMNI_MCP_SOURCE": "codex-plugin",
+        "OMNI_MCP_HARNESS": "codex"
+      }
+    }
+  }
+}

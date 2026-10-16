@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 6,
+  "git": {
+    "commitChanges": false
+  },
+  "agents": {
+    "approval": {
+      "personalMarketplace": "conversation",
+      "projects": "omni"
+    },
+    "guard": {
+      "warnProjectIds": [
+        "11111111-1111-4111-8111-111111111111"
+      ]
+    },
+    "installedByVersion": "0.1.1-rc.11"
+  },
+  "ai": {
+    "functions": {
+      "suggest-adapt": "auto",
+      "explain": "auto",
+      "summarize": "auto",
+      "compose": "auto"
+    },
+    "dataCategories": {
+      "marketplaceContent": true,
+      "stackFiles": true,
+      "transcripts": false,
+      "processCommands": false
+    },
+    "commands": {
+      "suggest": true,
+      "explain": true,
+      "summarize": true
+    }
+  },
+  "features": {
+    "learn": false,
+    "compose": false,
+    "activityAgents": true,
+    "aiProviders": false
+  }
+}

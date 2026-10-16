@@ -1,0 +1,23 @@
+.canvas-rail-layer { position: absolute; z-index: 12; inset: 0; pointer-events: none; }
+.canvas-rail-layer > * { pointer-events: auto; }
+.canvas-rail-layer .canvas-sheet { z-index: 12; }
+.rail-section { margin: 4px 0 18px; }
+.rail-section h3, .rail-section summary { margin: 0 0 8px; color: var(--canvas-muted); font-size: var(--canvas-meta); font-weight: 600; }
+.rail-section summary { cursor: pointer; }
+.rail-item > div { flex: 1; min-width: 0; }
+.rail-item strong { display: block; font-weight: 500; overflow-wrap: anywhere; }
+.rail-item small, .rail-item time, .rail-note { display: block; color: var(--canvas-muted); font-size: var(--canvas-meta); overflow-wrap: anywhere; }
+.rail-item small { margin-top: 2px; }
+.rail-item p { margin: 6px 0 0; }
+.rail-item .canvas-secondary-button { min-height: 28px; padding: 0 9px; font-size: var(--canvas-meta); }
+.canvas-rail-layer .shell-page { min-width: 0; padding: 0; }
+
+.rail-tile { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border-radius: 8px; color: var(--rail-tone); background: color-mix(in srgb, var(--rail-tone) 12%, var(--canvas-surface)); }
+.rail-tile.is-review { --rail-tone: var(--canvas-review); }
+.rail-tile.is-pending { --rail-tone: var(--canvas-pending); }
+.rail-history-entry { flex: 1; min-width: 0; border: 0; padding: 0; background: none; color: var(--canvas-ink); text-align: left; }
+.rail-item:has(.rail-history-entry) { align-items: center; }
+.rail-item:has(.rail-history-entry):hover { background: var(--canvas-hover); }
+.rail-section h3 { text-transform: uppercase; letter-spacing: .04em; }
+
+.rail-item > time { margin-right: 8px; }

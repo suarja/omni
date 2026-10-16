@@ -1,0 +1,578 @@
+{
+  "builtAt": "2026-10-16T15:27:02.485Z",
+  "hash": "8367db13a65913778c321071ea0fb01b5f82df48ee2c436f5c3bcc712af81ece",
+  "lessons": [
+    {
+      "lang": "en",
+      "kind": "course",
+      "slug": "keeping-projects-in-sync",
+      "title": "Keeping projects in sync",
+      "summary": "Assign shared context to projects, spot drift, capture improvements, and let Git keep the history.",
+      "products": ["claude-code", "codex"],
+      "illustration": "project",
+      "topic": "projects",
+      "cta": {
+        "route": "projects",
+        "label": "Open Workspace"
+      },
+      "body": "## Start with an observed project\n\nA project is a registered local root, not just a name in a list. Its observation gives Omni the evidence needed for a safe assignment.\n\nOpen the project node in `Workspace`, then choose `Manage skills` before choosing a write action.\n\n- Read the project path and harness evidence.\n- Use `Skills` for observed skills and their origins.\n- Use `Info` for project evidence and `Review` in the rail for checks.\n\n## Assign from the marketplace\n\nChoose `＋ Add skills` in the project sheet. The picker keeps the destination project visible while you select skills from your marketplace.\n\nThis picker selects individual skills. It does not install a whole plugin with commands or hooks.\n\n- Select the plugin’s available skills when they belong together.\n- Choose a single skill when the scope must stay narrow.\n- Keep the `Claude Code` and `Codex` harness rows explicit.\n\n## Notice drift early\n\nThe project and its marketplace source can evolve independently. Choose `Refresh` when local files or manifests changed.\n\nThe skill list distinguishes origins and update states from the operation that could resolve them.\n\n- Read the finding kind and severity.\n- Open the affected root rather than guessing from a count.\n- Keep later local edits outside a restore boundary.\n\n## Capture and let Git tell the story\n\nOn `Skills`, open an active project-only skill and choose `Add to my marketplace`. Select its destination under `Place in` and read `What changes`.\n\nThe receipt answers what Omni wrote. Git answers how the change entered history; neither replaces the other.\n\n- Inspect the capture summary before its final `Add`.\n- The picker’s `Add (count)` applies selected skills directly; there is no later Review approval.\n- Use `Undo` in `Activity` when the receipt and drift check support it.\n\n## Before you act\n\nStart with the observed page, not an assumption about the filesystem. The current route and its head tell you which target Omni has in scope.\n\n- Read the page title and the active tab.\n- Prefer the named action over a shortcut.\n- Keep the local path available for comparison.\n\n## Check the boundary\n\nEvery preview is read-only until its approval control is chosen. A blocked or unavailable state is evidence that needs a different decision.\n\n- Treat a missing root as unavailable, not empty.\n- Treat a conflict as a stop condition.\n- Keep the harness name beside the path.\n\n## Keep the trail\n\nAfter a write, Activity holds the operation history. The receipt and Git commit complement each other and make a later restore deliberate.\n\n- Read the files in the receipt.\n- Compare later edits before restoring.\n- Return to the source of truth for the next change.\n\n## A weekly check\n\nRe-open the source and project when your harness conventions change. This small review keeps the next operation tied to current local evidence.\n\n- Refresh the observed root.\n- Read the changed paths.\n- Choose one deliberate next action.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "course",
+      "slug": "omni-for-your-agents",
+      "title": "Omni for your agents",
+      "summary": "Give Claude Code and Codex a consented local MCP door into your workspace.",
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "mcp",
+      "cta": {
+        "route": "agents-setup",
+        "label": "Open Settings"
+      },
+      "body": "## Open the local MCP door\n\nOmni exposes a local MCP server for identified harness sessions. It can answer from registered projects, marketplaces, and Activity evidence.\n\nOpen `Settings` in the canvas rail and find `Agents`.\n\n- The setup is local-only.\n- The page names the detected harnesses.\n- The agent row’s `Check connection` reports its last real Omni call.\n\n## Choose a harness deliberately\n\nChoose `Connect` beside a detected, disconnected agent. Connect each agent separately.\n\nThe selection controls the scope of the generated plan; it is not a global switch.\n\n- Read which agent the confirmation names.\n- Treat each harness as a separate projection.\n- Read the connection summary before its final `Connect`.\n\n## Consent before any write\n\nThe connection confirmation describes the tool, skills, and file protection. It does not list file-level diffs. An agent request can be consented in conversation or reviewed in Omni.\n\nThe final `Connect` prepares and applies the installation.\n\n- Read the summary before `Connect`.\n- Reject or postpone a plan that is not understood.\n- The applied result becomes a receipt.\n\n## Read and restore the receipt\n\nActivity records completed operations and their results. A later restore compares current content with the original receipt.\n\nThis keeps local agent work auditable without making the MCP door a cloud dependency.\n\n- Open `Review` for pending requests and `Activity` for completed work.\n- Use an eligible `Undo` in Activity and read its reverse preview.\n- Use `Check connection` in the agent menu to read last-call evidence.\n\n## Before you act\n\nStart with the observed page, not an assumption about the filesystem. The current route and its head tell you which target Omni has in scope.\n\n- Read the page title and the active tab.\n- Prefer the named action over a shortcut.\n- Keep the local path available for comparison.\n\n## Check the boundary\n\nEvery preview is read-only until its approval control is chosen. A blocked or unavailable state is evidence that needs a different decision.\n\n- Treat a missing root as unavailable, not empty.\n- Treat a conflict as a stop condition.\n- Keep the harness name beside the path.\n\n## Keep the trail\n\nAfter a write, Activity holds the operation history. The receipt and Git commit complement each other and make a later restore deliberate.\n\n- Read the files in the receipt.\n- Compare later edits before restoring.\n- Return to the source of truth for the next change.\n\n## A weekly check\n\nRe-open the source and project when your harness conventions change. This small review keeps the next operation tied to current local evidence.\n\n- Refresh the observed root.\n- Read the changed paths.\n- Choose one deliberate next action.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "course",
+      "slug": "skills-plugins-marketplaces",
+      "title": "Skills, plugins and marketplaces",
+      "summary": "Understand the shared language behind agent tooling and keep one source of truth.",
+      "products": ["claude-code", "codex"],
+      "illustration": "marketplace",
+      "topic": "marketplaces",
+      "cta": {
+        "route": "library",
+        "label": "Open Workspace"
+      },
+      "body": "## Begin with a skill\n\nA skill is a focused instruction set, often a `SKILL.md` plus references or scripts. It describes a repeatable way of working.\n\nOmni observes its path and content instead of treating the text as an opaque count.\n\n- Read the skill in `Content`.\n- Keep references beside the skill when they are part of its behavior.\n- Capture only after checking provenance.\n\n## Group skills in a plugin\n\nA plugin groups related skills, commands, hooks, or MCP configuration. In the marketplace canvas, its skills are grouped together.\n\nChoose `Plugins and storefronts` to inspect plugin descriptions and publication actions.\n\n- Use `Manage skills`, then `＋ Add skills` in a project.\n- Read each skill node.\n- Keep package provenance visible.\n\n## Publish a marketplace\n\nA marketplace is a local source of packages. Register it from `Workspace` with `＋ Add`, then `Marketplace`, and choose the appropriate source type.\n\nOmni observes its real files and displays availability before a project can receive an assignment.\n\n- For a first personal source, choose `Another marketplace of mine`.\n- Use `External source` for someone else’s repository.\n- Refresh when files change outside Omni.\n\n## Keep one source of truth\n\nThe marketplace is canonical; projects receive assignments from it. Claude Code and Codex can share compatible content through native projections.\n\nActivity and Git show different layers of the same local change.\n\n- Read the observed skill origins and agent chips.\n- Read the selection or confirmation before its write action.\n- Read the receipt after approval.\n\n## Before you act\n\nStart with the observed page, not an assumption about the filesystem. The current route and its head tell you which target Omni has in scope.\n\n- Read the page title and the active tab.\n- Prefer the named action over a shortcut.\n- Keep the local path available for comparison.\n\n## Check the boundary\n\nEvery preview is read-only until its approval control is chosen. A blocked or unavailable state is evidence that needs a different decision.\n\n- Treat a missing root as unavailable, not empty.\n- Treat a conflict as a stop condition.\n- Keep the harness name beside the path.\n\n## Keep the trail\n\nAfter a write, Activity holds the operation history. The receipt and Git commit complement each other and make a later restore deliberate.\n\n- Read the files in the receipt.\n- Compare later edits before restoring.\n- Return to the source of truth for the next change.\n\n## A weekly check\n\nRe-open the source and project when your harness conventions change. This small review keeps the next operation tied to current local evidence.\n\n- Refresh the observed root.\n- Read the changed paths.\n- Choose one deliberate next action.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "agents-at-work",
+      "title": "Agents at work",
+      "summary": "Follow completed operations and optional live agent activity from the canvas rail.",
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "agents-at-work",
+      "cta": {
+        "route": "review",
+        "label": "Review"
+      },
+      "body": "The Activity sheet holds completed operations. Its optional Agent activity section shows live sessions, processes and worktrees.\n\nOmni uses real local process and transcript evidence, not sample counts. Pending requests appear in Review; completed operations appear in Activity with their results.\n\n## In Omni\n\nActivity and Review\n\n`Activity` holds operation history and, when enabled, the `Agent activity` section for live sessions and worktrees. `Review` holds pending requests and checks. Completed operations open their own result sheets.\n\n[Install Omni for your agents](academy://tutorial/install-omni-for-your-agents) explains how a local harness becomes visible.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "claude-code",
+      "title": "Claude Code",
+      "summary": "Anthropic’s coding harness, supported by Omni through its native plugin and MCP conventions.",
+      "products": ["claude-code", "codex"],
+      "illustration": "claude-code",
+      "topic": "claude-code",
+      "cta": {
+        "route": "library",
+        "label": "Open Workspace"
+      },
+      "body": "Claude Code reads skills and plugins from its expected directories and can call local MCP servers. Omni prepares those conventions after you confirm the connection summary.\n\nWhen a marketplace is installed by hand, Omni observes the Claude Code layout instead of copying it into a private cache.\n\n[Install a marketplace by hand](academy://tutorial/install-a-marketplace-by-hand) explains what to check around a native installation.\n\n## In Omni\n\nSettings and project observations\n\nUse `Settings`, then `Agents` to connect Claude Code. Project skill chips show observed copies. The `Plugins and storefronts` menu does not provide a native manual-install guide or a compatibility verdict.\n\n[Install a marketplace by hand](academy://tutorial/install-a-marketplace-by-hand) explains the boundary with native installation.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "codex",
+      "title": "Codex",
+      "summary": "OpenAI’s coding harness, supported by Omni through its native skills and MCP conventions.",
+      "products": ["claude-code", "codex"],
+      "illustration": "codex",
+      "topic": "codex",
+      "cta": {
+        "route": "library",
+        "label": "Open Workspace"
+      },
+      "body": "Codex reads skills from its native skills layout and can call a local MCP server. Omni keeps that projection explicit so Codex and Claude Code can share the same source without sharing incompatible files.\n\n[Install a marketplace by hand](academy://tutorial/install-a-marketplace-by-hand) explains what to check around a native installation.\n\n## In Omni\n\nSettings and project observations\n\nUse `Settings`, then `Agents` to connect Codex. In a project’s `Skills` tab, the Codex chip indicates an observed installation. It does not prove that a native plugin loader enabled a whole plugin.\n\n[Install a marketplace by hand](academy://tutorial/install-a-marketplace-by-hand) explains the manual path.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "git",
+      "title": "Git",
+      "summary": "The history layer that records how a reviewed local change entered a project.",
+      "products": ["claude-code", "codex"],
+      "illustration": "git",
+      "topic": "git",
+      "cta": {
+        "route": "library",
+        "label": "Open Workspace"
+      },
+      "body": "Git tracks commits and working-tree state. Omni tracks the operation receipt, the exact files, and the before-and-after evidence.\n\nThe operation history explains what Omni wrote, while Git explains the project history.\n\n[Undo anything Omni wrote](academy://tutorial/undo-anything-omni-wrote) covers the restore boundary.\n\n## In Omni\n\nProject evidence and operation history\n\nA project’s `Info` tab shows Git evidence. `Activity` holds completed operations; open a result to read the Git outcome when recorded. `Review` holds pending requests and checks.\n\n[Undo anything Omni wrote](academy://tutorial/undo-anything-omni-wrote) follows the receipt to restore.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "marketplaces",
+      "title": "Marketplaces",
+      "summary": "Local sources that hold the plugins and skills you choose to share across projects.",
+      "products": ["claude-code", "codex"],
+      "illustration": "marketplace",
+      "topic": "marketplaces",
+      "cta": {
+        "route": "library-add",
+        "label": "Open Add Marketplace"
+      },
+      "body": "A marketplace is a directory of packages with a known layout. Your personal marketplace is the central source from which projects receive assignments.\n\nOmni reads the root, records availability, and keeps ownership and provenance visible.\n\n[Connect your marketplace](academy://tutorial/connect-your-marketplace) starts the safe connection.\n\n## In Omni\n\nWorkspace and Add Marketplace\n\nIn `Workspace`, choose `＋ Add`, then `Marketplace`. The sheet distinguishes `External source` from a first personal marketplace. Open a registered marketplace node for its observed resources; read the personal path in `Settings`.\n\n[Connect your marketplace](academy://tutorial/connect-your-marketplace) follows the Add panel.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "mcp",
+      "title": "MCP",
+      "summary": "The local protocol door through which an identified agent can ask Omni for context or consent.",
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "mcp",
+      "cta": {
+        "route": "agents-setup",
+        "label": "Open Settings"
+      },
+      "body": "MCP lets a client discover and call tools through a standard server boundary. In Omni, the server is local and the gateway identifies the calling harness when possible.\n\nReads can answer from observed state. Writes become explicit requests with consent and receipts.\n\n[Install Omni for your agents](academy://tutorial/install-omni-for-your-agents) shows the setup.\n\n## In Omni\n\nSettings and connection evidence\n\nIn `Settings`, choose `Connect` for a detected, disconnected agent, then read the summary confirmation. After a real Omni call, use the agent’s `More actions`, then `Check connection`. `Review` holds pending requests; `Activity` holds completed operations.\n\n[Install Omni for your agents](academy://tutorial/install-omni-for-your-agents) mirrors those pages.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "plugins",
+      "title": "Plugins",
+      "summary": "Packages that group skills and other agent capabilities into one installable unit.",
+      "products": ["claude-code", "codex"],
+      "illustration": "plugin",
+      "topic": "plugins",
+      "cta": {
+        "route": "library",
+        "label": "Open Workspace"
+      },
+      "body": "A plugin groups related skills, commands, hooks, or manifests. It gives a team a meaningful boundary for inspection and assignment.\n\nOmni groups a plugin’s observed skills in its marketplace canvas.\n\n[Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project) walks through the skill selection.\n\n## In Omni\n\nMarketplace groups and project skills\n\nThe marketplace canvas groups skills by plugin. `Plugins and storefronts` opens plugin descriptions and actions. In a project, `Manage skills` then `＋ Add skills` selects individual skills, not a whole plugin with commands or hooks.\n\n[Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project) follows those actions.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "projects",
+      "title": "Projects",
+      "summary": "Registered codebases that receive deliberate assignments from your marketplace.",
+      "products": ["claude-code", "codex"],
+      "illustration": "project",
+      "topic": "projects",
+      "cta": {
+        "route": "projects",
+        "label": "Open Workspace"
+      },
+      "body": "A project is a registered local root, not just a name in a list. Its observed inventory gives Omni evidence for assignments, drift, and capture.\n\nThe skill picker names the destination project and lets you choose the agents before adding skills.\n\n[Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project) shows the safe path.\n\n## In Omni\n\nWorkspace and project skills\n\nOpen a project node in `Workspace`, then `Manage skills`. Its tabs are `Skills`, `Instructions`, and `Info`. Use `＋ Add skills` for marketplace skills and `Refresh` to reread local evidence.\n\n[Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project) follows the skill picker.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "topic",
+      "slug": "skills",
+      "title": "Skills",
+      "summary": "Small instruction sets that make agent work repeatable and inspectable.",
+      "products": ["claude-code", "codex"],
+      "illustration": "skill",
+      "topic": "skills",
+      "cta": {
+        "route": "projects",
+        "label": "Open Workspace"
+      },
+      "body": "A skill is a focused instruction set, often a `SKILL.md` plus references or scripts. It describes a way of working rather than a one-off answer.\n\nOmni observes skills from marketplaces and projects, preserves their paths and package provenance, and treats changes as reviewable operations.\n\n[Capture a skill from a project](academy://tutorial/capture-a-skill-from-a-project) follows the source.\n\n## In Omni\n\nProject skills and their content\n\nIn a project, choose `Manage skills`, then open a skill name on `Skills`. The skill sheet shows `Content`, its origin, and `Add to my marketplace` for an active project-only skill.\n\n[Capture a skill from a project](academy://tutorial/capture-a-skill-from-a-project) follows that action.\n"
+    },
+    {
+      "lang": "en",
+      "kind": "tutorial",
+      "slug": "add-a-plugin-to-a-project",
+      "title": "Add a plugin to a project",
+      "summary": "Select a plugin’s skills in a project and choose which agents receive them.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "plugin",
+      "topic": "projects",
+      "cta": {
+        "route": "projects",
+        "label": "Open Workspace"
+      },
+      "steps": ["1. Open the project", "2. Choose the skills", "3. Check agents and add"],
+      "body": "## 1. Open the project\n\nFrom `Workspace`, open the destination project node, then choose `Manage skills`. Read the project name and folder in the sheet.\n\nThe tabs are `Skills`, `Instructions`, and `Info`. This flow adds skills from your personal marketplace; it does not install a whole plugin with commands or hooks.\n\nWhat you will see: the project sheet on `Skills`, with `＋ Add skills` in its footer.\n\n[screenshot:add-plugin-project]\n\n## 2. Choose the skills\n\nChoose `＋ Add skills`. The `Add skills` sheet lists marketplace skills that are not yet in this project. Each row names its source package.\n\nSelect the skills belonging to the plugin you want. There is no whole-plugin picker in this flow. Already assigned skills are omitted.\n\nWhat you will see: the available skills, their package identifiers, and the `Agents` choices.\n\n[screenshot:add-plugin-picker]\n\n## 3. Check agents and add\n\nCheck the project name, selected skills, and the `Claude Code` and `Codex` checkboxes under `Agents`. Both agents start selected.\n\n`Add (2)`, for example, applies the two selected skills directly after preparing their operations. There is no saved assignment to approve later in Review. Choose it only when the selection is correct.\n\nAfterward, inspect the result and open `Activity` for receipts. A failure can leave a partial result; read it before retrying.\n\nWhat you will see: two selected skills, the agent choices, and `Add (2)` before it is clicked.\n\n[screenshot:add-plugin-assignment]\n\nNext, read [marketplaces](academy://topic/marketplaces), then [Capture a skill from a project](academy://tutorial/capture-a-skill-from-a-project).\n"
+    },
+    {
+      "lang": "en",
+      "kind": "tutorial",
+      "slug": "capture-a-skill-from-a-project",
+      "title": "Capture a skill from a project",
+      "summary": "Copy a project-only skill into a plugin in your personal marketplace.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "skill",
+      "topic": "skills",
+      "cta": {
+        "route": "projects",
+        "label": "Open Workspace"
+      },
+      "steps": ["1. Open the project’s skills", "2. Read the skill", "3. Choose a plugin and add"],
+      "body": "## 1. Open the project’s skills\n\nFrom `Workspace`, open the project, then `Manage skills`. Stay on `Skills` and find an active skill marked `Only in this project`.\n\nYou need a registered personal marketplace and a readable installed copy. An external skill uses the separate `Copy into my marketplace` action.\n\nWhat you will see: the project’s skills, including a skill that exists only in this project.\n\n[screenshot:capture-skill-project]\n\n## 2. Read the skill\n\nChoose the skill name to open its sheet. Read `What this skill does`, `Comes from`, `Installed in`, and `Content`.\n\nFor an active project-only skill, choose `Add to my marketplace`. This opens the capture sheet without writing the skill.\n\nWhat you will see: the skill sheet with its content and `Add to my marketplace`.\n\n[screenshot:capture-skill-detail]\n\n## 3. Choose a plugin and add\n\nUnder `Place in`, select an existing plugin, or `＋ New plugin` and fill in its name and English description. An existing skill with the same name blocks the capture.\n\nRead `What changes`: the destination receives the new skill; the project copy becomes linked to your marketplace without changing its files. The Git line reflects the current commit setting.\n\nThe final `Add` writes the capture when its prepared plan is ready. After approval, open `Activity` for its receipt.\n\nWhat you will see: the destination plugin choices, `What changes`, and the final `Add` button.\n\n[screenshot:capture-skill-preview]\n\nNext, read [marketplaces](academy://topic/marketplaces), then [Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project).\n"
+    },
+    {
+      "lang": "en",
+      "kind": "tutorial",
+      "slug": "connect-your-marketplace",
+      "title": "Connect your marketplace",
+      "summary": "Register an existing local marketplace from the Workspace Add panel.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "marketplace",
+      "topic": "marketplaces",
+      "cta": {
+        "route": "library-add",
+        "label": "Open Add Marketplace"
+      },
+      "steps": ["1. Open Add Marketplace", "2. Choose the source type", "3. Read the registered marketplace"],
+      "body": "## 1. Open Add Marketplace\n\nFrom `Workspace`, choose `＋ Add`, then `Marketplace`. The sheet opens on `External source` for repositories published by others.\n\nConnecting a local folder registers it in Omni. It does not install its skills into a project.\n\nWhat you will see: the Add menu with `Project`, `Marketplace`, and `New skill`.\n\n[screenshot:connect-marketplace-library]\n\n## 2. Choose the source type\n\nFor someone else's local repository, keep `External source` and choose `Choose a folder…`. For your first personal marketplace, choose `Another marketplace of mine`, then `Choose a folder…` under `Git repository`.\n\nSelect the existing repository in the system picker. Confirming that picker starts registration immediately; there is no separate `Connect marketplace` page.\n\nIf a personal marketplace already exists, the personal tab is `Public storefront`. It opens a storefront flow, not a replacement for your current marketplace.\n\nWhat you will see: the `Marketplace` sheet with source choices, `GitHub repository`, and `Choose a folder…`.\n\n[screenshot:connect-marketplace-choose]\n\n## 3. Read the registered marketplace\n\nWait for the registration result. If reading fails, use `Retry read`; if it completes, choose `Done` to return to `Workspace`.\n\nOpen the registered marketplace node to inspect its observed resources. Your personal marketplace opens a canvas grouped by plugin. `Refresh` reads changes made outside Omni.\n\nWhat you will see: the registered personal marketplace canvas, with plugin groups and skill nodes.\n\n[screenshot:connect-marketplace-confirm]\n\nNext, read [marketplaces](academy://topic/marketplaces), then [Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project).\n"
+    },
+    {
+      "lang": "en",
+      "kind": "tutorial",
+      "slug": "install-a-marketplace-by-hand",
+      "title": "Install a marketplace by hand",
+      "summary": "Locate your local marketplace and check a native installation back in Omni.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "terminal",
+      "topic": "claude-code",
+      "cta": {
+        "route": "library",
+        "label": "Open Workspace"
+      },
+      "steps": [
+        "1. Locate the marketplace",
+        "2. Use the agent’s native instructions",
+        "3. Observe the project afterward"
+      ],
+      "body": "## 1. Locate the marketplace\n\nFrom `Workspace`, open `My marketplace ·` followed by your marketplace name. Its canvas groups observed skills by plugin.\n\nFor the registered local path, open `Settings` and read the `Marketplace` section. Connecting this source to Omni does not install a native agent plugin.\n\nWhat you will see: the personal marketplace canvas with its plugin groups.\n\n[screenshot:install-marketplace-library]\n\n## 2. Use the agent’s native instructions\n\nChoose `Plugins and storefronts` to inspect the plugin list. A plugin’s `More actions for` menu concerns publishing and skill creation; there is no manual-install guide or compatibility conversion action here.\n\nA whole-marketplace native installation happens outside Omni, using the selected agent’s own installation instructions and the repository’s native manifests. This sheet supplies neither installation commands nor a compatibility verdict. Do not copy a manifest to a guessed path.\n\nFor a path entirely inside Omni, use [Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project) to select its skills instead.\n\nWhat you will see: a plugin’s actions menu in the marketplace sheet.\n\n[screenshot:install-marketplace-menu]\n\n## 3. Observe the project afterward\n\nAfter a manual installation, return to `Workspace`, open the affected registered project, and choose `Refresh`, then `Manage skills`.\n\nRead its `Skills` and `Instructions` tabs. Agent chips show observed copies, not proof that a native plugin loader enabled the plugin. Verify native plugin loading in the agent itself.\n\nWhat you will see: the project’s observed skills and their `Claude Code` and `Codex` chips.\n\n[screenshot:install-marketplace-harnesses]\n\nNext, read [marketplaces](academy://topic/marketplaces), then [Add a plugin to a project](academy://tutorial/add-a-plugin-to-a-project).\n"
+    },
+    {
+      "lang": "en",
+      "kind": "tutorial",
+      "slug": "install-omni-for-your-agents",
+      "title": "Install Omni for your agents",
+      "summary": "Connect each detected agent from Settings and verify a real Omni call.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "mcp",
+      "cta": {
+        "route": "agents-setup",
+        "label": "Open Settings"
+      },
+      "steps": ["1. Open Settings", "2. Choose an agent", "3. Confirm and verify a session"],
+      "body": "## 1. Open Settings\n\nChoose `Settings` in the canvas rail. The `Agents` section shows each supported agent and its observed connection state.\n\n`Not found on this Mac` means there is no Connect action for that agent. Configure the agent locally, then reopen Settings.\n\nWhat you will see: Settings with the `Agents` section and per-agent status.\n\n[screenshot:install-agents-home]\n\n## 2. Choose an agent\n\nFor a detected agent marked `Not connected`, choose `Connect` on its row. Each agent is connected separately.\n\nRead `Connect Codex?` or `Connect Claude Code?`. The confirmation describes the omni tool, Omni’s skills, and protection for files it manages.\n\nWhat you will see: the connection confirmation for a detected agent that is not yet connected.\n\n[screenshot:install-agents-select]\n\n## 3. Confirm and verify a session\n\nRead the confirmation before its final `Connect`. That click prepares and applies the installation. This sheet shows a summary rather than file-by-file diffs.\n\nAfter connecting, open a new agent session and make an Omni call. Return to the agent row’s `More actions`, then `Check connection`, to read the last-call evidence. A connected status alone does not prove a call succeeded.\n\nRepeat for another agent when needed. Do not use `Reinstall` just to inspect a connection; it writes files.\n\nWhat you will see: the connection summary and final `Connect` button before installation.\n\n[screenshot:install-agents-review]\n\nNext, read [marketplaces](academy://topic/marketplaces), then [Undo anything Omni wrote](academy://tutorial/undo-anything-omni-wrote).\n"
+    },
+    {
+      "lang": "en",
+      "kind": "tutorial",
+      "slug": "undo-anything-omni-wrote",
+      "title": "Undo anything Omni wrote",
+      "summary": "Read an operation in Activity and check its restore preview before approval.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "lesson",
+      "topic": "agents-at-work",
+      "cta": {
+        "route": "library",
+        "label": "Open Workspace"
+      },
+      "steps": ["1. Open Activity", "2. Read the operation result", "3. Check the reverse operation"],
+      "body": "## 1. Open Activity\n\nChoose `Activity` in the canvas rail. This is the operation history: it lists what Omni wrote, who requested it, and when.\n\nFind the operation for the intended target. `Undo` appears only for eligible receipts. Some operations cannot be reversed here; the title of this tutorial does not promise otherwise.\n\nWhat you will see: the Activity history with completed operations and eligible `Undo` buttons.\n\n[screenshot:undo-review]\n\n## 2. Read the operation result\n\nOpen the operation row to inspect its result. Check its target, changed files, and Git outcome when recorded. Skill operations can open a different result sheet from marketplace captures.\n\nFor a captured project skill, the receipt offers `Restore`. Read the receipt before choosing that action.\n\nWhat you will see: a skill-capture receipt with the original result and `Restore`.\n\n[screenshot:undo-receipt]\n\n## 3. Check the reverse operation\n\nChoose `Restore` from that receipt. It opens a reverse-operation preview; the final `Restore` applies it. Read the preview and any blocked state before confirming.\n\nOmni checks current content against the original receipt and protects later edits. If the reverse operation is blocked, keep those edits and resolve the cause before retrying.\n\nYou can also open an eligible operation’s reverse flow directly with `Undo` in Activity. Read its result after approval, including any partial failure.\n\nWhat you will see: the restore workbench before the final `Restore`, with the proposed reverse effects.\n\n[screenshot:undo-restore]\n\nNext, read [marketplaces](academy://topic/marketplaces), then [Capture a skill from a project](academy://tutorial/capture-a-skill-from-a-project).\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "course",
+      "slug": "keeping-projects-in-sync",
+      "title": "Garder les projets synchronisés",
+      "summary": "Assigner le bon contexte, repérer les dérives, capturer les améliorations et laisser Git garder l’historique.",
+      "products": ["claude-code", "codex"],
+      "illustration": "project",
+      "topic": "projects",
+      "cta": {
+        "route": "projects",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "## Commencer par un projet observé\n\nUn projet est une racine locale enregistrée, pas seulement un nom dans une liste. Son observation donne à Omni les preuves nécessaires à une assignation sûre.\n\nOuvrez le nœud du projet dans `Espace de travail`, puis choisissez `Gérer les skills` avant toute écriture.\n\n- Lisez le chemin du projet et les harnesses.\n- Utilisez `Skills` pour les skills observés et leurs origines.\n- Utilisez `Infos` pour les preuves du projet et `À valider` dans le rail pour les vérifications.\n\n## Assigner depuis la marketplace\n\nChoisissez `＋ Ajouter des skills` dans la fiche du projet. Le sélecteur garde le projet cible visible pendant le choix des skills de votre marketplace.\n\nCe sélecteur choisit des skills individuels. Il n’installe pas de plugin entier avec ses commandes ou hooks.\n\n- Cochez les skills disponibles du plugin lorsque leur usage va ensemble.\n- Choisissez un skill seul quand le périmètre doit rester précis.\n- Gardez les lignes de harness `Claude Code` et `Codex` explicites.\n\n## Repérer tôt les dérives\n\nLe projet et sa source de marketplace peuvent évoluer séparément. Choisissez `Actualiser` quand des fichiers ou manifestes locaux ont changé.\n\nLa liste des skills distingue les origines et les états de mise à jour des opérations qui pourraient les résoudre.\n\n- Lisez le type et la sévérité du constat.\n- Ouvrez la racine concernée plutôt que d’interpréter un compteur.\n- Gardez les modifications récentes hors de la restauration.\n\n## Capturer et laisser Git raconter\n\nDans `Skills`, ouvrez un skill actif propre au projet puis `Ajouter à ma marketplace`. Choisissez sa destination sous `Ranger dans` et lisez `Ce qui change`.\n\nLe reçu décrit ce qu’Omni a écrit. Git décrit l’entrée dans l’historique ; aucun ne remplace l’autre.\n\n- Inspectez le résumé de capture avant le bouton final `Ajouter`.\n- Le bouton `Ajouter (nombre)` applique directement les skills choisis ; aucune approbation ultérieure n’est prévue dans À valider.\n- Utilisez `Annuler` dans `Historique` quand le reçu et le contrôle de dérive le permettent.\n\n## Avant d’agir\n\nCommencez par la page observée, pas par une hypothèse sur le système de fichiers. La route et son en-tête disent quelle cible est dans le périmètre d’Omni.\n\n- Lisez le titre et l’onglet actif.\n- Préférez l’action nommée au raccourci.\n- Gardez le chemin local pour la comparaison.\n\n## Vérifier la frontière\n\nToute prévisualisation reste en lecture seule jusqu’à l’action d’approbation. Un blocage ou une indisponibilité est une preuve qui demande une autre décision.\n\n- Traitez une racine introuvable comme indisponible.\n- Traitez un conflit comme un arrêt.\n- Gardez le nom du harness près du chemin.\n\n## Garder la trace\n\nAprès une écriture, Historique conserve la trace des opérations. Le reçu et le commit Git se complètent pour rendre une restauration délibérée.\n\n- Lisez les fichiers du reçu.\n- Comparez les modifications récentes avant de restaurer.\n- Revenez à la source de vérité pour le changement suivant.\n\n## Une vérification régulière\n\nRouvrez la source et le projet quand les conventions de votre harness changent. Cette courte revue relie l’opération suivante aux preuves locales actuelles.\n\n- Actualisez la racine observée.\n- Lisez les chemins modifiés.\n- Choisissez une seule action délibérée.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "course",
+      "slug": "omni-for-your-agents",
+      "title": "Omni pour vos agents",
+      "summary": "Donner à Claude Code et Codex une porte MCP locale et consentie vers votre espace de travail.",
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "mcp",
+      "cta": {
+        "route": "agents-setup",
+        "label": "Ouvrir les réglages"
+      },
+      "body": "## Ouvrir la porte MCP locale\n\nOmni expose un serveur MCP local pour les sessions de harness identifiées. Il répond à partir des projets, marketplaces et preuves d’activité enregistrés.\n\nOuvrez `Réglages` dans le rail du canvas et repérez `Agents`.\n\n- La configuration reste locale.\n- La page nomme les harnesses détectés.\n- `Vérifier la connexion` sur la ligne de l’agent indique son dernier appel réel à Omni.\n\n## Choisir un harness explicitement\n\nChoisissez `Connecter` sur la ligne d’un agent détecté mais pas connecté. Chaque agent se connecte séparément.\n\nLa sélection contrôle le périmètre du plan généré ; ce n’est pas un interrupteur global.\n\n- Vérifiez le nom de l’agent dans la confirmation.\n- Traitez chaque harness comme une projection distincte.\n- Lisez le résumé de connexion avant son bouton final `Connecter`.\n\n## Consentir avant toute écriture\n\nLa confirmation décrit l’outil, les skills et la protection des fichiers. Elle ne liste pas de diffs fichier par fichier. Une demande d’agent peut recevoir son consentement dans la conversation ou dans Omni.\n\nLe bouton final `Connecter` prépare et applique l’installation.\n\n- Lisez le résumé avant `Connecter`.\n- Refusez ou reportez un plan incompris.\n- Le résultat appliqué devient un reçu.\n\n## Lire et restaurer le reçu\n\nHistorique enregistre les opérations terminées et leurs résultats. Une restauration compare ensuite le contenu actuel au reçu d’origine.\n\nLa porte MCP reste ainsi vérifiable sans devenir une dépendance cloud.\n\n- Ouvrez `À valider` pour les demandes en attente et `Historique` pour les opérations terminées.\n- Utilisez un bouton `Annuler` éligible dans Historique et lisez sa prévisualisation inverse.\n- Utilisez `Vérifier la connexion` dans le menu de l’agent pour lire la preuve du dernier appel.\n\n## Avant d’agir\n\nCommencez par la page observée, pas par une hypothèse sur le système de fichiers. La route et son en-tête disent quelle cible est dans le périmètre d’Omni.\n\n- Lisez le titre et l’onglet actif.\n- Préférez l’action nommée au raccourci.\n- Gardez le chemin local pour la comparaison.\n\n## Vérifier la frontière\n\nToute prévisualisation reste en lecture seule jusqu’à l’action d’approbation. Un blocage ou une indisponibilité est une preuve qui demande une autre décision.\n\n- Traitez une racine introuvable comme indisponible.\n- Traitez un conflit comme un arrêt.\n- Gardez le nom du harness près du chemin.\n\n## Garder la trace\n\nAprès une écriture, Historique conserve la trace des opérations. Le reçu et le commit Git se complètent pour rendre une restauration délibérée.\n\n- Lisez les fichiers du reçu.\n- Comparez les modifications récentes avant de restaurer.\n- Revenez à la source de vérité pour le changement suivant.\n\n## Une vérification régulière\n\nRouvrez la source et le projet quand les conventions de votre harness changent. Cette courte revue relie l’opération suivante aux preuves locales actuelles.\n\n- Actualisez la racine observée.\n- Lisez les chemins modifiés.\n- Choisissez une seule action délibérée.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "course",
+      "slug": "skills-plugins-marketplaces",
+      "title": "Skills, plugins et marketplaces",
+      "summary": "Comprendre le vocabulaire des outils d’agents et garder une seule source de vérité.",
+      "products": ["claude-code", "codex"],
+      "illustration": "marketplace",
+      "topic": "marketplaces",
+      "cta": {
+        "route": "library",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "## Commencer par un skill\n\nUn skill est un ensemble ciblé d’instructions, souvent un `SKILL.md` accompagné de références ou de scripts. Il décrit une méthode répétable.\n\nOmni conserve son chemin et son contenu au lieu de traiter le texte comme un simple compteur.\n\n- Lisez le skill dans `Contenu`.\n- Gardez les références avec le skill si elles participent à son comportement.\n- Capturez seulement après vérification de la provenance.\n\n## Regrouper les skills dans un plugin\n\nUn plugin réunit des skills, commandes, hooks ou configurations MCP liés. Dans le canvas de la marketplace, ses skills sont regroupés.\n\nChoisissez `Plugins et vitrines` pour lire les descriptions des plugins et leurs actions de publication.\n\n- Utilisez `Gérer les skills`, puis `＋ Ajouter des skills` dans un projet.\n- Lisez chaque nœud de skill.\n- Gardez la provenance du package visible.\n\n## Publier une marketplace\n\nUne marketplace est une source locale de packages. Enregistrez-la depuis `Espace de travail` avec `＋ Ajouter`, puis `Marketplace`, en choisissant le type de source adapté.\n\nOmni observe ses vrais fichiers et affiche la disponibilité avant toute assignation.\n\n- Pour une première source personnelle, choisissez `Une autre marketplace à moi`.\n- Utilisez `Source externe` pour le dépôt de quelqu’un d’autre.\n- Actualisez quand les fichiers changent hors d’Omni.\n\n## Garder une source de vérité\n\nLa marketplace est canonique ; les projets reçoivent des assignations. Claude Code et Codex partagent le contenu compatible via leurs projections natives.\n\nHistorique et Git montrent deux niveaux différents du même changement local.\n\n- Lisez les origines observées des skills et les pastilles d’agents.\n- Lisez la sélection ou la confirmation avant son action d’écriture.\n- Lisez le reçu après approbation.\n\n## Avant d’agir\n\nCommencez par la page observée, pas par une hypothèse sur le système de fichiers. La route et son en-tête disent quelle cible est dans le périmètre d’Omni.\n\n- Lisez le titre et l’onglet actif.\n- Préférez l’action nommée au raccourci.\n- Gardez le chemin local pour la comparaison.\n\n## Vérifier la frontière\n\nToute prévisualisation reste en lecture seule jusqu’à l’action d’approbation. Un blocage ou une indisponibilité est une preuve qui demande une autre décision.\n\n- Traitez une racine introuvable comme indisponible.\n- Traitez un conflit comme un arrêt.\n- Gardez le nom du harness près du chemin.\n\n## Garder la trace\n\nAprès une écriture, Historique conserve la trace des opérations. Le reçu et le commit Git se complètent pour rendre une restauration délibérée.\n\n- Lisez les fichiers du reçu.\n- Comparez les modifications récentes avant de restaurer.\n- Revenez à la source de vérité pour le changement suivant.\n\n## Une vérification régulière\n\nRouvrez la source et le projet quand les conventions de votre harness changent. Cette courte revue relie l’opération suivante aux preuves locales actuelles.\n\n- Actualisez la racine observée.\n- Lisez les chemins modifiés.\n- Choisissez une seule action délibérée.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "agents-at-work",
+      "title": "Agents au travail",
+      "summary": "Suivre les opérations terminées et l’activité optionnelle des agents depuis le rail du canvas.",
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "agents-at-work",
+      "cta": {
+        "route": "review",
+        "label": "Ouvrir À valider"
+      },
+      "body": "La fiche Historique conserve les opérations terminées. Sa section optionnelle Activité des agents montre les sessions, processus et worktrees en cours.\n\nOmni utilise les preuves locales réelles, pas des nombres d’exemple. Les demandes en attente apparaissent dans À valider ; les opérations terminées apparaissent dans Historique avec leurs résultats.\n\n[Installer Omni pour vos agents](academy://tutorial/install-omni-for-your-agents) explique la visibilité d’un harness local.\n\n## Dans Omni\n\nHistorique et À valider\n\n`Historique` conserve les opérations et, si elle est activée, la section `Activité des agents` pour les sessions et worktrees. `À valider` conserve les demandes en attente et les vérifications. Les opérations terminées ouvrent leur propre fiche de résultat.\n\n[Installer Omni pour vos agents](academy://tutorial/install-omni-for-your-agents) explique le lien.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "claude-code",
+      "title": "Claude Code",
+      "summary": "Le harness de code d’Anthropic, pris en charge par les conventions plugin et MCP d’Omni.",
+      "products": ["claude-code", "codex"],
+      "illustration": "claude-code",
+      "topic": "claude-code",
+      "cta": {
+        "route": "library",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "Claude Code lit les skills et plugins dans ses dossiers attendus et peut appeler des serveurs MCP locaux. Omni prépare ces conventions après validation du résumé de connexion.\n\nLors d’une installation manuelle, Omni observe le format Claude Code sans copier la source dans un cache privé.\n\n[Installer une marketplace à la main](academy://tutorial/install-a-marketplace-by-hand) explique les vérifications autour d’une installation native.\n\n## Dans Omni\n\nRéglages et observations du projet\n\nUtilisez `Réglages`, puis `Agents` pour connecter Claude Code. Les pastilles de skills du projet montrent les copies observées. Le menu `Plugins et vitrines` ne propose ni guide d’installation native à la main ni verdict de compatibilité.\n\n[Installer une marketplace à la main](academy://tutorial/install-a-marketplace-by-hand) explique la frontière avec l’installation native.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "codex",
+      "title": "Codex",
+      "summary": "Le harness de code d’OpenAI, pris en charge par les conventions skills et MCP d’Omni.",
+      "products": ["claude-code", "codex"],
+      "illustration": "codex",
+      "topic": "codex",
+      "cta": {
+        "route": "library",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "Codex lit les skills dans son format natif et peut appeler un serveur MCP local. Omni garde cette projection explicite afin de partager une source sans mélanger les fichiers incompatibles.\n\n[Installer une marketplace à la main](academy://tutorial/install-a-marketplace-by-hand) explique les vérifications autour d’une installation native.\n\n## Dans Omni\n\nRéglages et observations du projet\n\nUtilisez `Réglages`, puis `Agents` pour connecter Codex. Dans l’onglet `Skills` d’un projet, sa pastille indique une installation observée. Elle ne prouve pas que le chargeur natif a activé un plugin entier.\n\n[Installer une marketplace à la main](academy://tutorial/install-a-marketplace-by-hand) explique le parcours manuel.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "git",
+      "title": "Git",
+      "summary": "La couche d’historique qui enregistre l’entrée d’un changement vérifié dans un projet.",
+      "products": ["claude-code", "codex"],
+      "illustration": "git",
+      "topic": "git",
+      "cta": {
+        "route": "library",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "Git suit les commits et l’état de travail. Omni suit le reçu de l’opération, les fichiers exacts et les preuves avant-après.\n\nL’historique des opérations explique ce qu’Omni a écrit tandis que Git explique l’historique du projet.\n\n[Annuler ce qu’Omni a écrit](academy://tutorial/undo-anything-omni-wrote) décrit la restauration.\n\n## Dans Omni\n\nPreuves du projet et historique des opérations\n\nL’onglet `Infos` d’un projet montre les preuves Git. `Historique` conserve les opérations terminées ; ouvrez un résultat pour lire les informations Git enregistrées. `À valider` conserve les demandes en attente et les vérifications.\n\n[Annuler ce qu’Omni a écrit](academy://tutorial/undo-anything-omni-wrote) suit le reçu.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "marketplaces",
+      "title": "Marketplaces",
+      "summary": "Des sources locales qui contiennent les plugins et skills partagés entre vos projets.",
+      "products": ["claude-code", "codex"],
+      "illustration": "marketplace",
+      "topic": "marketplaces",
+      "cta": {
+        "route": "library-add",
+        "label": "Ouvrir Ajouter Marketplace"
+      },
+      "body": "Une marketplace est un dossier de packages avec une structure connue. Votre marketplace personnelle est la source centrale des assignations.\n\nOmni lit la racine, enregistre sa disponibilité et garde la provenance visible.\n\n[Connecter votre marketplace](academy://tutorial/connect-your-marketplace) commence la connexion sûre.\n\n## Dans Omni\n\nEspace de travail et Ajouter Marketplace\n\nDans `Espace de travail`, choisissez `＋ Ajouter`, puis `Marketplace`. La fiche distingue `Source externe` d’une première marketplace personnelle. Ouvrez un nœud de marketplace enregistré pour ses ressources observées ; lisez le chemin personnel dans `Réglages`.\n\n[Connecter votre marketplace](academy://tutorial/connect-your-marketplace) suit le panneau Ajouter.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "mcp",
+      "title": "MCP",
+      "summary": "La porte de protocole locale par laquelle un agent identifié demande du contexte ou un consentement.",
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "mcp",
+      "cta": {
+        "route": "agents-setup",
+        "label": "Ouvrir les réglages"
+      },
+      "body": "MCP permet à un client de découvrir et d’appeler des outils via un serveur standard. Dans Omni, le serveur est local et la passerelle identifie le harness quand c’est possible.\n\nLes lectures répondent depuis l’état observé ; les écritures demandent un consentement et produisent un reçu.\n\n[Installer Omni pour vos agents](academy://tutorial/install-omni-for-your-agents) montre la configuration.\n\n## Dans Omni\n\nRéglages et preuves de connexion\n\nDans `Réglages`, choisissez `Connecter` pour un agent détecté mais pas connecté, puis lisez le résumé de confirmation. Après un appel réel à Omni, utilisez `Plus d'actions`, puis `Vérifier la connexion`. `À valider` conserve les demandes en attente ; `Historique` conserve les opérations terminées.\n\n[Installer Omni pour vos agents](academy://tutorial/install-omni-for-your-agents) suit ces pages.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "plugins",
+      "title": "Plugins",
+      "summary": "Des packages qui regroupent des skills et d’autres capacités d’agents.",
+      "products": ["claude-code", "codex"],
+      "illustration": "plugin",
+      "topic": "plugins",
+      "cta": {
+        "route": "library",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "Un plugin regroupe des skills, commandes, hooks ou manifestes liés. Il forme une unité claire pour l’inspection et l’assignation.\n\nOmni regroupe les skills observés d’un plugin dans le canvas de sa marketplace.\n\n[Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project) détaille la sélection des skills.\n\n## Dans Omni\n\nGroupes de la marketplace et skills du projet\n\nLe canvas de la marketplace regroupe les skills par plugin. `Plugins et vitrines` ouvre les descriptions et actions des plugins. Dans un projet, `Gérer les skills` puis `＋ Ajouter des skills` sélectionne des skills individuels, sans installer un plugin entier avec ses commandes ou hooks.\n\n[Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project) suit ces actions.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "projects",
+      "title": "Projets",
+      "summary": "Des codebases enregistrées qui reçoivent des assignations délibérées depuis votre marketplace.",
+      "products": ["claude-code", "codex"],
+      "illustration": "project",
+      "topic": "projects",
+      "cta": {
+        "route": "projects",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "Un projet est une racine locale enregistrée, pas seulement un nom. Son inventaire observé donne à Omni les preuves nécessaires aux assignations, dérives et captures.\n\nLe sélecteur de skills nomme le projet cible et permet de choisir les agents avant l’ajout.\n\n[Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project) montre le parcours sûr.\n\n## Dans Omni\n\nEspace de travail et skills du projet\n\nOuvrez un nœud de projet dans `Espace de travail`, puis `Gérer les skills`. Les onglets sont `Skills`, `Instructions` et `Infos`. Utilisez `＋ Ajouter des skills` pour les skills de la marketplace et `Actualiser` pour relire les preuves locales.\n\n[Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project) suit ce sélecteur.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "topic",
+      "slug": "skills",
+      "title": "Skills",
+      "summary": "Des ensembles d’instructions ciblés pour rendre le travail des agents répétable.",
+      "products": ["claude-code", "codex"],
+      "illustration": "skill",
+      "topic": "skills",
+      "cta": {
+        "route": "projects",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "body": "Un skill est un ensemble ciblé d’instructions, souvent un `SKILL.md` accompagné de références ou de scripts. Il décrit une méthode de travail.\n\nOmni observe les skills des marketplaces et des projets, conserve leurs chemins et leur provenance, et traite les changements comme des opérations vérifiables.\n\n[Capturer un skill depuis un projet](academy://tutorial/capture-a-skill-from-a-project) suit la source.\n\n## Dans Omni\n\nSkills du projet et contenu\n\nDans un projet, choisissez `Gérer les skills`, puis le nom d’un skill dans `Skills`. Sa fiche montre `Contenu`, son origine et `Ajouter à ma marketplace` pour un skill actif propre au projet.\n\n[Capturer un skill depuis un projet](academy://tutorial/capture-a-skill-from-a-project) suit cette action.\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "tutorial",
+      "slug": "add-a-plugin-to-a-project",
+      "title": "Ajouter un plugin à un projet",
+      "summary": "Choisir les skills d’un plugin dans un projet et les agents qui les recevront.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "plugin",
+      "topic": "projects",
+      "cta": {
+        "route": "projects",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "steps": ["1. Ouvrir le projet", "2. Choisir les skills", "3. Vérifier les agents et ajouter"],
+      "body": "## 1. Ouvrir le projet\n\nDepuis `Espace de travail`, ouvrez le nœud du projet cible, puis choisissez `Gérer les skills`. Lisez le nom et le dossier du projet dans la fiche.\n\nLes onglets sont `Skills`, `Instructions` et `Infos`. Ce parcours ajoute des skills de votre marketplace personnelle ; il n’installe pas un plugin entier avec ses commandes ou hooks.\n\nCe que vous verrez : la fiche du projet sur `Skills`, avec `＋ Ajouter des skills` en bas.\n\n[screenshot:add-plugin-project]\n\n## 2. Choisir les skills\n\nChoisissez `＋ Ajouter des skills`. La fiche `Ajouter des skills` liste les skills de la marketplace qui ne sont pas encore dans ce projet. Chaque ligne indique le package source.\n\nCochez les skills du plugin souhaité. Ce parcours ne propose pas de sélection du plugin entier. Les skills déjà assignés sont absents de la liste.\n\nCe que vous verrez : les skills disponibles, leurs identifiants de package et les choix `Agents`.\n\n[screenshot:add-plugin-picker]\n\n## 3. Vérifier les agents et ajouter\n\nVérifiez le nom du projet, les skills sélectionnés et les cases `Claude Code` et `Codex` sous `Agents`. Les deux agents sont sélectionnés au départ.\n\n`Ajouter (2)`, par exemple, applique directement les deux skills sélectionnés après préparation des opérations. Il n’y a pas d’assignation enregistrée à approuver ensuite dans À valider. Choisissez ce bouton seulement si la sélection est correcte.\n\nExaminez ensuite le résultat et ouvrez `Historique` pour les reçus. Un échec peut laisser un résultat partiel ; lisez-le avant de réessayer.\n\nCe que vous verrez : deux skills sélectionnés, les choix d’agents et `Ajouter (2)` avant le clic.\n\n[screenshot:add-plugin-assignment]\n\nEt ensuite, lisez [marketplaces](academy://topic/marketplaces), puis [Capturer un skill depuis un projet](academy://tutorial/capture-a-skill-from-a-project).\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "tutorial",
+      "slug": "capture-a-skill-from-a-project",
+      "title": "Capturer un skill depuis un projet",
+      "summary": "Copier un skill propre à un projet dans un plugin de votre marketplace personnelle.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "skill",
+      "topic": "skills",
+      "cta": {
+        "route": "projects",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "steps": ["1. Ouvrir les skills du projet", "2. Lire le skill", "3. Choisir un plugin et ajouter"],
+      "body": "## 1. Ouvrir les skills du projet\n\nDepuis `Espace de travail`, ouvrez le projet, puis `Gérer les skills`. Restez sur `Skills` et repérez un skill actif marqué `Seulement dans ce projet`.\n\nIl faut une marketplace personnelle enregistrée et une copie installée lisible. Un skill externe utilise l’action distincte `Copier dans ma marketplace`.\n\nCe que vous verrez : les skills du projet, dont un skill présent seulement dans ce projet.\n\n[screenshot:capture-skill-project]\n\n## 2. Lire le skill\n\nChoisissez le nom du skill pour ouvrir sa fiche. Lisez `Ce que fait ce skill`, `Vient de`, `Installé dans` et `Contenu`.\n\nPour un skill actif propre au projet, choisissez `Ajouter à ma marketplace`. Cette action ouvre la fiche de capture sans écrire le skill.\n\nCe que vous verrez : la fiche du skill avec son contenu et `Ajouter à ma marketplace`.\n\n[screenshot:capture-skill-detail]\n\n## 3. Choisir un plugin et ajouter\n\nSous `Ranger dans`, choisissez un plugin existant, ou `＋ Nouveau plugin` puis renseignez son nom et sa description en anglais. Un skill du même nom dans le plugin bloque la capture.\n\nLisez `Ce qui change` : la destination reçoit le nouveau skill ; la copie du projet est reliée à votre marketplace sans modification de ses fichiers. La ligne Git reflète le réglage de commit actuel.\n\nLe bouton final `Ajouter` écrit la capture lorsque son plan est prêt. Après approbation, ouvrez `Historique` pour son reçu.\n\nCe que vous verrez : les choix de plugin de destination, `Ce qui change` et le bouton final `Ajouter`.\n\n[screenshot:capture-skill-preview]\n\nEt ensuite, lisez [marketplaces](academy://topic/marketplaces), puis [Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project).\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "tutorial",
+      "slug": "connect-your-marketplace",
+      "title": "Connecter votre marketplace",
+      "summary": "Enregistrer une marketplace locale existante depuis le panneau Ajouter de l’espace de travail.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "marketplace",
+      "topic": "marketplaces",
+      "cta": {
+        "route": "library-add",
+        "label": "Ouvrir Ajouter Marketplace"
+      },
+      "steps": ["1. Ouvrir Ajouter Marketplace", "2. Choisir le type de source", "3. Lire la marketplace enregistrée"],
+      "body": "## 1. Ouvrir Ajouter Marketplace\n\nDepuis `Espace de travail`, choisissez `＋ Ajouter`, puis `Marketplace`. La fiche s’ouvre sur `Source externe` pour les dépôts publiés par d’autres.\n\nConnecter un dossier local l’enregistre dans Omni. Cela n’installe pas ses skills dans un projet.\n\nCe que vous verrez : le menu Ajouter avec `Projet`, `Marketplace` et `Nouveau skill`.\n\n[screenshot:connect-marketplace-library]\n\n## 2. Choisir le type de source\n\nPour le dépôt local de quelqu’un d’autre, gardez `Source externe` et choisissez `Choisir un dossier…`. Pour votre première marketplace personnelle, choisissez `Une autre marketplace à moi`, puis `Choisir un dossier…` sous `Dépôt Git`.\n\nSélectionnez le dépôt existant dans le sélecteur système. Sa validation démarre directement l’enregistrement ; il n’y a pas de page de confirmation supplémentaire.\n\nSi une marketplace personnelle existe déjà, l’onglet personnel s’appelle `Vitrine publique`. Il ouvre un parcours de vitrine, sans remplacer votre marketplace actuelle.\n\nCe que vous verrez : la fiche `Marketplace` avec les choix de source, `Dépôt GitHub` et `Choisir un dossier…`.\n\n[screenshot:connect-marketplace-choose]\n\n## 3. Lire la marketplace enregistrée\n\nAttendez le résultat de l’enregistrement. Si la lecture échoue, utilisez `Réessayer la lecture` ; si elle se termine, choisissez `Terminer` pour revenir à `Espace de travail`.\n\nOuvrez le nœud de la marketplace pour examiner ses ressources observées. Votre marketplace personnelle s’ouvre sur un canvas regroupé par plugin. `Actualiser` relit les changements faits hors d’Omni.\n\nCe que vous verrez : le canvas de la marketplace personnelle enregistrée, avec ses groupes de plugins et ses nœuds de skills.\n\n[screenshot:connect-marketplace-confirm]\n\nEt ensuite, lisez [marketplaces](academy://topic/marketplaces), puis [Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project).\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "tutorial",
+      "slug": "install-a-marketplace-by-hand",
+      "title": "Installer une marketplace à la main",
+      "summary": "Retrouver la marketplace locale et observer une installation native dans Omni.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "terminal",
+      "topic": "claude-code",
+      "cta": {
+        "route": "library",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "steps": [
+        "1. Retrouver la marketplace",
+        "2. Suivre les instructions natives de l’agent",
+        "3. Observer le projet ensuite"
+      ],
+      "body": "## 1. Retrouver la marketplace\n\nDepuis `Espace de travail`, ouvrez `Ma marketplace ·` suivi du nom de votre marketplace. Son canvas regroupe les skills observés par plugin.\n\nPour retrouver le chemin local enregistré, ouvrez `Réglages` et lisez la section `Marketplace`. Connecter cette source à Omni n’installe pas de plugin natif dans un agent.\n\nCe que vous verrez : le canvas de la marketplace personnelle avec ses groupes de plugins.\n\n[screenshot:install-marketplace-library]\n\n## 2. Suivre les instructions natives de l’agent\n\nChoisissez `Plugins et vitrines` pour examiner la liste des plugins. Le menu `Plus d'actions pour` d’un plugin concerne la publication et la création de skills ; il ne contient pas de guide d’installation manuelle ni de conversion de compatibilité.\n\nL’installation native d’une marketplace entière se fait hors d’Omni, avec les instructions de l’agent choisi et les manifestes natifs du dépôt. Cette fiche ne fournit ni commandes d’installation ni verdict de compatibilité. Ne copiez pas de manifeste vers un chemin supposé.\n\nPour rester dans Omni, suivez [Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project) afin de sélectionner ses skills.\n\nCe que vous verrez : le menu d’actions d’un plugin dans la fiche de la marketplace.\n\n[screenshot:install-marketplace-menu]\n\n## 3. Observer le projet ensuite\n\nAprès une installation manuelle, revenez à `Espace de travail`, ouvrez le projet enregistré concerné et choisissez `Actualiser`, puis `Gérer les skills`.\n\nLisez ses onglets `Skills` et `Instructions`. Les pastilles d’agents montrent les copies observées ; elles ne prouvent pas que le chargeur natif a activé le plugin. Vérifiez ce chargement dans l’agent lui-même.\n\nCe que vous verrez : les skills observés du projet et leurs pastilles `Claude Code` et `Codex`.\n\n[screenshot:install-marketplace-harnesses]\n\nEt ensuite, lisez [marketplaces](academy://topic/marketplaces), puis [Ajouter un plugin à un projet](academy://tutorial/add-a-plugin-to-a-project).\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "tutorial",
+      "slug": "install-omni-for-your-agents",
+      "title": "Installer Omni pour vos agents",
+      "summary": "Connecter chaque agent détecté depuis Réglages et vérifier un appel réel à Omni.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "agent",
+      "topic": "mcp",
+      "cta": {
+        "route": "agents-setup",
+        "label": "Ouvrir les réglages"
+      },
+      "steps": ["1. Ouvrir les réglages", "2. Choisir un agent", "3. Confirmer et vérifier une session"],
+      "body": "## 1. Ouvrir les réglages\n\nChoisissez `Réglages` dans le rail du canvas. La section `Agents` montre chaque agent pris en charge et son état de connexion observé.\n\n`Introuvable sur ce Mac` signifie qu’aucune action de connexion n’est proposée. Configurez l’agent localement, puis rouvrez les réglages.\n\nCe que vous verrez : les réglages avec la section `Agents` et l’état de chaque agent.\n\n[screenshot:install-agents-home]\n\n## 2. Choisir un agent\n\nPour un agent détecté marqué `Pas connecté`, choisissez `Connecter` sur sa ligne. Chaque agent se connecte séparément.\n\nLisez `Connecter Codex ?` ou `Connecter Claude Code ?`. La confirmation décrit l’outil omni, les skills d’Omni et la protection des fichiers qu’il gère.\n\nCe que vous verrez : la confirmation de connexion d’un agent détecté mais pas encore connecté.\n\n[screenshot:install-agents-select]\n\n## 3. Confirmer et vérifier une session\n\nLisez la confirmation avant son bouton final `Connecter`. Ce clic prépare et applique l’installation. La fiche présente un résumé plutôt que des diffs fichier par fichier.\n\nAprès connexion, ouvrez une nouvelle session de l’agent et faites un appel à Omni. Revenez au menu `Plus d'actions` de sa ligne, puis à `Vérifier la connexion`, pour lire la preuve du dernier appel. Le statut connecté seul ne prouve pas qu’un appel a réussi.\n\nRépétez pour un autre agent si nécessaire. N’utilisez pas `Réinstaller` pour examiner une connexion : cette action écrit des fichiers.\n\nCe que vous verrez : le résumé de connexion et le bouton final `Connecter` avant l’installation.\n\n[screenshot:install-agents-review]\n\nEt ensuite, lisez [marketplaces](academy://topic/marketplaces), puis [Annuler une écriture d’Omni](academy://tutorial/undo-anything-omni-wrote).\n"
+    },
+    {
+      "lang": "fr",
+      "kind": "tutorial",
+      "slug": "undo-anything-omni-wrote",
+      "title": "Annuler une écriture d’Omni",
+      "summary": "Lire une opération dans Historique et vérifier sa restauration avant approbation.",
+      "minutes": 4,
+      "products": ["claude-code", "codex"],
+      "illustration": "lesson",
+      "topic": "agents-at-work",
+      "cta": {
+        "route": "library",
+        "label": "Ouvrir l’espace de travail"
+      },
+      "steps": ["1. Ouvrir l’historique", "2. Lire le résultat de l’opération", "3. Vérifier l’opération inverse"],
+      "body": "## 1. Ouvrir l’historique\n\nChoisissez `Historique` dans le rail du canvas. Il liste ce qu’Omni a écrit, qui l’a demandé et quand.\n\nRepérez l’opération sur la cible souhaitée. `Annuler` apparaît seulement pour les reçus éligibles. Certaines opérations ne sont pas réversibles ici ; le titre de ce tutoriel ne promet pas le contraire.\n\nCe que vous verrez : l’historique avec les opérations terminées et les boutons `Annuler` éligibles.\n\n[screenshot:undo-review]\n\n## 2. Lire le résultat de l’opération\n\nOuvrez la ligne de l’opération pour examiner son résultat. Vérifiez la cible, les fichiers modifiés et le résultat Git lorsqu’il est enregistré. Les opérations de skills peuvent ouvrir une fiche différente de celle d’une capture.\n\nPour un skill capturé depuis un projet, le reçu propose `Restaurer`. Lisez le reçu avant de choisir cette action.\n\nCe que vous verrez : un reçu de capture de skill avec le résultat d’origine et `Restaurer`.\n\n[screenshot:undo-receipt]\n\n## 3. Vérifier l’opération inverse\n\nChoisissez `Restaurer` dans ce reçu. Cette action ouvre une prévisualisation ; le bouton final `Restaurer` l’applique. Lisez la prévisualisation et tout blocage avant de confirmer.\n\nOmni compare le contenu actuel au reçu d’origine et protège les modifications ultérieures. Si la restauration est bloquée, conservez ces modifications et résolvez la cause avant de réessayer.\n\nVous pouvez aussi ouvrir directement le parcours inverse d’une opération éligible avec `Annuler` dans Historique. Après approbation, lisez son résultat, y compris tout échec partiel.\n\nCe que vous verrez : la fiche de restauration avant le bouton final `Restaurer`, avec les effets inverses proposés.\n\n[screenshot:undo-restore]\n\nEt ensuite, lisez [marketplaces](academy://topic/marketplaces), puis [Capturer un skill depuis un projet](academy://tutorial/capture-a-skill-from-a-project).\n"
+    }
+  ]
+}

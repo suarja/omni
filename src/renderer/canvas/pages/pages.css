@@ -1,0 +1,21 @@
+.page-graph { position: relative; }
+.page-section-title { position: absolute; margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+.page-section-title small { text-transform: none; letter-spacing: 0; font-weight: 400; }
+.page-section-title button { padding: 0; border: 0; background: none; color: var(--canvas-ink); font: inherit; letter-spacing: inherit; text-transform: inherit; }
+.page-section-title button:hover { text-decoration: underline; }
+.page-node { position: absolute; }
+.page-node.is-unused { border-style: dashed; background: transparent; }
+.page-node .canvas-node-meta { white-space: normal; overflow: visible; line-height: 1.3; }
+.page-node .external-chips { margin-top: 0; }
+.page-node .project-chip { max-width: 100%; white-space: normal; overflow-wrap: anywhere; line-height: 1.3; }
+.page-node-description { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.page-icon-skill { color: var(--canvas-skill); background: color-mix(in srgb, var(--canvas-skill) 12%, var(--canvas-surface)); }
+.page-icon-external { color: var(--canvas-external); background: var(--canvas-external-fill); }
+.page-icon-group { color: var(--canvas-plugin); background: var(--canvas-ok-fill); }
+.page-banner { position: absolute; left: 40px; right: 40px; top: 62px; }
+.page-banner .external-callout { padding: 10px 14px; font-size: var(--canvas-meta); }
+.page-stage-heading { right: 24px; }
+.page-head-actions { display: flex; gap: 8px; margin-left: auto; }
+.page-head-actions button { white-space: nowrap; }
+.page-status { position: absolute; top: 45px; left: 40px; padding: 8px 12px; background: var(--canvas-surface); border-radius: 8px; font-size: var(--canvas-meta); }
+.page-skill-md { margin: 0 0 8px; padding: 10px 12px; border-radius: 8px; background: var(--canvas-hover); white-space: pre-wrap; overflow-wrap: anywhere; font-family: ui-monospace, Menlo, monospace; font-size: var(--canvas-meta); }

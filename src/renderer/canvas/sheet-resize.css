@@ -1,0 +1,7 @@
+.canvas-sheet-resize { position: absolute; z-index: 3; top: 14px; bottom: 14px; left: 0; width: 8px; cursor: ew-resize; touch-action: none; user-select: none; outline: none; }
+.canvas-sheet-resize[hidden] { display: none; }
+.canvas-sheet-resize::after { position: absolute; top: 50%; left: 2px; width: 2px; height: 36px; border-radius: 2px; background: var(--canvas-sheet-edge); transform: translateY(-50%); opacity: .45; content: ""; transition: opacity .12s, background .12s; }
+.canvas-sheet-resize:hover::after, .canvas-sheet-resize:focus-visible::after, .canvas-sheet-resize.is-dragging::after { background: var(--canvas-project); opacity: 1; }
+.canvas-sheet-resize:focus-visible { box-shadow: inset 2px 0 var(--canvas-project); }
+@media (pointer: coarse) { .canvas-sheet-resize { width: 12px; } }
+@media (prefers-reduced-motion: reduce) { .canvas-sheet-resize::after { transition: none; } }

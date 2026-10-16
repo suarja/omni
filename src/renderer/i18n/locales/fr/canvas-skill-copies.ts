@@ -1,0 +1,22 @@
+export const canvasSkillCopies = {
+  copiesDiffer: "Les copies diffèrent",
+  localSkillChanges: "Modifications locales depuis la base enregistrée",
+  copyUnavailable: "Copie indisponible",
+  logicalSkill: "Compétence logique",
+  skillCopiesInfo: "Informations sur {name}",
+  skillInformation: "Informations",
+  skillRelationship: "Groupe de projet existant",
+  skillIdentity: "Identité logique",
+  skillIdentityEvidence: "Preuve d’identité",
+  skillEvidence: {
+    declared: "Clé déclarée",
+    "observed-equivalence": "Contenus identiques observés",
+    individual: "Emplacement individuel",
+  },
+  skillKey: "Clé de compétence déclarée",
+  skillCopies: "Copies observées",
+  skillLocation: "Emplacement",
+  skillFiles: "Fichiers",
+  skillTreeObserved: "Arbre de compétence observé",
+  skillTreeUnavailable: "Arbre de compétence indisponible",
+} as const;

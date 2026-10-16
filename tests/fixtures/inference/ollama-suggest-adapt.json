@@ -1,0 +1,27 @@
+{
+  "modelId": "llama3.1",
+  "provider": "ollama",
+  "system": "You choose which of the given catalogue candidates fit this project and say why in one short, factual sentence each. Only pick from the candidates given to you — never invent a skill, owner, or repository. Pick at most five. Do not explain your reasoning process; reply with the requested JSON only.",
+  "userContent": "fixture input",
+  "toolSchema": {
+    "type": "object",
+    "required": ["picks"],
+    "properties": {
+      "picks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["skill", "ownerRepo", "reason"],
+          "properties": {
+            "skill": { "type": "string" },
+            "ownerRepo": { "type": "string" },
+            "reason": { "type": "string", "maxLength": 160 }
+          },
+          "additionalProperties": false
+        },
+        "maxItems": 5
+      }
+    },
+    "additionalProperties": false
+  }
+}

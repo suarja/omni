@@ -1,0 +1,11 @@
+node_modules/
+out/
+dist/
+coverage/
+.worktrees/
+.DS_Store
+.env
+.env.*
+!.env.example
+packages/omni-catalogue/.cache/
+/release/

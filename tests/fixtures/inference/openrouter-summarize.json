@@ -1,0 +1,12 @@
+{
+  "modelId": "meta-llama/llama3.2",
+  "provider": "openrouter",
+  "system": "You summarize a coding agent session or a receipt of applied changes in one short, factual sentence — what is being done, not how you decided. Do not explain your reasoning process; reply with the requested JSON only.",
+  "userContent": "fixture input",
+  "toolSchema": {
+    "type": "object",
+    "required": ["sentence"],
+    "properties": { "sentence": { "type": "string", "maxLength": 200 } },
+    "additionalProperties": false
+  }
+}

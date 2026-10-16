@@ -1,0 +1,30 @@
+{
+  "builtAt": "2026-09-14T00:00:00.000Z",
+  "entries": [
+    {
+      "ownerRepo": "vercel-labs/skills",
+      "skill": "next-helper",
+      "name": "next-helper",
+      "description": "Helps configure Next.js projects.",
+      "path": "skills/next-helper/SKILL.md",
+      "url": "https://raw.githubusercontent.com/vercel-labs/skills/main/skills/next-helper/SKILL.md",
+      "tags": ["next", "react"],
+      "installs": 712000,
+      "weeklyInstalls": [],
+      "official": true,
+      "fetchedAt": "2026-09-14T00:00:00.000Z"
+    },
+    {
+      "ownerRepo": "some-org/django-tools",
+      "skill": "django-admin",
+      "name": "django-admin",
+      "description": "Django admin helpers.",
+      "path": "skills/django-admin/SKILL.md",
+      "tags": ["django", "python"],
+      "installs": 500,
+      "weeklyInstalls": [],
+      "official": false,
+      "fetchedAt": "2026-09-14T00:00:00.000Z"
+    }
+  ]
+}

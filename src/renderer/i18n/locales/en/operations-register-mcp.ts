@@ -1,0 +1,20 @@
+export const registerMcp = {
+  enableHeading: "Enable Omni for {harness}",
+  disableHeading: "Disable Omni for {harness}",
+  description:
+    "Omni adds its MCP server to the {harness} settings so your agents can call it. Nothing else in the file changes.",
+  whatWillChange: "What will change",
+  fileSize: "{path} · {bytes} bytes",
+  showDiff: "Show differences",
+  hideDiff: "Hide differences",
+  confirmNote: "The file is written only when you confirm.",
+  enable: "Enable",
+  disable: "Disable",
+  resultEnable: "Omni enabled for {harness}",
+  resultDisable: "Omni disabled for {harness}",
+  restartClaude: "Restart Claude Code to load it",
+  restartCodex: "Restart Codex to load it",
+  previewUnavailable: "Registration preview unavailable",
+  previewBlocked: "Registration preview blocked",
+  nothingToChange: "Nothing to change: {note}",
+};

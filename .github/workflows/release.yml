@@ -1,0 +1,97 @@
+name: Draft macOS release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: macos-14
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - name: Validate release source
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = arm64
+          pnpm install --frozen-lockfile
+          pnpm typecheck
+          pnpm lint
+          pnpm test --maxWorkers=4 --dangerouslyIgnoreUnhandledErrors=false
+          pnpm test:release
+          bash scripts/check-line-counts.sh
+          bash scripts/check-doc-structure.sh
+          pnpm check:public
+          node scripts/release/version.mjs --check "$RELEASE_TAG" > "$RUNNER_TEMP/release-notes.md"
+      - name: Verify private source export
+        if: github.event.repository.private
+        run: pnpm verify:public "$RUNNER_TEMP/omni-public-tree"
+      - name: Import temporary signing material
+        env:
+          MACOS_CERT_P12_BASE64: ${{ secrets.MACOS_CERT_P12_BASE64 }}
+          MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+          ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}
+        run: |
+          set -euo pipefail
+          umask 077
+          test -n "$MACOS_CERT_P12_BASE64"
+          test -n "$MACOS_CERT_PASSWORD"
+          test -n "$ASC_KEY_P8_BASE64"
+          printf '%s' "$MACOS_CERT_P12_BASE64" | base64 --decode > "$RUNNER_TEMP/certificate.p12"
+          printf '%s' "$ASC_KEY_P8_BASE64" | base64 --decode > "$RUNNER_TEMP/AuthKey.p8"
+          security create-keychain -p "$MACOS_CERT_PASSWORD" "$RUNNER_TEMP/omni-release.keychain-db"
+          security set-keychain-settings -lut 21600 "$RUNNER_TEMP/omni-release.keychain-db"
+          security unlock-keychain -p "$MACOS_CERT_PASSWORD" "$RUNNER_TEMP/omni-release.keychain-db"
+          security import "$RUNNER_TEMP/certificate.p12" -k "$RUNNER_TEMP/omni-release.keychain-db" -P "$MACOS_CERT_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CERT_PASSWORD" "$RUNNER_TEMP/omni-release.keychain-db" > /dev/null
+          identity="$(security find-identity -v -p codesigning "$RUNNER_TEMP/omni-release.keychain-db" | awk -F '"' '/Developer ID Application:/ {print $2}')"
+          team_id="$(node -p 'require("./resources/release-identity.json").teamId')"
+          case "$identity" in
+            "Developer ID Application: "*" ($team_id)") ;;
+            *) echo 'The temporary certificate must be a valid Developer ID identity for the configured team.'; exit 1 ;;
+          esac
+          OMNI_SIGN_IDENTITY="$identity" node --input-type=module -e 'import { signingConfiguration } from "./scripts/release/policy.mjs"; signingConfiguration({ OMNI_SIGN_IDENTITY: process.env.OMNI_SIGN_IDENTITY });'
+          printf 'OMNI_SIGN_IDENTITY=%s\n' "$identity" >> "$GITHUB_ENV"
+          rm -f "$RUNNER_TEMP/certificate.p12"
+      - name: Build signed and notarized artifacts
+        env:
+          OMNI_SIGN_KEYCHAIN: ${{ runner.temp }}/omni-release.keychain-db
+          OMNI_NOTARY_KEY_PATH: ${{ runner.temp }}/AuthKey.p8
+          OMNI_NOTARY_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          OMNI_NOTARY_ISSUER: ${{ secrets.ASC_ISSUER_ID }}
+        run: pnpm release:mac "$RUNNER_TEMP/omni-artifacts"
+      - name: Delete temporary signing material
+        if: always()
+        run: |
+          set -uo pipefail
+          keychain="$RUNNER_TEMP/omni-release.keychain-db"
+          cleanup_status=0
+          if test -f "$keychain"; then security delete-keychain "$keychain" || cleanup_status=$?; fi
+          rm -f "$RUNNER_TEMP/certificate.p12" "$RUNNER_TEMP/AuthKey.p8" || cleanup_status=$?
+          exit "$cleanup_status"
+      - name: Create draft GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          options=()
+          if [[ "$RELEASE_TAG" == *-* ]]; then options+=(--prerelease); fi
+          gh release create "$RELEASE_TAG" --verify-tag --draft "${options[@]}" --title "Omni Desktop $RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" \
+            "$RUNNER_TEMP/omni-artifacts/"*.zip "$RUNNER_TEMP/omni-artifacts/"*.dmg \
+            "$RUNNER_TEMP/omni-artifacts/SHA256SUMS" "$RUNNER_TEMP/omni-artifacts/release.json"

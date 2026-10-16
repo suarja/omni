@@ -1,0 +1,7 @@
+.canvas-toast { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--canvas-ink); color: var(--canvas-surface); border-radius: 10px; padding: 10px 14px; font-size: var(--canvas-meta); display: flex; gap: 14px; align-items: center; z-index: 40; box-shadow: var(--canvas-toast-shadow); max-width: calc(100% - 24px); }
+.canvas-toast button { border: 0; background: none; color: var(--canvas-toast-undo); font: inherit; font-weight: 600; }
+.canvas-toast .canvas-toast-close { color: var(--canvas-toast-close); font-weight: 400; font-size: var(--canvas-body); line-height: 1; padding: 0 2px; }
+.canvas-toast-bar { position: absolute; left: 10px; right: 10px; bottom: 4px; height: 2px; border-radius: 1px; background: var(--canvas-toast-bar); transform-origin: left; animation: canvas-toast-progress 6s linear forwards; }
+@keyframes canvas-toast-progress { to { transform: scaleX(0); } }
+@keyframes canvas-toast-resume { from { transform: var(--canvas-toast-from, scaleX(1)); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .canvas-toast-bar { display: none; animation: none; } }

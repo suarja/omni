@@ -1,0 +1,21 @@
+{
+  "name": "acme-plugins",
+  "description": "Personal Claude Code and Convex plugin registry",
+  "metadata": {
+    "description": "Personal Claude Code and Convex plugin registry"
+  },
+  "owner": {
+    "name": "Ada"
+  },
+  "plugins": [
+    {
+      "name": "pstack",
+      "version": "0.2.0",
+      "description": "A selective adapter for pstack's writing, architecture, workflow, and engineering-principle skills.",
+      "source": "./plugins/pstack",
+      "author": {
+        "name": "Acme"
+      }
+    }
+  ]
+}

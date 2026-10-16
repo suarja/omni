@@ -1,0 +1,19 @@
+@import "./skill-actions.css";
+
+.skill-area { min-height: 72px; resize: vertical; line-height: 1.45; }
+.skill-area.is-code { font: var(--canvas-meta)/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; min-height: 150px; }
+.new-skill-segment { display: inline-flex; border: 1px solid var(--canvas-rule); border-radius: 9px; padding: 2px; background: var(--canvas-segment-fill); gap: 2px; }
+.new-skill-segment button { border: 0; background: none; border-radius: 7px; min-height: 30px; padding: 0 12px; color: var(--canvas-muted); font: inherit; cursor: pointer; }
+.new-skill-segment button[aria-pressed=true] { background: var(--canvas-surface); color: var(--canvas-ink); box-shadow: var(--canvas-segment-shadow); }
+.new-skill-segment button:disabled { cursor: not-allowed; opacity: .45; }
+.new-skill-projects { border-top: 1px solid var(--canvas-rule); }
+.new-skill-project { display: flex; gap: 10px; align-items: flex-start; padding: 10px 4px; border-bottom: 1px solid var(--canvas-rule); cursor: pointer; }
+.new-skill-project:hover { background: var(--canvas-hover); }
+.new-skill-project input { margin-top: 3px; }
+.new-skill-project small { color: var(--canvas-muted); font-size: var(--canvas-meta); }
+.new-skill-prompt { position: relative; font: var(--canvas-meta)/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--canvas-sheet-inset); border: 1px solid var(--canvas-rule); border-radius: 9px; padding: 10px 12px; white-space: pre-wrap; color: var(--canvas-document-ink); }
+.new-skill-checks { list-style: none; margin: 6px 0 0; padding: 0; font-size: var(--canvas-meta); }
+.new-skill-checks li { padding: 2px 0; color: var(--canvas-ok); }
+.new-skill-checks li.is-failed { color: var(--canvas-review-ink); }
+.new-skill-findings { margin: 8px 0 0; padding-left: 18px; color: var(--canvas-review-ink); font-size: var(--canvas-meta); }
+.new-skill-sheet .skill-error { color: var(--canvas-warning-ink); }

@@ -1,0 +1,123 @@
+:root {
+  color-scheme: light dark;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  /* One type scale (owner, 2026-09-16): four sizes, nothing hard-coded anywhere else.
+     title = page titles (serif); section = section and card titles, metrics (serif);
+     body = every reading text, rows, controls; meta = secondary lines, badges, paths. */
+  --font-size-title: 30px;
+  --font-size-section: 20px;
+  --font-size-body: 15px;
+  --font-size-meta: 13px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.2;
+  --line-height-compact: 1.35;
+  --line-height-body: 1.45;
+  --line-height-relaxed: 1.6;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-label: 0.08em;
+  --radius-card: 12px;
+  --radius-control: 8px;
+  --radius-badge: 6px;
+  --radius-pill: 999px;
+  --radius-panel: var(--radius-card);
+  --control-height-sm: 28px;
+  --control-height: 32px;
+  --control-height-lg: 40px;
+  --shadow-drawer: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --tile-sage: oklch(88% 0.045 145);
+  --tile-rose: oklch(88% 0.045 20);
+  --tile-sand: oklch(91% 0.045 78);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  /* Source: accepted Candidate C visual reference */
+  --color-desktop: oklch(90% 0.004 85);
+  --color-canvas: oklch(95.8% 0.004 85);
+  --color-sidebar: oklch(93.8% 0.005 85);
+  --color-panel-top: oklch(100% 0 0);
+  --color-panel-bottom: oklch(98.4% 0.003 85);
+  --color-panel: oklch(99.4% 0 0);
+  --color-panel-highlight: oklch(100% 0 0 / .9);
+  --color-nested: oklch(97.2% 0.003 85);
+  --color-field: var(--color-nested);
+  --color-hover: oklch(97.2% 0.004 85);
+  --color-press: oklch(94.2% 0.005 85);
+  --color-selection: oklch(92.5% 0.006 85);
+  --color-border: oklch(89.5% 0.005 85);
+  --color-border-strong: oklch(84.5% 0.007 85);
+  --color-ink: oklch(23% 0.008 80);
+  --color-ink-muted: oklch(42% 0.008 80);
+  --color-ink-faint: oklch(53% 0.007 80);
+  --color-primary: oklch(21% 0.008 80);
+  --color-on-primary: oklch(99% 0 0);
+  --color-primary-hover: oklch(30% 0.008 80);
+  --color-avatar: oklch(88% 0.006 85);
+  --color-avatar-ink: oklch(35% 0.008 80);
+  --color-sidebar-ink: var(--color-ink);
+  --color-sidebar-ink-muted: var(--color-ink-muted);
+  --color-sidebar-ink-faint: var(--color-ink-faint);
+  --color-success: oklch(48% 0.13 150);
+  --color-success-soft: oklch(95.5% 0.035 150);
+  --color-warning: oklch(50% 0.12 68);
+  --color-warning-soft: oklch(95.8% 0.04 80);
+  --color-danger: oklch(50% 0.18 27);
+  --color-danger-soft: oklch(95.8% 0.03 25);
+  --color-neutral-soft: oklch(94.6% 0.004 85);
+  --color-icon-top: oklch(97% 0.004 85);
+  --color-icon-bottom: oklch(92.5% 0.006 85);
+  --color-code: oklch(96.5% 0.004 85);
+  --color-focus: oklch(55% 0.16 255);
+  --color-shadow: rgba(0, 0, 0, 0.04);
+  --color-backdrop: rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* Source: accepted Candidate C visual reference */
+  --color-desktop: oklch(12% 0.004 260);
+  --color-canvas: oklch(17.5% 0.006 260);
+  --color-sidebar: oklch(15% 0.006 260);
+  --color-panel-top: oklch(25.5% 0.008 260);
+  --color-panel-bottom: oklch(22.5% 0.008 260);
+  --color-panel: oklch(24% 0.008 260);
+  --color-panel-highlight: oklch(100% 0 0 / .06);
+  --color-field: var(--color-nested);
+  --color-hover: oklch(28% 0.009 260);
+  --color-press: oklch(30% 0.009 260);
+  --color-selection: oklch(30% 0.01 260);
+  --color-border: oklch(30% 0.009 260);
+  --color-border-strong: oklch(35% 0.01 260);
+  --color-ink: oklch(96% 0.002 85);
+  --color-ink-muted: oklch(81% 0.006 260);
+  --color-ink-faint: oklch(69% 0.008 260);
+  --color-primary: oklch(95% 0.002 85);
+  --color-on-primary: oklch(17% 0.006 260);
+  --color-primary-hover: oklch(86% 0.004 85);
+  --color-avatar: oklch(32% 0.008 260);
+  --color-avatar-ink: oklch(88% 0.003 85);
+  --color-sidebar-ink: var(--color-ink);
+  --color-sidebar-ink-muted: var(--color-ink-muted);
+  --color-sidebar-ink-faint: var(--color-ink-faint);
+  --color-success: oklch(80% 0.14 150);
+  --color-success-soft: oklch(29% 0.05 150);
+  --color-warning: oklch(84% 0.13 80);
+  --color-warning-soft: oklch(30% 0.05 80);
+  --color-danger: oklch(74% 0.16 27);
+  --color-danger-soft: oklch(29% 0.06 25);
+  --color-neutral-soft: oklch(30% 0.009 260);
+  --color-icon-top: oklch(33% 0.012 260);
+  --color-icon-bottom: oklch(26% 0.01 260);
+  --color-code: oklch(20% 0.007 260);
+  --color-focus: oklch(72% 0.14 255);
+  --color-shadow: rgba(0, 0, 0, 0.18);
+  --color-backdrop: rgba(0, 0, 0, 0.48);
+  --tile-sage: oklch(37% 0.045 145);
+  --tile-rose: oklch(37% 0.045 20);
+  --tile-sand: oklch(40% 0.045 78);
+}

@@ -1,0 +1,971 @@
+{
+  "intent": {
+    "kind": "reconcile",
+    "request": {
+      "choice": "link-canonical",
+      "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+      "source": {
+        "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+        "packageId": "packages/tools",
+        "artifactPath": "skills/demo"
+      },
+      "locations": [
+        {
+          "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+          "harnessId": "codex",
+          "folderPath": ".agents/skills/demo"
+        }
+      ]
+    }
+  },
+  "preview": {
+    "status": "ready",
+    "intentId": "92ae96f0-19d7-40e0-8bca-58dfcbae26af",
+    "planId": "05bbba38-6500-5a07-95ca-d1a5bb355681",
+    "effectFingerprint": "603cefb3e05b0c9bdd3af5f45f3a84b8bdb4cce67f8daa2592fde35f4017af9a",
+    "scope": {
+      "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+      "packageId": "packages/tools",
+      "artifactPath": "skills/demo",
+      "targets": [
+        {
+          "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+          "harnessId": "codex",
+          "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd"
+        }
+      ]
+    },
+    "steps": [
+      {
+        "stepId": "05bbba38-6500-5a07-95ca-d1a5bb355681",
+        "scope": {
+          "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+          "packageId": "packages/tools",
+          "artifactPath": "skills/demo",
+          "targets": [
+            {
+              "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "harnessId": "codex",
+              "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd"
+            }
+          ]
+        },
+        "plan": {
+          "planId": "05bbba38-6500-5a07-95ca-d1a5bb355681",
+          "kind": "link-skill",
+          "displayTarget": ".agents/skills/demo",
+          "actions": [
+            {
+              "kind": "create-directory",
+              "relativePath": ".agents/skills/demo/examples"
+            },
+            {
+              "kind": "create-directory",
+              "relativePath": ".agents/skills/demo/examples/nested"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": ".agents/skills/demo/examples/nested/new.md",
+              "byteLength": 32,
+              "afterHash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15",
+              "diff": "--- A\n+++ B\n@@ -1,0 +1,1 @@\n+Canonical support instructions.\n"
+            },
+            {
+              "kind": "delete-file",
+              "relativePath": ".agents/skills/demo/local-only.md",
+              "byteLength": 21,
+              "beforeHash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9",
+              "diff": "--- A\n+++ B\n@@ -1,1 +1,0 @@\n-Preserve on restore.\n"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": ".agents/skills/demo/notes.md",
+              "byteLength": 14,
+              "beforeHash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7",
+              "afterHash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+              "diff": "--- A\n+++ B\n@@ -1,1 +1,1 @@\n-Local orchestration instructions.\n+Support note.\n"
+            }
+          ],
+          "git": {
+            "mode": "unavailable",
+            "warnings": []
+          }
+        },
+        "bindingEffects": [
+          {
+            "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+            "after": {
+              "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+              "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+              "packageId": "packages/tools",
+              "artifactPath": "skills/demo",
+              "kind": "skill",
+              "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "harnessId": "codex",
+              "boundHash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+              "ownedHash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+              "createdAt": "2026-10-09T11:00:53.809Z"
+            }
+          }
+        ],
+        "files": [
+          {
+            "rootId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+            "relativePath": ".agents/skills/demo/examples/nested/new.md",
+            "change": "add",
+            "byteLength": 32,
+            "diff": "--- A\n+++ B\n@@ -1,0 +1,1 @@\n+Canonical support instructions.\n",
+            "afterHash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15"
+          },
+          {
+            "rootId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+            "relativePath": ".agents/skills/demo/local-only.md",
+            "change": "delete",
+            "byteLength": 21,
+            "diff": "--- A\n+++ B\n@@ -1,1 +1,0 @@\n-Preserve on restore.\n",
+            "beforeHash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9"
+          },
+          {
+            "rootId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+            "relativePath": ".agents/skills/demo/notes.md",
+            "change": "change",
+            "byteLength": 14,
+            "diff": "--- A\n+++ B\n@@ -1,1 +1,1 @@\n-Local orchestration instructions.\n+Support note.\n",
+            "beforeHash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7",
+            "afterHash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b"
+          }
+        ],
+        "metadataEffects": [
+          {
+            "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+            "location": {
+              "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "harnessId": "codex",
+              "folderPath": ".agents/skills/demo"
+            },
+            "after": {
+              "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+              "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+              "location": {
+                "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                "harnessId": "codex",
+                "folderPath": ".agents/skills/demo"
+              },
+              "source": {
+                "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo"
+              },
+              "baseRevisionId": "e6fedb94-29c7-5f93-8088-72cdc3446f9e"
+            }
+          }
+        ],
+        "baseReferences": [
+          {
+            "baseRevisionId": "e6fedb94-29c7-5f93-8088-72cdc3446f9e",
+            "revision": {
+              "algorithm": "omni-tree-v1",
+              "hash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+              "files": [
+                {
+                  "path": "examples/nested/new.md",
+                  "hash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15",
+                  "byteLength": 32
+                },
+                {
+                  "path": "notes.md",
+                  "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                  "byteLength": 14
+                },
+                {
+                  "path": "SKILL.md",
+                  "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                  "byteLength": 26
+                },
+                {
+                  "path": "support/payload.bin",
+                  "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                  "byteLength": 4
+                }
+              ]
+            }
+          }
+        ],
+        "unboundResolutionEvidence": {
+          "choice": "link-canonical",
+          "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+          "storeRevision": 1,
+          "record": {
+            "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+            "label": "demo",
+            "evidence": "observed-equivalence",
+            "locations": [
+              {
+                "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                "harnessId": "claude-code",
+                "folderPath": ".claude/skills/demo"
+              },
+              {
+                "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                "harnessId": "codex",
+                "folderPath": ".agents/skills/demo"
+              }
+            ],
+            "reference": {
+              "algorithm": "omni-tree-v1",
+              "hash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+              "files": [
+                {
+                  "path": "notes.md",
+                  "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                  "byteLength": 14
+                },
+                {
+                  "path": "SKILL.md",
+                  "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                  "byteLength": 26
+                },
+                {
+                  "path": "support/payload.bin",
+                  "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                  "byteLength": 4
+                }
+              ]
+            }
+          },
+          "source": {
+            "ref": {
+              "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+              "packageId": "packages/tools",
+              "artifactPath": "skills/demo"
+            },
+            "rootIdentity": "c615c22b714004dbb06c5cb1efdb45fc9e2aa94fec45951f4cd6654a02919d79",
+            "revision": {
+              "algorithm": "omni-tree-v1",
+              "hash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+              "files": [
+                {
+                  "path": "examples/nested/new.md",
+                  "hash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15",
+                  "byteLength": 32
+                },
+                {
+                  "path": "notes.md",
+                  "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                  "byteLength": 14
+                },
+                {
+                  "path": "SKILL.md",
+                  "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                  "byteLength": 26
+                },
+                {
+                  "path": "support/payload.bin",
+                  "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                  "byteLength": 4
+                }
+              ]
+            }
+          },
+          "local": {
+            "location": {
+              "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "harnessId": "codex",
+              "folderPath": ".agents/skills/demo"
+            },
+            "rootIdentity": "dbe6511f5d94b5694ebe87025e710e08eb252a19fe2ebc5e0df004bb85857543",
+            "revision": {
+              "algorithm": "omni-tree-v1",
+              "hash": "9d45dd9f6996367632b2af6751f6010e230acace60c026bb1ad52c60a5e486a3",
+              "files": [
+                {
+                  "path": "local-only.md",
+                  "hash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9",
+                  "byteLength": 21
+                },
+                {
+                  "path": "notes.md",
+                  "hash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7",
+                  "byteLength": 35
+                },
+                {
+                  "path": "SKILL.md",
+                  "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                  "byteLength": 26
+                },
+                {
+                  "path": "support/payload.bin",
+                  "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                  "byteLength": 4
+                }
+              ]
+            }
+          },
+          "priorManagement": {
+            "use": "absent",
+            "binding": "absent",
+            "base": "unknown"
+          }
+        },
+        "unboundResolutionEnvelope": {
+          "source": [
+            {
+              "path": ".",
+              "kind": "directory",
+              "identity": "16777233:125546682"
+            },
+            {
+              "path": "examples",
+              "kind": "directory",
+              "identity": "16777233:125546897"
+            },
+            {
+              "path": "examples/nested",
+              "kind": "directory",
+              "identity": "16777233:125546898"
+            },
+            {
+              "path": "examples/nested/new.md",
+              "kind": "file",
+              "identity": "16777233:125546899"
+            },
+            {
+              "path": "notes.md",
+              "kind": "file",
+              "identity": "16777233:125546684"
+            },
+            {
+              "path": "SKILL.md",
+              "kind": "file",
+              "identity": "16777233:125546683"
+            },
+            {
+              "path": "support",
+              "kind": "directory",
+              "identity": "16777233:125546776"
+            },
+            {
+              "path": "support/payload.bin",
+              "kind": "file",
+              "identity": "16777233:125546779"
+            }
+          ],
+          "local": [
+            {
+              "path": ".",
+              "kind": "directory",
+              "identity": "16777233:125546782"
+            },
+            {
+              "path": "local-only.md",
+              "kind": "file",
+              "identity": "16777233:125546896"
+            },
+            {
+              "path": "notes.md",
+              "kind": "file",
+              "identity": "16777233:125546784"
+            },
+            {
+              "path": "SKILL.md",
+              "kind": "file",
+              "identity": "16777233:125546783"
+            },
+            {
+              "path": "support",
+              "kind": "directory",
+              "identity": "16777233:125546785"
+            },
+            {
+              "path": "support/payload.bin",
+              "kind": "file",
+              "identity": "16777233:125546786"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "result": {
+    "intentId": "92ae96f0-19d7-40e0-8bca-58dfcbae26af",
+    "operationId": "92ae96f0-19d7-40e0-8bca-58dfcbae26af",
+    "status": "applied",
+    "source": {
+      "status": "unchanged",
+      "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc"
+    },
+    "targets": [
+      {
+        "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+        "harnessId": "codex",
+        "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+        "artifactPath": "skills/demo",
+        "status": "applied"
+      }
+    ],
+    "receiptIds": ["05bbba38-6500-5a07-95ca-d1a5bb355681"],
+    "receipts": [
+      {
+        "operationId": "05bbba38-6500-5a07-95ca-d1a5bb355681",
+        "kind": "link-skill",
+        "status": "applied",
+        "appliedAt": "2026-10-09T11:00:56.213Z",
+        "displayTarget": ".agents/skills/demo",
+        "actions": [
+          {
+            "kind": "create-directory",
+            "relativePath": ".agents/skills/demo/examples",
+            "status": "applied"
+          },
+          {
+            "kind": "create-directory",
+            "relativePath": ".agents/skills/demo/examples/nested",
+            "status": "applied"
+          },
+          {
+            "kind": "write-file",
+            "relativePath": ".agents/skills/demo/examples/nested/new.md",
+            "byteLength": 32,
+            "afterHash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15",
+            "diff": "--- A\n+++ B\n@@ -1,0 +1,1 @@\n+Canonical support instructions.\n",
+            "status": "applied"
+          },
+          {
+            "kind": "delete-file",
+            "relativePath": ".agents/skills/demo/local-only.md",
+            "byteLength": 21,
+            "beforeHash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9",
+            "diff": "--- A\n+++ B\n@@ -1,1 +1,0 @@\n-Preserve on restore.\n",
+            "status": "applied"
+          },
+          {
+            "kind": "write-file",
+            "relativePath": ".agents/skills/demo/notes.md",
+            "byteLength": 14,
+            "beforeHash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7",
+            "afterHash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+            "diff": "--- A\n+++ B\n@@ -1,1 +1,1 @@\n-Local orchestration instructions.\n+Support note.\n",
+            "status": "applied"
+          }
+        ],
+        "git": {
+          "mode": "unavailable"
+        },
+        "registered": null,
+        "source": {
+          "kind": "source",
+          "id": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+          "relativePath": "skills/demo"
+        },
+        "project": {
+          "id": "b65f07d3-14cc-49ff-8677-ff68b003cabe"
+        },
+        "bindings": [
+          {
+            "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+            "after": {
+              "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+              "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+              "packageId": "packages/tools",
+              "artifactPath": "skills/demo",
+              "kind": "skill",
+              "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "harnessId": "codex",
+              "boundHash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+              "ownedHash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+              "createdAt": "2026-10-09T11:00:53.809Z"
+            }
+          }
+        ],
+        "createdDirectories": [".agents/skills/demo/examples", ".agents/skills/demo/examples/nested"],
+        "link": {
+          "intentId": "92ae96f0-19d7-40e0-8bca-58dfcbae26af",
+          "stepId": "05bbba38-6500-5a07-95ca-d1a5bb355681"
+        }
+      }
+    ],
+    "issues": [],
+    "recoveryAvailable": false,
+    "link": {
+      "choice": "link-canonical",
+      "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+      "source": {
+        "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+        "packageId": "packages/tools",
+        "artifactPath": "skills/demo"
+      },
+      "location": {
+        "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+        "harnessId": "codex",
+        "folderPath": ".agents/skills/demo"
+      },
+      "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+      "status": "applied"
+    }
+  },
+  "restore": {
+    "intent": {
+      "kind": "restore",
+      "operationId": "92ae96f0-19d7-40e0-8bca-58dfcbae26af"
+    },
+    "preview": {
+      "status": "ready",
+      "intentId": "c3078e8c-eb2f-4160-a40a-f60d45b97711",
+      "planId": "8501352d-3c7c-54b5-8dd2-1574b153605e",
+      "effectFingerprint": "8bf5f78dce0cc87f0efb3222cd29fa85fef33044ade4a1b294ad219de8792150",
+      "scope": {
+        "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+        "packageId": "packages/tools",
+        "artifactPath": "skills/demo",
+        "targets": [
+          {
+            "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+            "harnessId": "codex",
+            "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "stepId": "8501352d-3c7c-54b5-8dd2-1574b153605e",
+          "scope": {
+            "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+            "packageId": "packages/tools",
+            "artifactPath": "skills/demo",
+            "targets": [
+              {
+                "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                "harnessId": "codex",
+                "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd"
+              }
+            ]
+          },
+          "plan": {
+            "planId": "8501352d-3c7c-54b5-8dd2-1574b153605e",
+            "kind": "restore-apply",
+            "displayTarget": ".agents/skills/demo",
+            "actions": [
+              {
+                "kind": "delete-file",
+                "relativePath": ".agents/skills/demo/examples/nested/new.md",
+                "beforeHash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": ".agents/skills/demo/local-only.md",
+                "byteLength": 21,
+                "afterHash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9"
+              },
+              {
+                "kind": "write-file",
+                "relativePath": ".agents/skills/demo/notes.md",
+                "byteLength": 35,
+                "beforeHash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                "afterHash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7"
+              },
+              {
+                "kind": "delete-directory",
+                "relativePath": ".agents/skills/demo/examples/nested"
+              },
+              {
+                "kind": "delete-directory",
+                "relativePath": ".agents/skills/demo/examples"
+              }
+            ],
+            "git": {
+              "mode": "disabled",
+              "warnings": []
+            }
+          },
+          "bindingEffects": [
+            {
+              "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+              "before": {
+                "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+                "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo",
+                "kind": "skill",
+                "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                "harnessId": "codex",
+                "boundHash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+                "ownedHash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+                "createdAt": "2026-10-09T11:00:53.809Z"
+              }
+            }
+          ],
+          "files": [
+            {
+              "rootId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "relativePath": ".agents/skills/demo/examples/nested/new.md",
+              "change": "delete",
+              "byteLength": 32,
+              "diff": "--- A\n+++ B\n@@ -1,1 +1,0 @@\n-Canonical support instructions.\n",
+              "beforeHash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15"
+            },
+            {
+              "rootId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "relativePath": ".agents/skills/demo/local-only.md",
+              "change": "add",
+              "diff": "--- A\n+++ B\n@@ -1,0 +1,1 @@\n+Preserve on restore.\n",
+              "afterHash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9"
+            },
+            {
+              "rootId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+              "relativePath": ".agents/skills/demo/notes.md",
+              "change": "change",
+              "byteLength": 35,
+              "diff": "--- A\n+++ B\n@@ -1,1 +1,1 @@\n-Support note.\n+Local orchestration instructions.\n",
+              "beforeHash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+              "afterHash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7"
+            }
+          ],
+          "metadataEffects": [
+            {
+              "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+              "location": {
+                "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                "harnessId": "codex",
+                "folderPath": ".agents/skills/demo"
+              },
+              "before": {
+                "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+                "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+                "location": {
+                  "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                },
+                "source": {
+                  "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+                  "packageId": "packages/tools",
+                  "artifactPath": "skills/demo"
+                },
+                "baseRevisionId": "e6fedb94-29c7-5f93-8088-72cdc3446f9e"
+              }
+            }
+          ],
+          "baseReferences": [
+            {
+              "baseRevisionId": "e6fedb94-29c7-5f93-8088-72cdc3446f9e",
+              "revision": {
+                "algorithm": "omni-tree-v1",
+                "hash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+                "files": [
+                  {
+                    "path": "examples/nested/new.md",
+                    "hash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15",
+                    "byteLength": 32
+                  },
+                  {
+                    "path": "notes.md",
+                    "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                    "byteLength": 14
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            }
+          ],
+          "unboundResolutionEvidence": {
+            "choice": "link-canonical",
+            "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+            "storeRevision": 1,
+            "record": {
+              "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+              "label": "demo",
+              "evidence": "observed-equivalence",
+              "locations": [
+                {
+                  "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                  "harnessId": "claude-code",
+                  "folderPath": ".claude/skills/demo"
+                },
+                {
+                  "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                  "harnessId": "codex",
+                  "folderPath": ".agents/skills/demo"
+                }
+              ],
+              "reference": {
+                "algorithm": "omni-tree-v1",
+                "hash": "eb2ecd05e360cc51e1d9cba117b6408d948dbc599961ade44845bdc589b86b88",
+                "files": [
+                  {
+                    "path": "notes.md",
+                    "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                    "byteLength": 14
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            },
+            "source": {
+              "ref": {
+                "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+                "packageId": "packages/tools",
+                "artifactPath": "skills/demo"
+              },
+              "rootIdentity": "c615c22b714004dbb06c5cb1efdb45fc9e2aa94fec45951f4cd6654a02919d79",
+              "revision": {
+                "algorithm": "omni-tree-v1",
+                "hash": "7498f874d751cd95d2f10290fbf90409887aa83ec1c8a6097c6672cf4688abfd",
+                "files": [
+                  {
+                    "path": "examples/nested/new.md",
+                    "hash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15",
+                    "byteLength": 32
+                  },
+                  {
+                    "path": "notes.md",
+                    "hash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+                    "byteLength": 14
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            },
+            "local": {
+              "location": {
+                "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+                "harnessId": "codex",
+                "folderPath": ".agents/skills/demo"
+              },
+              "rootIdentity": "dbe6511f5d94b5694ebe87025e710e08eb252a19fe2ebc5e0df004bb85857543",
+              "revision": {
+                "algorithm": "omni-tree-v1",
+                "hash": "9d45dd9f6996367632b2af6751f6010e230acace60c026bb1ad52c60a5e486a3",
+                "files": [
+                  {
+                    "path": "local-only.md",
+                    "hash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9",
+                    "byteLength": 21
+                  },
+                  {
+                    "path": "notes.md",
+                    "hash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7",
+                    "byteLength": 35
+                  },
+                  {
+                    "path": "SKILL.md",
+                    "hash": "9b4a34b6cf69bc0dd9d92a676e2f0994658ada1cec1b5027917a95beb12639ab",
+                    "byteLength": 26
+                  },
+                  {
+                    "path": "support/payload.bin",
+                    "hash": "651032937555549189439287302eb802518ef0fcbd7fcaf7d4f94e90fe1c74b8",
+                    "byteLength": 4
+                  }
+                ]
+              }
+            },
+            "priorManagement": {
+              "use": "absent",
+              "binding": "absent",
+              "base": "unknown"
+            }
+          },
+          "unboundResolutionEnvelope": {
+            "source": [
+              {
+                "path": ".",
+                "kind": "directory",
+                "identity": "16777233:125546682"
+              },
+              {
+                "path": "examples",
+                "kind": "directory",
+                "identity": "16777233:125546897"
+              },
+              {
+                "path": "examples/nested",
+                "kind": "directory",
+                "identity": "16777233:125546898"
+              },
+              {
+                "path": "examples/nested/new.md",
+                "kind": "file",
+                "identity": "16777233:125546899"
+              },
+              {
+                "path": "notes.md",
+                "kind": "file",
+                "identity": "16777233:125546684"
+              },
+              {
+                "path": "SKILL.md",
+                "kind": "file",
+                "identity": "16777233:125546683"
+              },
+              {
+                "path": "support",
+                "kind": "directory",
+                "identity": "16777233:125546776"
+              },
+              {
+                "path": "support/payload.bin",
+                "kind": "file",
+                "identity": "16777233:125546779"
+              }
+            ],
+            "local": [
+              {
+                "path": ".",
+                "kind": "directory",
+                "identity": "16777233:125546782"
+              },
+              {
+                "path": "local-only.md",
+                "kind": "file",
+                "identity": "16777233:125546896"
+              },
+              {
+                "path": "notes.md",
+                "kind": "file",
+                "identity": "16777233:125546784"
+              },
+              {
+                "path": "SKILL.md",
+                "kind": "file",
+                "identity": "16777233:125546783"
+              },
+              {
+                "path": "support",
+                "kind": "directory",
+                "identity": "16777233:125546785"
+              },
+              {
+                "path": "support/payload.bin",
+                "kind": "file",
+                "identity": "16777233:125546786"
+              }
+            ]
+          },
+          "unboundResolutionRestoreOrigin": {
+            "intentId": "92ae96f0-19d7-40e0-8bca-58dfcbae26af",
+            "stepId": "05bbba38-6500-5a07-95ca-d1a5bb355681"
+          }
+        }
+      ]
+    },
+    "result": {
+      "intentId": "c3078e8c-eb2f-4160-a40a-f60d45b97711",
+      "operationId": "c3078e8c-eb2f-4160-a40a-f60d45b97711",
+      "status": "restored",
+      "source": {
+        "status": "unchanged",
+        "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc"
+      },
+      "targets": [
+        {
+          "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+          "harnessId": "codex",
+          "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+          "artifactPath": "skills/demo",
+          "status": "restored"
+        }
+      ],
+      "receiptIds": ["a98ae0bc-8080-56f3-a583-5ade0c641030"],
+      "receipts": [
+        {
+          "operationId": "a98ae0bc-8080-56f3-a583-5ade0c641030",
+          "kind": "restore-apply",
+          "status": "applied",
+          "appliedAt": "2026-10-09T11:00:57.443Z",
+          "displayTarget": ".agents/skills/demo",
+          "actions": [
+            {
+              "kind": "delete-file",
+              "relativePath": ".agents/skills/demo/examples/nested/new.md",
+              "beforeHash": "bafb47ad91dfadfbda0a38d58f50f6246b2ad4091e487c137b79b8e995c93b15",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": ".agents/skills/demo/local-only.md",
+              "byteLength": 21,
+              "afterHash": "575a96bc7606d2dd98121e1123bbd6d49eb46a24ba7e8a62d05d864823fb04f9",
+              "status": "applied"
+            },
+            {
+              "kind": "write-file",
+              "relativePath": ".agents/skills/demo/notes.md",
+              "byteLength": 35,
+              "beforeHash": "8683f2e116b4a62fb98d710cce2838d1ac7760ed64e68c5547f9eab04b88365b",
+              "afterHash": "e62c8901ce8a0c6eb13ba1c8653cab7a2cd1f470d88ead0616abea71dcc7fbb7",
+              "status": "applied"
+            },
+            {
+              "kind": "delete-directory",
+              "relativePath": ".agents/skills/demo/examples/nested",
+              "status": "applied"
+            },
+            {
+              "kind": "delete-directory",
+              "relativePath": ".agents/skills/demo/examples",
+              "status": "applied"
+            }
+          ],
+          "git": {
+            "mode": "unavailable"
+          },
+          "registered": null,
+          "source": {
+            "kind": "source",
+            "id": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+            "relativePath": "skills/demo"
+          },
+          "project": {
+            "id": "b65f07d3-14cc-49ff-8677-ff68b003cabe"
+          },
+          "restores": "92ae96f0-19d7-40e0-8bca-58dfcbae26af"
+        }
+      ],
+      "issues": [],
+      "recoveryAvailable": false,
+      "link": {
+        "choice": "link-canonical",
+        "skillId": "d9927c1f-3e90-498e-9e1e-db2f3af632a2",
+        "source": {
+          "sourceId": "508b31db-e1f6-47b5-ab27-b50fac6229bc",
+          "packageId": "packages/tools",
+          "artifactPath": "skills/demo"
+        },
+        "location": {
+          "projectId": "b65f07d3-14cc-49ff-8677-ff68b003cabe",
+          "harnessId": "codex",
+          "folderPath": ".agents/skills/demo"
+        },
+        "bindingId": "80dc6352-f7dc-5d40-9149-aca7c6599dcd",
+        "status": "restored"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Claude Only",
+  "metadata": {
+    "description": "A Claude-only fixture"
+  },
+  "plugins": [
+    {
+      "name": "skills-only",
+      "version": "1.0.0",
+      "description": "Portable skills",
+      "source": "./packages/skills-only"
+    },
+    {
+      "name": "commands",
+      "version": "1.0.0",
+      "description": "Claude commands",
+      "source": "./packages/commands"
+    },
+    {
+      "name": "remote",
+      "source": {
+        "source": "github",
+        "repo": "owner/remote",
+        "ref": "v1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@example/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@clerk/expo": "^4.6.1",
+    "convex": "^1.42.3",
+    "expo": "^57.0.0",
+    "expo-router": "~57.0.17",
+    "i18next": "^26.4.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-i18next": "^17.0.12",
+    "react-native": "0.86.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "typescript": "~6.0.3"
+  }
+}

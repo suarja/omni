@@ -1,0 +1,11 @@
+{
+  "name": "@omni/catalogue",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "A snapshot of the public skills.sh leaderboard, built by scripts/build.mjs.",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

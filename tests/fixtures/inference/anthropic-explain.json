@@ -1,0 +1,15 @@
+{
+  "modelId": "claude-haiku-4-5",
+  "provider": "anthropic",
+  "system": "You explain what differs between two versions of the same skill or finding, in one short, factual sentence. Say which side to keep — left, right, either (both are fine), or unknown (you cannot tell from what is given). Do not explain your reasoning process; reply with the requested JSON only.",
+  "userContent": "fixture input",
+  "toolSchema": {
+    "type": "object",
+    "required": ["explanation", "keep"],
+    "properties": {
+      "explanation": { "type": "string", "maxLength": 400 },
+      "keep": { "enum": ["left", "right", "either", "unknown"] }
+    },
+    "additionalProperties": false
+  }
+}

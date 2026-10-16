@@ -1,0 +1,52 @@
+{
+  "name": "omni-desktop",
+  "version": "0.1.1-rc.15",
+  "private": true,
+  "description": "A local-first desktop tool for managing developer context.",
+  "main": "out/main/index.js",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "demo:profile": "node scripts/demo-profile/cli.mjs",
+    "build": "pnpm build:plugin-runtime && electron-vite build && node scripts/stage-omni-plugin-runtime.mjs && bash scripts/check-preload-bundle.sh",
+    "build:plugin-runtime": "node scripts/build-omni-plugin-runtime.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check:size": "bash scripts/check-line-counts.sh",
+    "build:catalogue": "pnpm --filter @omni/catalogue build",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+    "release:mac": "node scripts/package-macos.mjs",
+    "test:release": "node --test scripts/release-policy.node-test.mjs",
+    "lint": "pnpm format:check",
+    "check:public": "node scripts/public-tree/cli.mjs check",
+    "export:public": "node scripts/public-tree/cli.mjs export",
+    "verify:public": "node scripts/public-tree/verify.mjs",
+    "release:version": "node scripts/release/version.mjs"
+  },
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "0.85.1",
+    "@earendil-works/pi-ai": "0.85.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typebox": "1.3.7",
+    "update-electron-app": "^3.3.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^36.0.0",
+    "electron-vite": "^3.1.0",
+    "esbuild": "^0.28.1",
+    "jsdom": "29.0.1",
+    "prettier": "^3.9.6",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0",
+    "yaml": "^2.9.1"
+  },
+  "license": "MIT"
+}

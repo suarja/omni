@@ -1,0 +1,28 @@
+.canvas-viewport { position: absolute; inset: 0; overflow: clip; touch-action: none; cursor: grab; background-image: radial-gradient(var(--canvas-dot) 1px, transparent 1.2px), var(--canvas-paper-finish); background-size: 16px 16px, 100% 100%; background-repeat: repeat, no-repeat; }
+.canvas-viewport.is-dragging { cursor: grabbing; }
+.canvas-viewport:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: -2px; }
+.canvas-world { position: absolute; top: 0; left: 0; width: 1px; height: 1px; transform-origin: 0 0; will-change: transform; }
+.canvas-graph { position: relative; width: 1px; height: 1px; }
+.canvas-wires { position: absolute; z-index: 0; max-width: none; max-height: none; overflow: visible; pointer-events: none; }
+.canvas-wire { fill: none; stroke: var(--canvas-wire); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
+.canvas-wire[data-attention="copy-difference"], .canvas-wire[data-attention="local-change"] { stroke: var(--canvas-warning); stroke-width: 1.7px; }
+.canvas-wire[data-attention="unavailable"] { stroke: var(--canvas-unknown); stroke-width: 1.7px; }
+.canvas-port { fill: var(--canvas-paper); stroke: var(--canvas-wire); stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
+.canvas-node-row { position: absolute; z-index: 1; }
+.canvas-node-row[data-kind="group"] .canvas-node { border-radius: 9px; }
+.canvas-node-row[data-kind="group"] .canvas-node-label { color: var(--canvas-ink); }
+.canvas-empty-column { z-index: 1; }
+.canvas-camera-controls { position: absolute; z-index: 3; right: 16px; bottom: 16px; display: flex; width: max-content; max-width: calc(100% - 24px); align-items: center; gap: 4px; padding: 5px 7px; background: linear-gradient(var(--canvas-surface), var(--canvas-hover)); border: 1px solid var(--canvas-rule); border-radius: 10px; box-shadow: 0 4px 14px var(--canvas-control-shadow); cursor: default; -webkit-app-region: no-drag; }
+.canvas-camera-controls button { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; padding: 0; color: var(--canvas-muted); background: transparent; border: 0; border-radius: 6px; }
+.canvas-camera-controls button:hover:not(:disabled) { color: var(--canvas-ink); background: var(--canvas-rail-hover); }
+.canvas-camera-controls button:disabled { opacity: .45; }
+.canvas-camera-controls output { min-width: 47px; color: var(--canvas-muted); font-size: var(--canvas-meta); font-variant-numeric: tabular-nums; text-align: center; }
+.canvas-camera-controls > span { width: 1px; height: 18px; margin: 0 3px; background: var(--canvas-rule); }
+.canvas-camera-controls:focus-within { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
+.canvas-setup-empty { position: relative; z-index: 2; pointer-events: auto; }
+@media (pointer: coarse) { .canvas-camera-controls button { width: 38px; height: 38px; } }
+@media (max-width: 620px) {
+  .canvas-stage-heading { top: 8px; right: 14px; left: 14px; }
+  .canvas-camera-controls { bottom: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .canvas-node-row { transition: none; } }

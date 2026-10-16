@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "receipts": [
+    {
+      "operationId": "capture-receipt-1",
+      "kind": "import-artifact",
+      "status": "applied",
+      "appliedAt": "2026-10-11T10:00:00.000Z",
+      "displayTarget": "Release tools",
+      "actions": [],
+      "git": {
+        "mode": "unavailable"
+      },
+      "registered": null,
+      "provenance": {
+        "agent": {
+          "harness": "codex",
+          "requestedAt": "2026-10-11T10:00:00.000Z"
+        },
+        "approval": "conversation"
+      }
+    },
+    {
+      "operationId": "capture-receipt-2",
+      "kind": "import-artifact",
+      "status": "applied",
+      "appliedAt": "2026-10-11T10:00:00.000Z",
+      "displayTarget": "Release tools",
+      "actions": [],
+      "git": {
+        "mode": "unavailable"
+      },
+      "registered": null,
+      "provenance": {
+        "agent": {
+          "harness": "codex",
+          "requestedAt": "2026-10-11T10:00:00.000Z"
+        },
+        "approval": "conversation"
+      }
+    },
+    {
+      "operationId": "capture-receipt-3",
+      "kind": "import-artifact",
+      "status": "applied",
+      "appliedAt": "2026-10-11T10:00:00.000Z",
+      "displayTarget": "Release tools",
+      "actions": [],
+      "git": {
+        "mode": "unavailable"
+      },
+      "registered": null,
+      "provenance": {
+        "agent": {
+          "harness": "codex",
+          "requestedAt": "2026-10-11T10:00:00.000Z"
+        },
+        "approval": "conversation"
+      }
+    },
+    {
+      "operationId": "receipt-2",
+      "kind": "write-skill",
+      "status": "applied",
+      "appliedAt": "2026-10-11T10:00:00.000Z",
+      "displayTarget": "Release tools",
+      "actions": [],
+      "git": {
+        "mode": "unavailable"
+      },
+      "registered": null,
+      "skillMode": "create"
+    },
+    {
+      "operationId": "receipt-3",
+      "kind": "install-agents",
+      "status": "applied",
+      "appliedAt": "2026-10-11T10:00:00.000Z",
+      "displayTarget": "Release tools",
+      "actions": [],
+      "git": {
+        "mode": "unavailable"
+      },
+      "registered": null
+    },
+    {
+      "operationId": "receipt-4",
+      "kind": "add-to-project",
+      "status": "applied",
+      "appliedAt": "2026-10-11T10:00:00.000Z",
+      "displayTarget": "Release tools",
+      "actions": [],
+      "git": {
+        "mode": "unavailable"
+      },
+      "registered": null
+    }
+  ]
+}

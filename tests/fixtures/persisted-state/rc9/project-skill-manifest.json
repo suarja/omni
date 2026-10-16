@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "intentId": "44444444-4444-4444-8444-444444444444",
+  "row": {
+    "id": "release-check",
+    "skillId": "33333333-3333-4333-8333-333333333333",
+    "name": "Release check",
+    "description": "Checks local release files.",
+    "origin": {
+      "kind": "project-only"
+    },
+    "agents": {
+      "claude-code": {
+        "state": "installed",
+        "folderPath": ".claude/skills/release-check"
+      },
+      "codex": {
+        "state": "absent"
+      }
+    },
+    "state": "current"
+  },
+  "action": "install-agent",
+  "steps": [
+    {
+      "stepId": "55555555-5555-4555-8555-555555555555",
+      "location": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "harnessId": "claude-code",
+        "folderPath": ".claude/skills/release-check"
+      },
+      "rootIdentity": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "trees": [],
+      "parking": [],
+      "uses": [],
+      "records": [],
+      "bindings": [],
+      "status": "applied"
+    }
+  ]
+}

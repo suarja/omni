@@ -1,0 +1,8 @@
+{
+  "name": "pstack",
+  "version": "0.2.0",
+  "description": "A selective adapter for pstack's writing, architecture, workflow, and engineering-principle skills.",
+  "author": {
+    "name": "Acme"
+  }
+}
