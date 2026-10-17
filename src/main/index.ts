@@ -84,7 +84,7 @@ function createWindow(policy: RendererPolicy): BrowserWindow {
     height: 900,
     minWidth: 1180,
     minHeight: 760,
-    backgroundColor: "#fbfaf9",
+    backgroundColor: "#f7f8f6",
     ...(process.platform === "darwin"
       ? {
           titleBarStyle: "hiddenInset" as const,

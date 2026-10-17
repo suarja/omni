@@ -31,7 +31,7 @@
 .workspace-setup-place.is-loading .ui-loading-skeleton { min-height: inherit; }
 .workspace-setup-map :focus-visible, .workspace-setup-header :focus-visible { outline: 2px solid var(--canvas-focus-edge); outline-offset: 3px; }
 .workspace-setup-error { position: absolute; z-index: 3; bottom: 16px; left: 20px; max-width: 480px; padding: 10px; color: var(--canvas-warning-ink); background: var(--canvas-warning-fill); border-radius: 8px; font-size: var(--font-size-meta); }
-.workspace-setup-help { position: absolute; z-index: 5; top: calc(var(--window-frame-titlebar-height) + 8px); right: 24px; padding: 8px; background: var(--canvas-surface); border: 1px solid var(--canvas-rule); border-radius: 10px; box-shadow: var(--canvas-menu-shadow); }
+.workspace-setup-help { position: absolute; z-index: 5; top: calc(var(--titlebar-height) + 8px); right: 24px; padding: 8px; background: var(--canvas-surface); border: 1px solid var(--canvas-rule); border-radius: 10px; box-shadow: var(--canvas-menu-shadow); }
 @media (max-width: 800px) { .workspace-setup-header { top: 18px; } }
 
 .workspace-setup-unavailable { position: absolute; z-index: 3; bottom: 16px; left: 20px; max-width: calc(100% - 180px); color: var(--canvas-warning-ink); font-size: var(--font-size-meta); }

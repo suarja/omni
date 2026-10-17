@@ -1,4 +1,4 @@
-.sheet.canvas-sheet { position: absolute; z-index: 10; top: var(--window-frame-titlebar-height); right: 10px; bottom: 10px; display: flex; width: var(--canvas-sheet-width, 520px); max-width: calc(100% - 20px); max-height: none; flex-direction: column; overflow: hidden; color: var(--canvas-ink); background: var(--canvas-surface); border: 1px solid var(--canvas-sheet-edge); border-radius: 14px; box-shadow: var(--canvas-sheet-relief); transition: transform .18s; }
+.sheet.canvas-sheet { position: absolute; z-index: 10; top: var(--titlebar-height); right: 10px; bottom: 10px; display: flex; width: var(--canvas-sheet-width, 520px); max-width: calc(100% - 20px); max-height: none; flex-direction: column; overflow: hidden; color: var(--canvas-ink); background: var(--canvas-surface); border: 1px solid var(--canvas-sheet-edge); border-radius: 14px; box-shadow: var(--canvas-sheet-relief); transition: transform .18s; }
 .sheet .sh-head { display: flex; flex: 0 0 auto; gap: 12px; align-items: flex-start; padding: 16px 18px 0; }
 .sh-head > div { min-width: 0; }
 .sheet .sh-kicker { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); }
@@ -79,6 +79,6 @@
 .sheet :focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
 .sheet button:disabled { opacity: .45; }
 @media (max-width: 760px) { .sheet.canvas-sheet { left: 68px; width: auto; } }
-@media (max-width: 500px) { .sheet.canvas-sheet { top: calc(var(--window-frame-titlebar-height) + 104px); right: 10px; bottom: 10px; left: 10px; } .sheet .item { flex-wrap: wrap; } }
-@media (max-width: 500px) and (pointer: coarse) { .sheet.canvas-sheet { top: calc(var(--window-frame-titlebar-height) + 108px); } }
+@media (max-width: 500px) { .sheet.canvas-sheet { top: calc(var(--titlebar-height) + 104px); right: 10px; bottom: 10px; left: 10px; } .sheet .item { flex-wrap: wrap; } }
+@media (max-width: 500px) and (pointer: coarse) { .sheet.canvas-sheet { top: calc(var(--titlebar-height) + 108px); } }
 @media (prefers-reduced-motion: reduce) { .sheet.canvas-sheet { transition: none; } }

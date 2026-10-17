@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.2
+
+The window is just the window.
+
+- Omni no longer paints its own frame inside the window: the dark (or grey) ring around the app
+  and its corners is gone in both appearances. macOS draws the window's shape and edge.
+
 ## 0.5.1
 
 Updates that install, and a calmer workspace.
