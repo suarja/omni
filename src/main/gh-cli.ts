@@ -1,4 +1,4 @@
-import { execFile } from "node:child_process";
+import { execFile } from "../adapters/owned-child-processes";
 import { promisify } from "node:util";
 const exec = promisify(execFile);
 export type GhCreateResult = Readonly<{ status: "created" }> | Readonly<{ status: "failed"; diagnostic: string }>;

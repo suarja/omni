@@ -1,4 +1,5 @@
-import type { CSSProperties, ReactElement } from "react";
+import { MarketplaceRecovery } from "./MarketplaceRecovery";
+import { useState, type CSSProperties, type ReactElement } from "react";
 import iconUrl from "../../../../resources/brand/icon.svg?url";
 import markUrl from "../../../../resources/brand/mark.svg?url";
 import { agentName } from "../../agents/agent-utils";
@@ -19,7 +20,10 @@ type MapProps = Readonly<{
   onSetup: (intent: WorkspaceMapIntent, opener: HTMLElement) => void;
 }>;
 
-export function WorkspaceSetupHeader({ state }: Readonly<{ state: WorkspaceMapState }>): ReactElement {
+export function WorkspaceSetupHeader({
+  state,
+  onFocusStep,
+}: Readonly<{ state: WorkspaceMapState; onFocusStep: () => void }>): ReactElement {
   const { t } = useI18n();
   const count = state.progress.count;
   return (
@@ -32,13 +36,17 @@ export function WorkspaceSetupHeader({ state }: Readonly<{ state: WorkspaceMapSt
         </>
       ) : null}
       <div className="workspace-setup-progress" data-testid="workspace-setup-progress">
-        {count ? <span>{t("canvasSetup.setupProgress", { count })}</span> : null}
+        <button type="button" className="workspace-setup-hide" data-testid="workspace-setup-next" onClick={onFocusStep}>
+          {t("canvasSetup.setupProgress", {
+            count,
+            next: t(`canvasSetup.next.${state.progress.current ?? "marketplace"}`),
+          })}
+        </button>
         <span className="workspace-setup-segments" aria-hidden="true">
           {(["marketplace", "project", "agents"] as const).map((step) => (
             <i key={step} data-done={state.progress.done[step]} />
           ))}
         </span>
-        {!count ? <span>{t("canvasSetup.progress", { count })}</span> : null}
         {count ? (
           <button
             className="workspace-setup-hide"
@@ -66,6 +74,7 @@ function placeStyle(place: WorkspaceSetupPlace): CSSProperties {
 
 function SetupPlace({ place, ...props }: MapProps & Readonly<{ place: WorkspaceSetupPlace }>): ReactElement {
   const { t } = useI18n();
+  const [hasRecoveryOffer, setHasRecoveryOffer] = useState(false);
   const step = place.step;
   const current = props.state.progress.current === step;
   const index = step === "marketplace" ? 1 : step === "project" ? 2 : 3;
@@ -84,7 +93,9 @@ function SetupPlace({ place, ...props }: MapProps & Readonly<{ place: WorkspaceS
   return (
     <section
       className={`workspace-setup-place${props.loading ? " is-loading" : ""}`}
-      style={placeStyle(place)}
+      style={{ ...placeStyle(place), ...(hasRecoveryOffer ? { minHeight: undefined } : {}) }}
+      data-recovery-offered={hasRecoveryOffer}
+      tabIndex={-1}
       data-setup-step={step}
       data-current={current}
       aria-labelledby={props.loading ? undefined : `workspace-setup-${step}-title`}
@@ -110,10 +121,11 @@ function SetupPlace({ place, ...props }: MapProps & Readonly<{ place: WorkspaceS
           {step !== "agents" ? (
             <p className="workspace-setup-place-copy">{t(`canvasSetup.places.${step}.description`)}</p>
           ) : null}
+          {step === "marketplace" ? <MarketplaceRecovery onOfferChange={setHasRecoveryOffer} /> : null}
           <div className="workspace-setup-place-actions">
             {step === "marketplace" ? (
               <>
-                {action("create-marketplace", t("canvasSetup.createMyMarketplace"), true)}
+                {action("create-marketplace", t("canvasSetup.createMyMarketplace"), !hasRecoveryOffer)}
                 {action("connect-marketplace", t("canvasSetup.connectMyMarketplace"))}
               </>
             ) : step === "project" ? (

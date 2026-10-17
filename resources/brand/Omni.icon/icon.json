@@ -1,0 +1,134 @@
+{
+  "fill-specializations": [
+    {
+      "value": {
+        "solid": "srgb:0.96863,0.97255,0.96471,1.00000"
+      }
+    },
+    {
+      "appearance": "dark",
+      "value": {
+        "solid": "srgb:0.18039,0.20392,0.21961,1.00000"
+      }
+    },
+    {
+      "appearance": "tinted",
+      "value": {
+        "solid": "srgb:0.83922,0.83922,0.83922,1.00000"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "hidden-specializations": [
+        {
+          "value": false
+        },
+        {
+          "appearance": "dark",
+          "value": true
+        },
+        {
+          "appearance": "tinted",
+          "value": true
+        }
+      ],
+      "layers": [
+        {
+          "name": "graph-light",
+          "image-name": "graph-light.svg",
+          "glass": false
+        },
+        {
+          "name": "dots-light",
+          "image-name": "dots-light.svg",
+          "glass": false
+        }
+      ],
+      "shadow": {
+        "kind": "none",
+        "opacity": 0
+      },
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    },
+    {
+      "hidden-specializations": [
+        {
+          "value": true
+        },
+        {
+          "appearance": "dark",
+          "value": false
+        },
+        {
+          "appearance": "tinted",
+          "value": true
+        }
+      ],
+      "layers": [
+        {
+          "name": "graph-dark",
+          "image-name": "graph-dark.svg",
+          "glass": false
+        },
+        {
+          "name": "dots-dark",
+          "image-name": "dots-dark.svg",
+          "glass": false
+        }
+      ],
+      "shadow": {
+        "kind": "none",
+        "opacity": 0
+      },
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    },
+    {
+      "hidden-specializations": [
+        {
+          "value": true
+        },
+        {
+          "appearance": "dark",
+          "value": true
+        },
+        {
+          "appearance": "tinted",
+          "value": false
+        }
+      ],
+      "layers": [
+        {
+          "name": "graph-tinted",
+          "image-name": "graph-tinted.svg",
+          "glass": false
+        },
+        {
+          "name": "dots-tinted",
+          "image-name": "dots-tinted.svg",
+          "glass": false
+        }
+      ],
+      "shadow": {
+        "kind": "none",
+        "opacity": 0
+      },
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}

@@ -1,5 +1,5 @@
 import { pushWithEvidence, savePushOutcome } from "./push-evidence";
-import { execFile } from "node:child_process";
+import { execFile } from "../../adapters/owned-child-processes";
 import { mkdir, realpath } from "node:fs/promises";
 import { promisify } from "node:util";
 import { registerSource } from "../../domain/project-source-registry";

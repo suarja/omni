@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { execFile as nodeExecFile } from "node:child_process";
+import { execFile as nodeExecFile } from "../adapters/owned-child-processes";
 import { realpath, rm } from "node:fs/promises";
 import { resolve } from "node:path";
 import { promisify } from "node:util";

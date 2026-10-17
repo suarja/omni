@@ -15,7 +15,7 @@ test("a standalone main bundle refuses dependencies outside the application", ()
   assert.deepEqual(inspectRuntimeImports('require("unbundled-library");'), ["unbundled-library"]);
 });
 
-import { mkdtemp, mkdir, writeFile, lstat, readlink, rm } from "node:fs/promises";
+import { mkdtemp, mkdir, writeFile, readFile, lstat, readlink, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { normalizeElectronFramework } from "./macos-framework.mjs";
@@ -53,11 +53,14 @@ test("packaging installs the approved Omni icon and declares it in Info.plist", 
     iconSource: "/tmp/source/resources/brand/Omni.icns",
     iconDestination: "/tmp/Omni.app/Contents/Resources/Omni.icns",
     obsoleteIcon: "/tmp/Omni.app/Contents/Resources/electron.icns",
+    assetsSource: "/tmp/source/resources/brand/Assets.car",
+    assetsDestination: "/tmp/Omni.app/Contents/Resources/Assets.car",
     plistEntries: {
       CFBundleDisplayName: "Omni",
       CFBundleName: "Omni",
       CFBundleExecutable: "Omni",
       CFBundleIconFile: "Omni",
+      CFBundleIconName: "Omni",
     },
   });
 });
@@ -69,4 +72,35 @@ test("release artifacts use the Omni name for each supported architecture", () =
       dmg: `Omni-0.2.0-${arch}.dmg`,
     });
   }
+});
+
+import { composerArtwork, composerDocument } from "./brand/composer-icon.mjs";
+import { glyph, themes } from "./brand/artwork.mjs";
+test("the system icon reuses the brand graph with light, dark and tinted artwork and no baked enclosure", () => {
+  const document = composerDocument();
+  const assets = composerArtwork();
+  assert.equal(Object.keys(assets).length, 6);
+  assert.ok(assets["graph-light.svg"].includes(glyph(themes.light)));
+  assert.ok(assets["graph-dark.svg"].includes(glyph(themes.dark)));
+  assert.equal(document["fill-specializations"].length, 3);
+  for (const group of document.groups) {
+    assert.equal(group.shadow.kind, "none");
+    assert.ok(group.layers[0]["image-name"].startsWith("graph-"));
+    assert.equal(group["hidden-specializations"].filter(({ value }) => !value).length, 1);
+    for (const layer of group.layers) {
+      assert.equal(layer.glass, false);
+      assert.ok(assets[layer["image-name"]]);
+    }
+  }
+  for (const source of Object.values(assets)) {
+    assert.ok(!source.includes("feDropShadow"));
+    assert.ok(!source.includes('rx="185"'));
+  }
+});
+
+test("committed Icon Composer sources match the brand generator", async () => {
+  const root = new URL("../resources/brand/Omni.icon/", import.meta.url);
+  assert.deepEqual(JSON.parse(await readFile(new URL("icon.json", root), "utf8")), composerDocument());
+  for (const [name, source] of Object.entries(composerArtwork()))
+    assert.equal(await readFile(new URL(`Assets/${name}`, root), "utf8"), source);
 });

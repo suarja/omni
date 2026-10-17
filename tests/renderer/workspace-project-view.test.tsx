@@ -54,25 +54,37 @@ async function render(snapshot: ResourceSnapshot, api = apiFor(snapshot), langua
   );
   return api;
 }
-it("shows neutral counters for unobserved workspace roots without acquiring grants or reading them", async () => {
-  const snapshot: ResourceSnapshot = {
-    ...projectSnapshot,
-    roots: projectSnapshot.roots.map((root) => ({ ...root, evidence: { status: "unobserved" } })),
-  };
-  const api = await render(snapshot);
-  for (const title of ["Project One", "Personal Skills"]) {
-    const node = [...container.querySelectorAll(".canvas-node-row")].find((node) => node.textContent?.includes(title))!;
-    expect(node.querySelector(".canvas-node-meta [aria-busy=true]")?.getAttribute("aria-label")).toBe(
-      "Chargement : Espace de travail",
-    );
-    expect(node.querySelector(".canvas-node-meta.is-faint")).not.toBeNull();
-    expect(node.querySelector('[data-glyph="project"], [data-glyph="marketplace"]')).not.toBeNull();
-    expect(node.querySelector(".project-chip.is-update")).toBeNull();
-  }
-  expect(ensureGrant).not.toHaveBeenCalled();
-  expect(api.readProjectSkills).not.toHaveBeenCalled();
-  expect(api.observeSource).not.toHaveBeenCalled();
-});
+it.each(["unobserved", "unavailable", "absent"] as const)(
+  "resolves an uncached %s project subtitle without starting a read",
+  async (state) => {
+    const snapshot: ResourceSnapshot = {
+      ...projectSnapshot,
+      roots: projectSnapshot.roots
+        .filter((root) => state !== "absent" || root.entry.kind !== "project")
+        .map((root) => ({
+          ...root,
+          evidence: state === "unavailable" ? { status: "unavailable", reason: "failed" } : { status: "unobserved" },
+        })),
+    };
+    const api = await render(snapshot);
+    for (const title of ["Project One", "Personal Skills"]) {
+      const node = [...container.querySelectorAll(".canvas-node-row")].find((node) =>
+        node.textContent?.includes(title),
+      )!;
+      if (title === "Project One") {
+        expect(node.querySelector(".canvas-node-meta [aria-busy=true]")).toBeNull();
+        expect(node.querySelector(".canvas-node-meta")?.textContent).toBe("Pas encore lu");
+      }
+      expect(node.querySelector(".canvas-node-meta.is-faint")).not.toBeNull();
+      if (state !== "unavailable")
+        expect(node.querySelector('[data-glyph="project"], [data-glyph="marketplace"]')).not.toBeNull();
+      expect(node.querySelector(".project-chip.is-update")).toBeNull();
+    }
+    expect(ensureGrant).not.toHaveBeenCalled();
+    expect(api.readProjectSkills).not.toHaveBeenCalled();
+    expect(api.observeSource).not.toHaveBeenCalled();
+  },
+);
 it("reuses observed skill counters across registry revisions without initiating a fresh read", async () => {
   const api = await render(projectSnapshot);
   await render({ ...projectSnapshot, registry: { ...projectSnapshot.registry, revision: 2 } }, api);

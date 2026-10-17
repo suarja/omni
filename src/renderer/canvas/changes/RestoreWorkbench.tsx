@@ -299,7 +299,7 @@ export function RestoreWorkbench({
     ? new Date(receipt.appliedAt).toLocaleDateString(language === "fr" ? "fr-FR" : "en-US")
     : "—";
   const description =
-    receipt?.kind === "link-storefront"
+    receipt?.kind === "link-storefront" || receipt?.kind === "connect-marketplace"
       ? preview?.kind === "ready"
         ? preview.plan.notes?.join(" ")
         : undefined
@@ -339,7 +339,7 @@ export function RestoreWorkbench({
                           : t("operations.restore.description", { date: captureDate, package: packageName(target) })
           : undefined;
   const heading =
-    receipt?.kind === "link-storefront"
+    receipt?.kind === "link-storefront" || receipt?.kind === "connect-marketplace"
       ? `${t("projectView.undo")} ${target}`
       : receipt?.kind === "register-project"
         ? t("agents.archiveProject", { name: target })

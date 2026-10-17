@@ -96,7 +96,7 @@ describe("workspace setup flow", () => {
   );
 
   it.each(["loading", "unobserved"] as const)(
-    "shows neutral loading while an otherwise healthy workspace has a %s root",
+    "shows the not-read subtitle while an otherwise healthy workspace has a %s project",
     async (pending) => {
       const personal = source("source-one", "Personal skills");
       const waiting = project("project-one");
@@ -115,7 +115,11 @@ describe("workspace setup flow", () => {
       expect(rendered.container.querySelector("[data-testid=workspace-setup-progress]")?.textContent).toContain(
         "2 of 3",
       );
-      expect(rendered.container.querySelector('[aria-busy=true][aria-label="Loading Workspace"]')).not.toBeNull();
+      const subtitle = rendered.container.querySelector(
+        '[data-testid="canvas-entry-project-project-one"] .canvas-node-meta',
+      );
+      expect(subtitle?.textContent).toBe("Not read yet");
+      expect(subtitle?.querySelector("[aria-busy=true]")).toBeNull();
       await act(async () =>
         renderResourceCanvas(
           rendered.root,

@@ -26,6 +26,7 @@ export function PageGraph(
     nodeTops: readonly (readonly number[])[];
     height: number;
     banner?: ReactNode;
+    onBannerMeasure?: (height: number) => void;
     onMeasure: (heights: ReadonlyMap<string, number>) => void;
   }>,
 ): ReactElement {
@@ -33,7 +34,9 @@ export function PageGraph(
   const ids = JSON.stringify(props.sections.flatMap((section) => section.nodes.map((node) => node.id)));
   useLayoutEffect(() => {
     const nodes = [...(graph.current?.querySelectorAll<HTMLElement>("[data-page-node]") ?? [])];
+    const banner = graph.current?.querySelector<HTMLElement>(".page-banner");
     const measure = (): void => {
+      props.onBannerMeasure?.(banner?.offsetHeight ?? 0);
       const heights = new Map(
         nodes.flatMap((node) => (node.offsetHeight > 0 ? [[node.dataset.pageNode!, node.offsetHeight] as const] : [])),
       );
@@ -42,8 +45,9 @@ export function PageGraph(
     measure();
     const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
     nodes.forEach((node) => observer?.observe(node));
+    if (banner) observer?.observe(banner);
     return () => observer?.disconnect();
-  }, [ids, props.onMeasure]);
+  }, [ids, Boolean(props.banner), props.onMeasure, props.onBannerMeasure]);
   return (
     <div ref={graph} className="page-graph" style={{ width: 1216, height: props.height }}>
       {props.banner ? <div className="page-banner">{props.banner}</div> : null}

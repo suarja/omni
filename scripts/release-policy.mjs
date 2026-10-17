@@ -1,17 +1,20 @@
 import { isBuiltin } from "node:module";
 import { join } from "node:path";
 
-/** @returns {{ iconSource: string, iconDestination: string, obsoleteIcon: string, plistEntries: Record<string, string> }} */
+/** Plans the legacy and system-rendered macOS icon resources. */
 export function applicationBrandingPlan(sourceRoot, app) {
   return {
     iconSource: join(sourceRoot, "resources/brand/Omni.icns"),
     iconDestination: join(app, "Contents/Resources/Omni.icns"),
+    assetsSource: join(sourceRoot, "resources/brand/Assets.car"),
+    assetsDestination: join(app, "Contents/Resources/Assets.car"),
     obsoleteIcon: join(app, "Contents/Resources/electron.icns"),
     plistEntries: {
       CFBundleDisplayName: "Omni",
       CFBundleName: "Omni",
       CFBundleExecutable: "Omni",
       CFBundleIconFile: "Omni",
+      CFBundleIconName: "Omni",
     },
   };
 }

@@ -1,5 +1,9 @@
 import { randomUUID } from "node:crypto";
-import { spawn as nodeSpawn, type ChildProcess, type ChildProcessWithoutNullStreams } from "node:child_process";
+import {
+  spawn as nodeSpawn,
+  type ChildProcess,
+  type ChildProcessWithoutNullStreams,
+} from "../adapters/owned-child-processes";
 import { isAbsolute, resolve } from "node:path";
 
 import { resolveResource } from "./omni-resources";

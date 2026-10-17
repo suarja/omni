@@ -2,7 +2,7 @@
 // function below is the exact behaviour `activity-snapshot.ts`, `activity-actions.ts` and
 // `agent-gateway/server.ts` had before the platform seam — same `ps`/`lsof` invocations, same
 // signals, same socket path rule.
-import { execFile as nodeExecFile } from "node:child_process";
+import { execFile as nodeExecFile } from "../../adapters/owned-child-processes";
 import { chmod } from "node:fs/promises";
 import { resolve } from "node:path";
 import { promisify } from "node:util";

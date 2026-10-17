@@ -25,3 +25,5 @@
   .canvas-camera-controls { bottom: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { .canvas-node-row { transition: none; } }
+
+.canvas-project-frame { fill: none; stroke: var(--canvas-rule); stroke-width: 1px; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }

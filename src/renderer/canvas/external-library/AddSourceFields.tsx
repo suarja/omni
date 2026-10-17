@@ -1,3 +1,4 @@
+import { activeWorkshop } from "../../../domain/source-roles";
 import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { licenceLabel } from "./presentation";
 import { discoverMacSource, useMacDiscovery } from "./use-mac-discovery";
@@ -120,6 +121,10 @@ export function AddSourceFields(
   );
   return (
     <div className="external-library-sheet" data-testid="external-add-fields">
+      <p className="add-resource-copy is-first">
+        {t("addResource.externalHint")}
+        {!rail || !activeWorkshop(rail.canvas.snapshot.registry) ? ` ${t("addResource.externalOwnHint")}` : null}
+      </p>
       <div className="skill-field">
         <label className="skill-label" htmlFor="external-repository">
           {t("externalLibrary.githubField")}

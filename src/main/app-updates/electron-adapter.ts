@@ -1,8 +1,8 @@
 import type { EventEmitter } from "node:events";
-import { execFile } from "node:child_process";
+import { execFile } from "../../adapters/owned-child-processes";
 import { promisify } from "node:util";
 import { join, resolve } from "node:path";
-import { autoUpdater } from "electron";
+import { autoUpdater, BrowserWindow } from "electron";
 import { updateElectronApp, UpdateSourceType } from "update-electron-app";
 import identity from "../../../resources/release-identity.json";
 import { canUpdate, createAppUpdates, type AppUpdatesService, type UpdatePolicy } from "./service";
@@ -14,6 +14,7 @@ export function createElectronAppUpdates(
     appRoot: string;
     userDataPath: string;
     policy: UpdatePolicy;
+    prepareForUpdate: () => Promise<void>;
     changed: (state: AppUpdateState) => void;
   }>,
 ): AppUpdatesService {
@@ -21,7 +22,17 @@ export function createElectronAppUpdates(
     policy: options.policy,
     preferences: createUpdatePreferences(join(options.userDataPath, "omni", "app-updates.json")),
     updater: canUpdate(options.policy)
-      ? autoUpdater
+      ? {
+          on: (event, listener) => (autoUpdater as EventEmitter).on(event, listener),
+          removeListener: (event, listener) => (autoUpdater as EventEmitter).removeListener(event, listener),
+          quitAndInstall: async () => {
+            await options.prepareForUpdate();
+            // Native updater closes windows before asking Squirrel to relaunch. Renderer vetoes
+            // and activate events must not strand that handoff after cleanup has completed.
+            for (const window of BrowserWindow.getAllWindows()) window.destroy();
+            autoUpdater.quitAndInstall();
+          },
+        }
       : { on: () => undefined, removeListener: () => undefined, quitAndInstall: () => undefined },
     changed: options.changed,
     verifySignature: async () => {

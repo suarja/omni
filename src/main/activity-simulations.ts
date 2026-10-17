@@ -1,8 +1,8 @@
-import { spawn } from "node:child_process";
+import { spawn } from "../adapters/owned-child-processes";
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 
-import { execFile as nodeExecFile } from "node:child_process";
+import { execFile as nodeExecFile } from "../adapters/owned-child-processes";
 import { promisify } from "node:util";
 
 import { safeGitArgs } from "./safe-git-args";

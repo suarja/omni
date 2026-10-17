@@ -1,4 +1,4 @@
-import { execFile as nodeExecFile } from "node:child_process";
+import { execFile as nodeExecFile } from "../adapters/owned-child-processes";
 import { lstat, realpath, stat } from "node:fs/promises";
 import { basename, relative, resolve, sep } from "node:path";
 import { promisify } from "node:util";

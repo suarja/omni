@@ -12,13 +12,11 @@ const FIXTURES = join(__dirname, "../fixtures/platform/darwin");
 type ExecCall = Readonly<{ file: string; args: readonly string[]; timeout?: number }>;
 type ExecResult = Readonly<{ stdout: string; stderr: string }>;
 
-// `darwin.ts` only ever calls the promisified form of `execFile` (never the callback form),
-// so the stub only needs to satisfy `util.promisify.custom` — exactly what real
-// `node:child_process` does for `execFile` itself, which is why the module under test can
-// `await execFile(...)` and read `.stdout` without a mapping layer of its own.
+// These parsing tests stub the owned-process adapter's promisified command boundary.
+// Child handle ownership is covered separately with real processes.
 async function loadDarwin(handler: (call: ExecCall) => Promise<ExecResult>) {
   vi.resetModules();
-  vi.doMock("node:child_process", () => {
+  vi.doMock("../../src/adapters/owned-child-processes", () => {
     const execFile = (): void => {
       throw new Error("This stub only implements the promisified execFile path.");
     };
@@ -33,7 +31,7 @@ async function loadDarwin(handler: (call: ExecCall) => Promise<ExecResult>) {
 }
 
 afterEach(() => {
-  vi.doUnmock("node:child_process");
+  vi.doUnmock("../../src/adapters/owned-child-processes");
   vi.resetModules();
   vi.restoreAllMocks();
 });

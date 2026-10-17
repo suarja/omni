@@ -76,6 +76,7 @@ export type PositionedNode = Readonly<{ node: CanvasNode; x: number; y: number }
 export type CanvasLayout = Readonly<{
   nodes: readonly PositionedNode[];
   bounds: Bounds;
+  projectFrame?: Bounds;
   wires: readonly Readonly<{
     id: string;
     d: string;

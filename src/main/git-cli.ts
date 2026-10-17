@@ -1,7 +1,7 @@
 import { push, remoteUrl, type GitPushResult, type GitPushTarget } from "./git-push";
 export { push, remoteUrl } from "./git-push";
 export type { GitPushResult, GitPushTarget } from "./git-push";
-import { execFile as nodeExecFile } from "node:child_process";
+import { execFile as nodeExecFile } from "../adapters/owned-child-processes";
 import { realpath } from "node:fs/promises";
 import { promisify } from "node:util";
 

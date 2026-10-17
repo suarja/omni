@@ -49,6 +49,8 @@ export function operationLabel(
     return t("skillActions.historyDescribe", {
       name: receipt.displayTarget.split("/").at(-1) ?? receipt.displayTarget,
     });
+  if (receipt.kind === "connect-marketplace")
+    return t("canvasSetup.marketplaceConnected", { name: receipt.displayTarget });
   if (receipt.kind === "link-storefront") return `${t("storefronts.link")} ${receipt.displayTarget}`;
   if (receipt.kind === "archive-storefront") return `${t("projectView.undo")} ${receipt.displayTarget}`;
   if (receipt.kind === "register-project") return t("agents.registerProject", { name: receipt.displayTarget });
@@ -141,6 +143,8 @@ function relativeDate(timestamp: string, t: ReturnType<typeof useI18n>["t"]): st
 }
 
 export function isReceiptRestorable(receipt: OperationReceipt, receipts: readonly OperationReceipt[]): boolean {
+  if (receipt.kind === "connect-marketplace") return receipt.status === "applied" && !receipt.restored;
+  if (receipt.kind === "undo-connect-marketplace") return false;
   if (receipt.kind === "link-storefront") return receipt.status === "applied" && !receipt.restored;
   if (receipt.kind === "archive-storefront") return false;
   if (receipt.kind === "register-project") return receipt.status === "applied" && !receipt.restored;

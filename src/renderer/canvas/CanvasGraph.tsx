@@ -170,6 +170,7 @@ function renderNode(
             className={`canvas-node-meta${resource && metadata?.get(nodeKey(resource.ref)) === t("canvas.notRead") ? " is-faint" : ""}`}
           >
             {resource &&
+            resource.kind !== "project" &&
             (resource.state === "loading" || resource.state === "unobserved") &&
             metadata?.get(nodeKey(resource.ref)) === t("canvas.notRead") ? (
               <LoadingSkeleton
@@ -272,6 +273,17 @@ export function CanvasGraph(
         style={{ height: `${height}px`, left: `${left}px`, top: `${top}px`, width: `${width}px` }}
         viewBox={`${left} ${top} ${width} ${height}`}
       >
+        {props.layout.projectFrame ? (
+          <rect
+            className="canvas-project-frame"
+            data-testid="canvas-project-frame"
+            x={props.layout.projectFrame.left}
+            y={props.layout.projectFrame.top}
+            width={props.layout.projectFrame.right - props.layout.projectFrame.left}
+            height={props.layout.projectFrame.bottom - props.layout.projectFrame.top}
+            rx={12}
+          />
+        ) : null}
         {props.layout.wires.map((wire) => (
           <path
             className="canvas-wire"

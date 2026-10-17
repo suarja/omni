@@ -98,7 +98,17 @@ export function CanvasStage(
           </span>
         </div>
       ) : null}
-      {mapVisible && !mapLoading && props.workspaceMap ? <WorkspaceSetupHeader state={props.workspaceMap} /> : null}
+      {mapVisible && !mapLoading && props.workspaceMap ? (
+        <WorkspaceSetupHeader
+          state={props.workspaceMap}
+          onFocusStep={() => {
+            props.camera.fit();
+            props.viewportRef.current
+              ?.querySelector<HTMLElement>(`[data-setup-step="${props.workspaceMap?.progress.current}"]`)
+              ?.focus({ preventScroll: true });
+          }}
+        />
+      ) : null}
       {props.contextIsWorkspace && props.workspaceMap?.error ? (
         <p className="workspace-setup-error" role="alert">
           {t("canvasSetup.setupStateUnavailable")}

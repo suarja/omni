@@ -1,6 +1,7 @@
 // Builds Omni's brand assets from one definition: SVG sources, PNG renders and the macOS .icns.
 // Run with Electron so rendering uses Chromium: `pnpm brand:build`.
 import { app, BrowserWindow } from "electron";
+import { mkdtempSync, rmSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -10,42 +11,8 @@ import { fileURLToPath } from "node:url";
 const root = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const out = join(root, "resources/brand");
 
-// Canvas palette (src/renderer/canvas/canvas-tokens.css); dark accents are lifted for contrast on ink.
-const themes = {
-  light: {
-    plate: "#f7f8f6",
-    plateEdge: "#dce0dc",
-    dot: "#d3d7d2",
-    edge: "#a8afb0",
-    center: "#ffffff",
-    centerRing: "#c9d3e2",
-    project: "#567faf",
-    plugin: "#388777",
-    marketplace: "#7b62b0",
-  },
-  dark: {
-    plate: "#2e3438",
-    plateEdge: "#2e3438",
-    dot: "#454c51",
-    edge: "#787f83",
-    center: "#f7f8f6",
-    centerRing: "#787f83",
-    project: "#6f97c6",
-    plugin: "#4fa18f",
-    marketplace: "#9580c8",
-  },
-};
-
-/** The graph glyph in a -60..60 coordinate space: a center node linked to three entities. */
-function glyph(t) {
-  return [
-    `<path d="M0,0 L-26,-24 M0,0 L30,-6 M0,0 L-6,30" fill="none" stroke="${t.edge}" stroke-width="2.5" stroke-linecap="round"/>`,
-    `<rect x="-13" y="-13" width="26" height="26" rx="7" fill="${t.center}" stroke="${t.centerRing}" stroke-width="3"/>`,
-    `<rect x="-34" y="-32" width="16" height="16" rx="5" fill="${t.project}"/>`,
-    `<rect x="22" y="-14" width="16" height="16" rx="5" fill="${t.plugin}"/>`,
-    `<rect x="-14" y="22" width="16" height="16" rx="5" fill="${t.marketplace}"/>`,
-  ].join("");
-}
+import { glyph, themes } from "./artwork.mjs";
+import { buildComposerIcon } from "./composer-icon.mjs";
 
 /** macOS app icon on a 1024 canvas: 824 plate, 100 margin, soft shadow. Dots are dropped at small sizes. */
 function icon(t, { dots = true } = {}) {
@@ -76,6 +43,10 @@ async function render(window, svg, size) {
   return image.resize({ width: size, height: size }).toPNG();
 }
 
+const brandProfile = mkdtempSync(join(tmpdir(), "omni-brand-profile-"));
+app.setPath("userData", brandProfile);
+app.setPath("sessionData", brandProfile);
+app.once("quit", () => rmSync(brandProfile, { recursive: true, force: true }));
 app.commandLine.appendSwitch("force-device-scale-factor", "1");
 app.dock?.hide();
 // A top-level await before "ready" stalls Electron's ESM main; start from the ready callback.
@@ -118,6 +89,7 @@ async function build() {
     }
     execFileSync("/usr/bin/iconutil", ["-c", "icns", iconset, "-o", join(out, "Omni.icns")]);
     await rm(resolve(iconset, ".."), { recursive: true, force: true });
+    await buildComposerIcon(out);
     console.log(`Built brand assets in ${out}`);
   } finally {
     window.destroy();

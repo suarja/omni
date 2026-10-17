@@ -12,7 +12,7 @@ export type UpdatePolicy = Readonly<{
 type Updater = Readonly<{
   on(event: string, listener: () => void): unknown;
   removeListener(event: string, listener: () => void): unknown;
-  quitAndInstall(): void;
+  quitAndInstall(): void | Promise<void>;
 }>;
 export interface AppUpdatesService {
   initialize(): Promise<void>;
@@ -46,21 +46,23 @@ export function createAppUpdates(
   let session: { stopUpdates(): void } | undefined;
   let queue = Promise.resolve();
   let disposed = false;
+  let restartAttempt: Promise<void> | undefined;
   const publish = (): void => options.changed({ ...state });
   const onDownloaded = (): void => {
-    if (!session || !state.enabled || disposed) return;
+    if (!state.available || disposed) return;
     state = { ...state, downloaded: true, error: false };
+    reconcile();
     publish();
   };
   const onError = (): void => {
+    restartAttempt = undefined;
     state = { ...state, error: true };
     publish();
   };
   function reconcile(): void {
-    if (!state.available || !state.enabled || disposed) {
+    if (!state.available || !state.enabled || state.downloaded || disposed) {
       session?.stopUpdates();
       session = undefined;
-      state = { ...state, downloaded: false };
     } else if (!session) session = options.start();
   }
   async function initializeOnce(): Promise<void> {
@@ -102,9 +104,15 @@ export function createAppUpdates(
   async function restart(): Promise<void> {
     await queue;
     await initialize();
-    if (!state.available || !state.enabled || !state.downloaded || disposed)
-      throw new Error("No enabled app update is downloaded. Keep using Omni and try again after download.");
-    options.updater.quitAndInstall();
+    if (!state.available || !state.downloaded || disposed)
+      throw new Error("No app update is downloaded. Keep using Omni and try again after download.");
+    restartAttempt ??= Promise.resolve()
+      .then(() => options.updater.quitAndInstall())
+      .catch((error: unknown) => {
+        onError();
+        throw error;
+      });
+    await restartAttempt;
   }
   function dispose(): void {
     disposed = true;

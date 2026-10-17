@@ -1,3 +1,4 @@
+import { routeCircuitTree } from "./circuit-tree";
 import type { CanvasLayout, CanvasNode, CanvasProjection, Point, PositionedNode, Size } from "./spatial-types";
 
 const nodeWidth = 264;
@@ -123,20 +124,19 @@ function detailedWires(center: PositionedNode, children: readonly PositionedNode
     const group = children.filter((child) => Math.sign(child.x - center.x) === side);
     if (!group.length) continue;
     const bus = center.x + side * 220;
-    const minimum = Math.min(center.y, ...group.map((child) => child.y));
-    const maximum = Math.max(center.y, ...group.map((child) => child.y));
     const start = { x: center.x + (side * nodeWidth) / 2, y: center.y };
+    const ends = group.map((child) => ({ x: child.x - (side * nodeWidth) / 2, y: child.y }));
+    const tree = routeCircuitTree(start, bus, ends);
     wires.push({
       id: `trunk:${side}`,
-      d: `M ${start.x} ${start.y} H ${bus} M ${bus} ${minimum} V ${maximum}`,
+      d: tree.trunk,
       ...wireAttention(center.node),
     });
     addPort(ports, start);
-    for (const child of group) {
-      const end = { x: child.x - (side * nodeWidth) / 2, y: child.y };
-      wires.push({ id: `branch:${child.node.id}`, d: `M ${bus} ${child.y} H ${end.x}`, ...wireAttention(child.node) });
-      addPort(ports, end);
-    }
+    group.forEach((child, index) => {
+      wires.push({ id: `branch:${child.node.id}`, d: tree.branches[index]!, ...wireAttention(child.node) });
+      addPort(ports, ends[index]!);
+    });
   }
   return { wires, ports };
 }

@@ -29,7 +29,8 @@ export const addResource = {
   firstMine: "Ma première marketplace",
   sourceFolder: "Dossier de la source",
   externalHint:
-    "Un dépôt de skills publié par d'autres, cloné sur cet ordinateur. Omni le lit sans jamais le modifier ; vous pourrez installer ses skills ou les copier dans votre marketplace.",
+    "Un dépôt maintenu par une autre personne, une équipe ou une communauté. Suivez ses skills sans modifier la source.",
+  externalOwnHint: "Pour votre propre dépôt, choisissez Ma première marketplace.",
   currentBefore: "Votre marketplace actuelle est ",
   currentAfter: ". Ajoutez-en une autre pour séparer des skills (par exemple une vitrine publique).",
   firstHint: "Une marketplace à vous pour ranger vos skills et les installer dans vos projets.",

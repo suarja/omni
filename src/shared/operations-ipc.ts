@@ -1,3 +1,4 @@
+import type { ConnectMarketplaceRequest, MarketplaceConnectionPlan } from "./marketplace-connection-ipc";
 import type { LinkStorefrontRequest, StorefrontLinkPlan } from "./storefront-link-ipc";
 import type { RegisterProjectRequest, ProjectRegistrationPlan } from "./project-registration-ipc";
 import type {
@@ -54,6 +55,8 @@ export type { AddToProjectRequest } from "./operations-add-to-project-ipc";
 
 // One list of operation kinds: the type and both parsers derive from it.
 export const OPERATION_KINDS = [
+  "connect-marketplace",
+  "undo-connect-marketplace",
   "link-storefront",
   "archive-storefront",
   "register-project",
@@ -120,6 +123,7 @@ export type OperationPlan = Readonly<{
   report?: import("./operations-compatible-ipc").CompatibilityReport;
   findings?: readonly SkillFinding[];
   notes?: readonly string[];
+  marketplaceConnection?: MarketplaceConnectionPlan;
   storefrontLink?: StorefrontLinkPlan;
   projectRegistration?: ProjectRegistrationPlan;
   harnesses?: readonly Readonly<{
@@ -260,6 +264,7 @@ export interface OperationsDesktopApi {
       | RetryPushRequest
       | PreviewMarketplaceRequest
       | PreviewApplyPlanRequest
+      | ConnectMarketplaceRequest
       | LinkStorefrontRequest
       | RegisterProjectRequest
       | DescribePluginRequest

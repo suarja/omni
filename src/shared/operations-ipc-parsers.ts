@@ -1,3 +1,8 @@
+import {
+  connectMarketplaceSchema,
+  parseMarketplaceConnectionPlan,
+  type ConnectMarketplaceRequest,
+} from "./marketplace-connection-ipc";
 import { linkStorefrontSchema, parseStorefrontLinkPlan, type LinkStorefrontRequest } from "./storefront-link-ipc";
 import {
   registerProjectSchema,
@@ -62,6 +67,7 @@ function parsePlan(value: unknown): OperationPlan {
   assertKeys(
     plan,
     [
+      "marketplaceConnection",
       "storefrontLink",
       "projectRegistration",
       "planId",
@@ -96,6 +102,9 @@ function parsePlan(value: unknown): OperationPlan {
     ...(plan.packageId === undefined ? {} : { packageId: readRelativePath(plan.packageId) }),
     actions: plan.actions.map((action) => parseOperationAction(action) as OperationAction),
     git: { mode: git.mode, warnings: git.warnings },
+    ...(plan.marketplaceConnection === undefined
+      ? {}
+      : { marketplaceConnection: parseMarketplaceConnectionPlan(plan.marketplaceConnection) }),
     ...(plan.storefrontLink === undefined ? {} : { storefrontLink: parseStorefrontLinkPlan(plan.storefrontLink) }),
     ...(plan.projectRegistration === undefined
       ? {}
@@ -239,6 +248,7 @@ export function parsePreviewMarketplaceRequest(value: unknown): PreviewMarketpla
 export function parsePreviewOperationRequest(
   value: unknown,
 ):
+  | ConnectMarketplaceRequest
   | LinkStorefrontRequest
   | RegisterProjectRequest
   | PublishPluginRequest
@@ -256,6 +266,7 @@ export function parsePreviewOperationRequest(
   | WriteHarnessSettingRequest
   | AddToProjectRequest {
   const request = assertRecord(value, "Operation preview request");
+  if (request.kind === "connect-marketplace") return connectMarketplaceSchema.parse(request);
   if (request.kind === "link-storefront") return linkStorefrontSchema.parse(request);
   if (request.kind === "register-project") return registerProjectSchema.parse(request);
   if (request.kind === "publish-plugin") return parsePublishPluginRequest(request);

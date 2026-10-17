@@ -155,16 +155,16 @@ it("allows projects and agents before a marketplace and completes without welcom
   expect(rendered.container.querySelector("[data-testid=workspace-connected-agents]")?.textContent).toContain("Codex");
   const positions = mapPositions();
   await render(resourceSnapshot(registryView([app], [source("mine", "My skills")])));
-  expect(mapPositions()).toMatchObject(positions);
+  expect(mapPositions()).not.toEqual(positions);
   expect(rendered.container.querySelector("[data-testid=workspace-setup-progress]")).toBeNull();
-  expectOmniLandmark();
+  expect(rendered.container.querySelector(".workspace-setup-center")).toBeNull();
   expect(rendered.container.querySelector(".stage-title")?.textContent).toBe("Workspace");
   expect(rendered.container.querySelector("[data-setup-step]")).toBeNull();
-  expect(rendered.container.querySelectorAll(".canvas-wire")).toHaveLength(3);
+  expect(rendered.container.querySelectorAll(".canvas-wire")).toHaveLength(1);
   expect(rendered.container.querySelector(".canvas-wire[data-dashed=true]")).toBeNull();
 });
 
-it("keeps the marketplace, project, agents and camera fixed when the last step completes", async () => {
+it("switches layout once on completion and keeps it fixed on later reads", async () => {
   vi.spyOn(HTMLDivElement.prototype, "clientWidth", "get").mockReturnValue(1440);
   vi.spyOn(HTMLDivElement.prototype, "clientHeight", "get").mockReturnValue(838);
   const snapshot = resourceSnapshot(registryView([project("app")], [source("mine", "My skills")]));
@@ -173,12 +173,14 @@ it("keeps the marketplace, project, agents and camera fixed when the last step c
   const camera = rendered.container.querySelector<HTMLElement>(".canvas-world")?.style.transform;
   status = { ...status, harnesses: [harness(true)] };
   await act(async () => listeners.forEach((listener) => listener()));
-  expect(mapPositions()).toMatchObject(before);
-  expect(rendered.container.querySelector<HTMLElement>(".workspace-connected-agents")?.style.left).toBe("-132px");
-  expect(rendered.container.querySelector<HTMLElement>(".workspace-connected-agents")?.style.top).toBe("136px");
+  expect(mapPositions()).not.toEqual(before);
+  expect(rendered.container.querySelector<HTMLElement>(".workspace-connected-agents")?.style.top).toBe("-36px");
+  const completed = mapPositions();
+  await act(async () => listeners.forEach((listener) => listener()));
+  expect(mapPositions()).toEqual(completed);
   expect(rendered.container.querySelector<HTMLElement>(".canvas-world")?.style.transform).toBe(camera);
   expect(rendered.container.querySelector(".workspace-setup-header")).toBeNull();
-  expectOmniLandmark();
+  expect(rendered.container.querySelector(".workspace-setup-center")).toBeNull();
 });
 
 it("does not count archived entries, storefronts, external sources or detection alone as done", async () => {
@@ -207,11 +209,11 @@ it("hides setup durably, keeps real nodes, and restores it from Help", async () 
   expect(setSettings).toHaveBeenCalledWith(expect.objectContaining({ workspaceSetupHidden: true }));
   expect(rendered.container.querySelector("[data-setup-step]")).toBeNull();
   expect(rendered.container.querySelector("[data-testid=canvas-entry-project-app]")).not.toBeNull();
-  expect(mapPositions()).toEqual(positions);
-  expectOmniLandmark();
+  expect(mapPositions()).not.toEqual(positions);
+  expect(rendered.container.querySelector(".workspace-setup-center")).toBeNull();
   expect(rendered.container.querySelector(".workspace-setup-header")).toBeNull();
   expect(rendered.container.querySelector(".stage-title")?.textContent).toBe("Workspace");
-  expect(rendered.container.querySelectorAll(".canvas-wire")).toHaveLength(2);
+  expect(rendered.container.querySelectorAll(".canvas-wire")).toHaveLength(1);
   expect(rendered.container.querySelector(".canvas-wire[data-dashed=true]")).toBeNull();
   await act(async () => rendered.root.unmount());
   rendered = createCanvasRoot();
@@ -222,6 +224,7 @@ it("hides setup durably, keeps real nodes, and restores it from Help", async () 
   expect(settings.workspaceSetupHidden).toBe(false);
   expect(rendered.container.querySelectorAll("[data-setup-step]")).toHaveLength(1);
   expect(mapPositions()).toEqual(positions);
+  expectOmniLandmark();
 });
 
 it("retains the map and reports a failed Hide instead of pretending it persisted", async () => {

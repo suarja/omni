@@ -20,7 +20,7 @@ afterEach(async () => {
 });
 function fixture(policy = eligible) {
   let enabled = true;
-  const updater = Object.assign(new EventEmitter(), { quitAndInstall: vi.fn() });
+  const updater = Object.assign(new EventEmitter(), { quitAndInstall: vi.fn<() => void | Promise<void>>() });
   const stopUpdates = vi.fn();
   const start = vi.fn(() => ({ stopUpdates }));
   const verifySignature = vi.fn(async () => true);
@@ -81,14 +81,84 @@ describe("app updates", () => {
     expect(f.updater.quitAndInstall).toHaveBeenCalledOnce();
     f.service.dispose();
   });
-  it("discards a late download after opt-out and rejects a premature restart", async () => {
+  it("rejects a premature restart before any download", async () => {
     const f = fixture();
     await f.service.initialize();
     await expect(f.service.restart()).rejects.toThrow(/download/);
     await f.service.set(false);
-    f.updater.emit("update-downloaded");
     expect((await f.service.get()).downloaded).toBe(false);
     await expect(f.service.restart()).rejects.toThrow();
+    f.service.dispose();
+  });
+  it("stops polling as soon as an update is staged so Electron keeps its native install flag", async () => {
+    const f = fixture();
+    await f.service.initialize();
+    let nativeUpdateAvailable = true;
+    f.stopUpdates.mockImplementation(() => {
+      nativeUpdateAvailable = true;
+    });
+    f.updater.emit("update-downloaded");
+    // Electron 36 sets g_update_available=false on a later empty check.
+    if (!f.stopUpdates.mock.calls.length) nativeUpdateAvailable = false;
+    f.updater.quitAndInstall.mockImplementation(() => {
+      if (!nativeUpdateAvailable) throw new Error("No update available, can't quit and install");
+    });
+    await expect(f.service.restart()).resolves.toBeUndefined();
+    expect(f.stopUpdates).toHaveBeenCalledOnce();
+    f.updater.emit("update-not-available");
+    expect((await f.service.get()).downloaded).toBe(true);
+    f.service.dispose();
+  });
+  it("keeps a staged update restartable through opt-out and opt-in without resetting the native feed", async () => {
+    const f = fixture();
+    await f.service.initialize();
+    f.updater.emit("update-downloaded");
+    await f.service.set(false);
+    expect(await f.service.get()).toMatchObject({ enabled: false, downloaded: true });
+    await f.service.restart();
+    await f.service.set(true);
+    expect(f.start).toHaveBeenCalledOnce();
+    expect((await f.service.get()).downloaded).toBe(true);
+    f.service.dispose();
+  });
+  it("records a staged in-flight download after opt-out", async () => {
+    const f = fixture();
+    await f.service.initialize();
+    await f.service.set(false);
+    f.updater.emit("update-downloaded");
+    expect((await f.service.get()).downloaded).toBe(true);
+    await f.service.restart();
+    f.service.dispose();
+  });
+  it("hands one restart to Squirrel when the action is clicked again during cleanup", async () => {
+    const f = fixture();
+    await f.service.initialize();
+    f.updater.emit("update-downloaded");
+    let finish!: () => void;
+    const pending = new Promise<void>((resolve) => {
+      finish = resolve;
+    });
+    f.updater.quitAndInstall.mockImplementation(() => pending);
+    const first = f.service.restart();
+    const second = f.service.restart();
+    await vi.waitFor(() => expect(f.updater.quitAndInstall).toHaveBeenCalled());
+    finish();
+    await Promise.all([first, second]);
+    expect(f.updater.quitAndInstall).toHaveBeenCalledOnce();
+    f.service.dispose();
+  });
+  it("retains the restart action and permits retry after a failed install request", async () => {
+    const f = fixture();
+    await f.service.initialize();
+    f.updater.emit("update-downloaded");
+    f.updater.quitAndInstall.mockRejectedValueOnce(new Error("Native install failed"));
+    await expect(f.service.restart()).rejects.toThrow("Native install failed");
+    expect(await f.service.get()).toMatchObject({ downloaded: true, error: true });
+    await f.service.restart();
+    expect(f.updater.quitAndInstall).toHaveBeenCalledTimes(2);
+    f.updater.emit("error");
+    await f.service.restart();
+    expect(f.updater.quitAndInstall).toHaveBeenCalledTimes(3);
     f.service.dispose();
   });
   it("persists the default-on decision and rejects malformed preferences", async () => {

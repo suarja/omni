@@ -25,9 +25,7 @@ export function AddMarketplaceSheet(
   const cancel = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!props.state.ownership)
-      props.actions.setOwnership(
-        props.initialRepository || activeWorkshop(props.setup.snapshot.registry) ? "external" : "personal",
-      );
+      props.actions.setOwnership(activeWorkshop(props.setup.snapshot.registry) ? "external" : "personal");
   }, [props.state.ownership, props.initialRepository, props.setup.snapshot.registry]);
   useEffect(() => {
     cancel.current?.focus();

@@ -20,7 +20,8 @@ import { useCanvasCamera } from "./spatial/use-canvas-camera";
 import { useCanvasNavigation } from "./spatial/use-canvas-navigation";
 import { displayGroupLabel } from "./spatial/canvas-labels";
 import { CanvasStage } from "./CanvasStage";
-import { layoutWorkspaceMap, type WorkspaceMapLayout } from "./setup/workspace-map-layout";
+import { createWorkspaceLayoutSession } from "./setup/workspace-layout-session";
+import { type WorkspaceMapLayout } from "./setup/workspace-map-layout";
 import type { WorkspaceMapIntent } from "./setup/WorkspaceSetupMap";
 import "./canvas.css";
 import "./setup/setup.css";
@@ -131,7 +132,10 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
               addWorkspaceUseRelations(baseNavigation.projection, props.snapshot, rail?.uses ?? []),
               rail.externalLibrary.list.sources,
             )
-          : addWorkspaceUseRelations(baseNavigation.projection, props.snapshot, rail?.uses ?? [])
+          : projectExternalLibrary(
+              addWorkspaceUseRelations(baseNavigation.projection, props.snapshot, rail?.uses ?? []),
+              [],
+            )
         : baseNavigation.projection,
     [props.context.kind, baseNavigation.projection, props.snapshot, rail?.uses, rail?.externalLibrary.list],
   );
@@ -177,14 +181,16 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
       ? navigation.selection.relativePath
       : details?.resource.relativePath;
   const viewportRef = useRef<HTMLDivElement>(null);
+  const [workspaceLayout] = useState(createWorkspaceLayoutSession);
   const layoutForSize = (size: Readonly<{ width: number; height: number }>): WorkspaceMapLayout =>
     props.context.kind === "workspace"
-      ? layoutWorkspaceMap(navigation.projection, size, workspaceMap.progress, mapVisible)
+      ? workspaceLayout(navigation.projection, size, workspaceMap.progress, mapVisible)
       : layoutCanvas(navigation.projection, size);
   const emptyLayout = layoutForSize({ width: 0, height: 0 });
   const camera = useCanvasCamera({
     viewportRef,
     minimumFitScale: props.context.kind === "workspace" ? 0.5 : undefined,
+    pending: props.context.kind === "workspace" && (props.registryLoading || workspaceMap.loading),
     viewKey: navigation.viewKey,
     layout: emptyLayout,
     layoutForSize,

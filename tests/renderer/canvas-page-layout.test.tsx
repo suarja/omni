@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { act } from "react";
 import { createRoot } from "react-dom/client";
-import { expect, it } from "vitest";
-import { layoutPageSections } from "../../src/renderer/canvas/pages/PageGraph";
+import { expect, it, vi } from "vitest";
+import { PageGraph, layoutPageSections } from "../../src/renderer/canvas/pages/PageGraph";
 import { SkillUseChips } from "../../src/renderer/canvas/pages/SkillUseChips";
 import { I18nProvider } from "../../src/renderer/i18n";
 import { useFixture } from "./external-library-fixture";
@@ -86,4 +86,30 @@ it("uses measured wrapped content to place following rows without overlap", () =
   const graph = layoutPageSections([{ id: "section", title: "section", nodes }], 70, 18, new Map([["skill-1", 140]]));
   expect(graph.nodeTops[0]![4]! - graph.nodeTops[0]![1]!).toBe(164);
   expect(graph.layout.bounds.bottom).toBeGreaterThan(graph.nodeTops[0]![4]! + 72);
+});
+
+it("reports the full banner height so recovery offers cannot cover source skills", () => {
+  const measured = vi.fn();
+  const height = vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    return this.classList.contains("page-banner") ? 180 : 72;
+  });
+  const root = createRoot(document.createElement("div"));
+  act(() =>
+    root.render(
+      <PageGraph
+        sections={[]}
+        tops={[]}
+        nodeTops={[]}
+        height={500}
+        banner={<p>Recovery offer</p>}
+        onMeasure={vi.fn()}
+        onBannerMeasure={measured}
+      />,
+    ),
+  );
+  expect(measured).toHaveBeenCalledWith(180);
+  act(() => root.unmount());
+  height.mockRestore();
 });

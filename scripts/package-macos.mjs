@@ -74,13 +74,16 @@ async function copyApplication(snapshot, destination, metadata, config, identity
   const branding = applicationBrandingPlan(snapshot, app);
   await rm(branding.obsoleteIcon, { force: true });
   await cp(branding.iconSource, branding.iconDestination);
+  await cp(branding.assetsSource, branding.assetsDestination);
   for (const [key, value] of Object.entries({
     ...branding.plistEntries,
     CFBundleIdentifier: identity.bundleId,
     CFBundleShortVersionString: metadata.version,
     CFBundleVersion: metadata.version,
   })) {
-    run("/usr/libexec/PlistBuddy", ["-c", `Set :${key} ${value}`, plist]);
+    // Electron's template does not yet declare CFBundleIconName.
+    if (key === "CFBundleIconName") run("/usr/libexec/PlistBuddy", ["-c", `Add :${key} string ${value}`, plist]);
+    else run("/usr/libexec/PlistBuddy", ["-c", `Set :${key} ${value}`, plist]);
   }
   await rename(join(app, "Contents/MacOS/Electron"), join(app, "Contents/MacOS/Omni"));
   const launcher =

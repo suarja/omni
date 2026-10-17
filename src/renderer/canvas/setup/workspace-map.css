@@ -40,3 +40,7 @@
   .has-workspace-map .canvas-viewport { top: 270px; }
   .canvas-header-actions > .canvas-secondary-button[data-setup-help] { display: inline-flex; }
 }
+
+.marketplace-recovery { margin-bottom: 12px; overflow-wrap: anywhere; }
+
+.workspace-setup-place[data-recovery-offered="true"] .workspace-setup-place-actions { flex-wrap: nowrap; }

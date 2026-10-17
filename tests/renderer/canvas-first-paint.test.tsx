@@ -24,7 +24,12 @@ let resize: () => void;
 let paints: { visibility: string; transform: string }[];
 const changed = vi.fn();
 
-function Harness(props: { viewKey?: string; layout?: CanvasLayout; initialCamera?: Camera }): ReactElement {
+function Harness(props: {
+  viewKey?: string;
+  layout?: CanvasLayout;
+  initialCamera?: Camera;
+  pending?: boolean;
+}): ReactElement {
   const viewportRef = useRef<HTMLDivElement>(null);
   const controls = useCanvasCamera({
     viewportRef,
@@ -32,6 +37,7 @@ function Harness(props: { viewKey?: string; layout?: CanvasLayout; initialCamera
     layout: props.layout ?? layout,
     initialCamera: props.initialCamera,
     disabled: false,
+    pending: props.pending,
     onCameraChange: changed,
   });
   useLayoutEffect(() => {
@@ -168,4 +174,15 @@ it("reserves each primary instruction slot even when CLAUDE.md arrives before AG
   const overflow = buildProjectGraph(null, "Project", null, [agents, claude, { ...agents, path: "GEMINI.md" }], t);
   expect(new Set(overflow.nodes.filter((node) => node.x === 396).map((node) => node.y)).size).toBe(4);
   expect(overflow.nodes.find((node) => node.id === "cost")?.y).toBe(after.nodes.find((node) => node.id === "cost")?.y);
+});
+
+it("fits only the settled workspace mode when preferences and agent status arrive late", () => {
+  render({ pending: true });
+  expect(container.querySelector<HTMLElement>(".canvas-world")!.style.visibility).toBe("hidden");
+  expect(changed).not.toHaveBeenCalled();
+  const settled = { ...layout, bounds: { left: -700, right: 700, top: -500, bottom: 500 } };
+  render({ pending: false, layout: settled });
+  const expected = fitCamera(settled.bounds, { width, height });
+  expect(transform()).toBe(`translate(${expected.x}px, ${expected.y}px) scale(${expected.scale})`);
+  expect(changed).toHaveBeenCalledTimes(1);
 });

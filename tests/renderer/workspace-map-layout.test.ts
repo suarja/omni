@@ -1,3 +1,4 @@
+import { projectExternalLibrary } from "../../src/renderer/canvas/external-library/workspace";
 import { expect, it } from "vitest";
 import { deriveWorkspaceSetupProgress } from "../../src/renderer/canvas/setup/workspace-map-state";
 import { layoutWorkspaceMap } from "../../src/renderer/canvas/setup/workspace-map-layout";
@@ -27,60 +28,14 @@ function layout(projectCount = 0, marketplace = false, width = 1440, agents = fa
   };
 }
 
-it.each([1440, 1285, 320])("keeps every map position and fit stable when setup ends at width %i", (width) => {
-  const partial = layout(1, true, width).result;
-  const complete = layout(1, true, width, true, false).result;
-  expect(complete.nodes).toEqual(partial.nodes);
-  expect(complete.map?.center).toEqual(partial.map?.center);
-  expect(complete.map?.agents).toMatchObject(partial.map!.places.find((place) => place.step === "agents")!);
-  expect(complete.map?.places).toEqual([]);
-  expect(complete.bounds).toEqual(partial.bounds);
-  expect(complete.wires).toHaveLength(3);
-  expect(complete.wires.every((wire) => !wire.dashed)).toBe(true);
-});
-
-it.each([1440, 1285, 320])("only removes unfinished places and their wires when hidden at width %i", (width) => {
-  for (const [projects, marketplace, agents] of [
-    [0, false, false],
-    [1, false, true],
-    [1, true, false],
-  ] as const) {
-    const shown = layout(projects, marketplace, width, agents).result;
-    const hidden = layout(projects, marketplace, width, agents, false).result;
-    expect(hidden.nodes).toEqual(shown.nodes);
-    expect(hidden.bounds).toEqual(shown.bounds);
-    expect(hidden.map?.center).toEqual(shown.map?.center);
-    expect(hidden.map?.agents).toEqual(shown.map?.agents);
-    expect(hidden.map?.places).toEqual([]);
-    expect(hidden.wires).toEqual(shown.wires.filter((wire) => !wire.dashed));
-    expect(shown.wires.filter((wire) => wire.dashed)).toHaveLength(
-      3 - Number(projects > 0) - Number(marketplace) - Number(agents),
-    );
-  }
-});
-
-it("keeps the center and connects all source and project nodes in a dense workspace", () => {
-  const registry = registryView(
-    Array.from({ length: 8 }, (_, index) => project(`app-${index}`)),
-    [
-      source("mine", "Mine"),
-      source("other", "Other"),
-      source("external", "External", "external"),
-      { ...source("store", "Store"), role: "storefront" },
-    ],
-  );
-  const catalogue = createResourceCatalogue(resourceSnapshot(registry));
-  const projection = projectCanvas(catalogue.browse({ kind: "workspace" }), catalogue, null);
-  const progress = deriveWorkspaceSetupProgress(registry, null);
-  const shown = layoutWorkspaceMap(projection, { width: 1440, height: 838 }, progress, true);
-  const hidden = layoutWorkspaceMap(projection, { width: 1440, height: 838 }, progress, false);
-  expect(hidden.nodes).toEqual(shown.nodes);
-  expect(hidden.map?.center).toEqual({ x: 0, y: 0 });
-  expect(hidden.bounds.left).toBe(-hidden.bounds.right);
-  for (const item of hidden.nodes) {
-    expect(Math.abs(item.x)).toBe(404);
-    expect(hidden.wires.some((wire) => wire.id === `workspace:${item.node.id}` && !wire.dashed)).toBe(true);
-    expect(item.y + 36).toBeLessThanOrEqual(hidden.bounds.bottom);
+it.each([1440, 1285, 320])("removes the center and reserved slots once complete or hidden at width %i", (width) => {
+  for (const result of [layout(1, true, width, true).result, layout(1, false, width, true, false).result]) {
+    expect(result.map?.center).toBeUndefined();
+    expect(result.map?.places).toEqual([]);
+    expect(result.map?.agents).toBeDefined();
+    expect(result.wires.some((wire) => wire.id.startsWith("workspace:") || wire.id.startsWith("setup:"))).toBe(false);
+    expect(result.wires.filter((wire) => wire.id.startsWith("agents:"))).toHaveLength(1);
+    expect(result.bounds.left).toBeLessThanOrEqual(Math.min(...result.nodes.map((node) => node.x - 132)) - 40);
   }
 });
 
@@ -189,4 +144,29 @@ it("keeps an existing external source clear of the unfinished marketplace place"
     const place = result.map!.places.find((place) => place.step === "marketplace")!;
     for (const node of result.nodes) expect(node.y - 36).toBeGreaterThanOrEqual(place.y + place.height / 2);
   }
+});
+
+it.each([1440, 1285, 320])("keeps the collapsed External library clear of unfinished setup at %i", (width) => {
+  const registry = registryView([project("app")], [source("external", "Own repo", "external")]);
+  const catalogue = createResourceCatalogue(resourceSnapshot(registry));
+  const projection = projectExternalLibrary(
+    projectCanvas(catalogue.browse({ kind: "workspace" }), catalogue, null),
+    [],
+  );
+  const result = layoutWorkspaceMap(
+    projection,
+    { width, height: 838 },
+    deriveWorkspaceSetupProgress(registry, null),
+    true,
+  );
+  const place = result.map!.places.find((place) => place.step === "marketplace")!;
+  expect(place.height).toBeGreaterThanOrEqual(352);
+  const center = result.map!.center!;
+  expect(
+    Math.abs(center.x - place.x) >= 75 + place.width / 2 || Math.abs(center.y - place.y) >= 48 + place.height / 2,
+  ).toBe(true);
+  for (const node of result.nodes)
+    expect(
+      Math.abs(node.x - place.x) >= 132 + place.width / 2 || Math.abs(node.y - place.y) >= 36 + place.height / 2,
+    ).toBe(true);
 });

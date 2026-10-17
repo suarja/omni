@@ -29,7 +29,8 @@ export const addResource = {
   firstMine: "My first marketplace",
   sourceFolder: "Source folder",
   externalHint:
-    "A skill repository published by others, cloned on this computer. Omni reads it without ever modifying it; you can install its skills or copy them into your marketplace.",
+    "A repository maintained by someone else, such as a team or community marketplace. Follow its skills without editing the source.",
+  externalOwnHint: "For your own repository, choose My first marketplace.",
   currentBefore: "Your current marketplace is ",
   currentAfter: ". Add another to keep some skills separate (for example, a public showcase).",
   firstHint: "A marketplace of your own to store skills and install them in your projects.",

@@ -1,4 +1,4 @@
-import { execFile, spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
+import { execFile, spawn, type ChildProcessWithoutNullStreams } from "../adapters/owned-child-processes";
 import { performance } from "node:perf_hooks";
 import { createHash } from "node:crypto";
 import { promisify } from "node:util";

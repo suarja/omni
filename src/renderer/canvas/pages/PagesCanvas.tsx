@@ -43,6 +43,7 @@ function PageCanvas(props: ResourceCanvasProps & Readonly<{ model: Model }>): Re
   const page = props.canvasPage!;
   const key = JSON.stringify(page);
   const model = props.model;
+  const [bannerHeight, setBannerHeight] = useState(0);
   const [heights, setHeights] = useState<ReadonlyMap<string, number>>(new Map());
   const measure = useCallback((next: ReadonlyMap<string, number>): void => {
     setHeights((current) =>
@@ -50,8 +51,14 @@ function PageCanvas(props: ResourceCanvasProps & Readonly<{ model: Model }>): Re
     );
   }, []);
   const graph = useMemo(
-    () => layoutPageSections(model.sections, model.banner ? 128 : 70, page.kind === "marketplace" ? 22 : 18, heights),
-    [model.sections, model.banner, page.kind, heights],
+    () =>
+      layoutPageSections(
+        model.sections,
+        model.banner ? Math.max(128, 62 + bannerHeight + 24) : 70,
+        page.kind === "marketplace" ? 22 : 18,
+        heights,
+      ),
+    [model.sections, model.banner, page.kind, heights, bannerHeight],
   );
   const camera = useCanvasCamera({
     viewportRef,
@@ -171,6 +178,7 @@ function PageCanvas(props: ResourceCanvasProps & Readonly<{ model: Model }>): Re
               tops={graph.tops}
               nodeTops={graph.nodeTops}
               onMeasure={measure}
+              onBannerMeasure={setBannerHeight}
               height={graph.layout.bounds.bottom}
               banner={model.banner}
             />

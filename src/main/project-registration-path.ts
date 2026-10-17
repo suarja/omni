@@ -1,4 +1,4 @@
-import { execFile } from "node:child_process";
+import { execFile } from "../adapters/owned-child-processes";
 import { access, constants, realpath, stat } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
 import { isAbsolute, relative, resolve } from "node:path";

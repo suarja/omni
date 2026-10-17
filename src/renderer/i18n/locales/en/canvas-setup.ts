@@ -40,7 +40,12 @@ export const canvasSetup = {
   welcomeDescription:
     "Your workspace is a map of your agents' skills. Fill in the three places below; nothing changes in your folders without a preview.",
   progress: "{count} of 3",
-  setupProgress: "Setup · {count} of 3",
+  next: { marketplace: "your marketplace", project: "your projects", agents: "your agents" },
+  marketplaceRecovery: "{name} was added as an external source. Use it as your marketplace?",
+  useAsMarketplace: "Use as my marketplace",
+  marketplaceConnected: "{name} is now your marketplace",
+  marketplaceUndone: "External source registration restored",
+  setupProgress: "Setup · {count} of 3 · Next: {next}",
   step: "Step {count}",
   hideSetup: "Hide",
   showSetup: "Show setup",

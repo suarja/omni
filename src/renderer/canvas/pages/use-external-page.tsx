@@ -1,3 +1,5 @@
+import { activeWorkshop } from "../../../domain/source-roles";
+import { MarketplaceRecovery } from "../setup/MarketplaceRecovery";
 import { useSourceRepository } from "./use-source-repository";
 import { buildLibrarySections, buildSourceSections } from "./external-page-sections";
 import { type ReactElement, type ReactNode } from "react";
@@ -100,6 +102,13 @@ export function useExternalPage(sourceId?: string): Readonly<{
     const sourceUses = uses.filter((use) => use.sourceId === sourceId);
     if (sourceUses.some(needsComparison) || !sourceUses.length) banner = <SourcePageBanner sourceId={sourceId} />;
   }
+  if (source?.kind === "folder" && !activeWorkshop(rail.canvas.snapshot.registry))
+    banner = (
+      <>
+        <MarketplaceRecovery sourceId={sourceId} />
+        {banner}
+      </>
+    );
   const failure =
     repository.error ??
     (source?.lastError

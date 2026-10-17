@@ -37,7 +37,12 @@ export const canvasSetup = {
   welcomeDescription:
     "Votre espace de travail est une carte des skills de vos agents. Remplissez les trois emplacements ci-dessous ; rien ne change dans vos dossiers sans un aperçu.",
   progress: "{count} sur 3",
-  setupProgress: "Configuration · {count} sur 3",
+  next: { marketplace: "votre marketplace", project: "vos projets", agents: "vos agents" },
+  marketplaceRecovery: "{name} a été ajouté comme source externe. L’utiliser comme votre marketplace ?",
+  useAsMarketplace: "Utiliser comme ma marketplace",
+  marketplaceConnected: "{name} est maintenant votre marketplace",
+  marketplaceUndone: "Inscription comme source externe rétablie",
+  setupProgress: "Configuration · {count} sur 3 · Ensuite : {next}",
   step: "Étape {count}",
   hideSetup: "Masquer",
   showSetup: "Afficher la configuration",

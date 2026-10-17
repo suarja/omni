@@ -48,6 +48,12 @@
     "resources/brand/icon-dark.svg",
     "resources/brand/icon.svg",
     "resources/brand/mark-dark.svg",
-    "resources/brand/mark.svg"
+    "resources/brand/mark.svg",
+    "resources/brand/Omni.icon/Assets/graph-light.svg",
+    "resources/brand/Omni.icon/Assets/dots-light.svg",
+    "resources/brand/Omni.icon/Assets/graph-dark.svg",
+    "resources/brand/Omni.icon/Assets/dots-dark.svg",
+    "resources/brand/Omni.icon/Assets/graph-tinted.svg",
+    "resources/brand/Omni.icon/Assets/dots-tinted.svg"
   ]
 }

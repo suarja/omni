@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.1
+
+Updates that install, and a calmer workspace.
+
+- "Restart to update" now installs the downloaded version: Omni stops checking once an update is
+  downloaded, so a later empty check can no longer cancel it. Quitting Omni always ends the app and
+  its child processes within a few seconds.
+- A native macOS 26 app icon (light, dark and tinted), without the dark frame around it.
+- The Omni center appears only during setup. Once setup is finished or hidden, the workspace lays
+  sources, projects and agents out across the canvas, with straight branching links and a single
+  link from your agents to your projects.
+- A project subtitle no longer stays a loading bar; unread projects say "Not read yet".
+- Setup names the step that is left. If you added your own marketplace as an external source,
+  Omni offers to use it as your marketplace in one click, with Undo. Adding a first marketplace
+  opens on "My marketplace".
+
+If you run 0.5.0 or earlier, install 0.5.1 from the DMG once: the update bug is in those versions.
+
 ## 0.5.0
 
 Agents can share on purpose.

@@ -23,6 +23,7 @@ export type CameraInputs = Readonly<{
   initialCamera?: Camera;
   resizeAnchor?: "center" | "origin";
   disabled: boolean;
+  pending?: boolean;
   onCameraChange: (camera: Camera) => void;
 }>;
 export type CameraControls = Readonly<{
@@ -155,13 +156,14 @@ export function useCanvasCamera(input: CameraInputs): CameraControls {
 
   useLayoutEffect(() => {
     const measured = sizeRef.current;
-    if (measured.width <= 0 || measured.height <= 0 || initializedViews.current.has(input.viewKey)) return;
+    if (input.pending || measured.width <= 0 || measured.height <= 0 || initializedViews.current.has(input.viewKey))
+      return;
     const measuredLayout = input.layoutForSize?.(measured) ?? input.layout;
     const next = input.initialCamera ?? fitCamera(measuredLayout.bounds, measured, input.minimumFitScale);
     initializedViews.current.add(input.viewKey);
     commitCamera(next);
     setReadyView(input.viewKey);
-  }, [boundsSignature, commitCamera, input.initialCamera, input.viewKey, input.minimumFitScale, size]);
+  }, [boundsSignature, commitCamera, input.initialCamera, input.viewKey, input.minimumFitScale, input.pending, size]);
 
   useEffect(() => {
     if (!input.disabled) return;

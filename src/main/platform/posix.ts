@@ -2,7 +2,7 @@
 // it lands): signalling, liveness, and the generic `ps` invocation. What differs per platform
 // (the BSD column names darwin asks `ps` for, `lsof` for working directories) stays out of
 // this file and lives in the platform module itself.
-import { execFile as nodeExecFile } from "node:child_process";
+import { execFile as nodeExecFile } from "../../adapters/owned-child-processes";
 import { promisify } from "node:util";
 
 import type { PlatformSignal } from "./platform";

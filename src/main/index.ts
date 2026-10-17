@@ -23,6 +23,8 @@ import { registerCatalogueIpcHandlers } from "./catalogue/ipc";
 import { registerSettingsIpcHandlers } from "./settings-ipc";
 import { registerAcademyIpcHandlers } from "./academy/ipc";
 import { registerInferenceIpcHandlers } from "./inference/ipc";
+import { createAppShutdown } from "./app-shutdown";
+import { terminateOwnedChildren } from "../adapters/owned-child-processes";
 import { createLoginItemService } from "./login-item";
 import { registerLoginItemIpcHandlers } from "./login-item-ipc";
 import { startMainWindow, activateMainWindow } from "./startup-window";
@@ -68,6 +70,12 @@ if (typeof app.setName === "function") app.setName(app.isPackaged ? "Omni" : "Om
 
 const hasSingleInstance = app.requestSingleInstanceLock();
 let mainWindow: BrowserWindow | undefined;
+const shutdown = createAppShutdown({
+  app,
+  killChildren: terminateOwnedChildren,
+  report: (message, error) => console.error(message, error),
+});
+shutdown.addCleanup("directory reader", disposeSharedIsolatedDirectoryReader);
 
 function createWindow(policy: RendererPolicy): BrowserWindow {
   const window = new BrowserWindow({
@@ -126,6 +134,7 @@ if (!hasSingleInstance) {
   app.quit();
 } else {
   app.on("second-instance", () => {
+    if (shutdown.isQuitting()) return;
     const window = mainWindow ?? BrowserWindow.getAllWindows()[0];
     if (!window) return;
     if (window.isMinimized()) window.restore();
@@ -211,6 +220,7 @@ void (hasSingleInstance
         const appUpdates = createElectronAppUpdates({
           appRoot: appPath,
           userDataPath,
+          prepareForUpdate: shutdown.prepareForUpdate,
           policy: {
             isPackaged: app.isPackaged,
             channel: build.channel,
@@ -227,6 +237,7 @@ void (hasSingleInstance
         });
         registerAppUpdatesIpc(assertSender, appUpdates);
         void appUpdates.initialize();
+        app.once("will-quit", () => appUpdates.dispose());
         const loginItem = createLoginItemService({
           store: settingsStore,
           os: app,
@@ -378,14 +389,10 @@ void (hasSingleInstance
           }),
         );
         await gateway.start();
-        app.once("before-quit", (event) => {
-          event.preventDefault();
-          stopReviewNotifications();
-          appUpdates.dispose();
-          stopRequestAttention();
-          externalScheduler.stop();
-          void Promise.allSettled([gateway.stop(), disposeSharedIsolatedDirectoryReader()]).then(() => app.quit());
-        });
+        shutdown.addCleanup("review notifications", stopReviewNotifications);
+        shutdown.addCleanup("request attention", stopRequestAttention);
+        shutdown.addCleanup("external library scheduler", () => externalScheduler.stop());
+        shutdown.addCleanup("agent gateway", () => gateway.stop());
         mainWindow = startMainWindow({ wasOpenedAtLogin, create: () => createWindow(policy) });
         mainWindow.webContents.once("did-finish-load", () => {
           void externalScheduler
@@ -395,6 +402,7 @@ void (hasSingleInstance
         void maintenance.start().catch((error: unknown) => console.error("Automatic agent update failed.", error));
 
         app.on("activate", () => {
+          if (shutdown.isQuitting()) return;
           mainWindow = activateMainWindow(mainWindow, () => createWindow(policy));
         });
       })

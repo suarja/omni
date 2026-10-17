@@ -1,3 +1,4 @@
+import { createMarketplaceConnectionOperations } from "./operations-connect-marketplace";
 import { createStorefrontLinkOperations } from "./storefronts/link-operations";
 import { createProjectRegistrationOperations } from "./operations-register-project";
 import { createPublicationOperations } from "./storefronts/operations";
@@ -477,6 +478,12 @@ export function registerOperationsIpcHandlers(
     operationStore: store,
     ...(options.homeDir ? { homeDir: options.homeDir } : {}),
   });
+  const marketplaceConnection = createMarketplaceConnectionOperations({
+    userDataPath,
+    store,
+    now,
+    onChanged: () => externalLibrary.refreshCopies(),
+  });
   const storefrontLink = createStorefrontLinkOperations({ userDataPath, store, now });
   const projectRegistration = createProjectRegistrationOperations({
     registry,
@@ -504,6 +511,7 @@ export function registerOperationsIpcHandlers(
 
   const previewOperation = async (rawRequest: unknown): Promise<PreviewMarketplaceResponse> => {
     const request = parsePreviewOperationRequest(rawRequest);
+    if (request.kind === "connect-marketplace") return marketplaceConnection.preview(request);
     if (request.kind === "link-storefront") return storefrontLink.preview(request);
     if (request.kind === "register-project") return projectRegistration.preview(request);
     if (request.kind === "publish-plugin" || request.kind === "create-storefront" || request.kind === "retry-push")
@@ -511,6 +519,8 @@ export function registerOperationsIpcHandlers(
     if (request.kind === "restore-import") {
       const linkUndo = await storefrontLink.previewRestore(request.operationId);
       if (linkUndo) return linkUndo;
+      const marketplaceUndo = await marketplaceConnection.previewRestore(request.operationId);
+      if (marketplaceUndo) return marketplaceUndo;
       const projectUndo = await projectRegistration.previewRestore(request.operationId);
       if (projectUndo) return projectUndo;
       const publication = await publicationOperations.previewRestore(request);
@@ -641,6 +651,7 @@ export function registerOperationsIpcHandlers(
     return applied;
   };
   const applyOperation = async (rawRequest: unknown) =>
+    (await marketplaceConnection.apply(rawRequest)) ??
     (await storefrontLink.apply(rawRequest)) ??
     (await projectRegistration.apply(rawRequest)) ??
     (await publicationOperations.apply(rawRequest)) ??

@@ -126,10 +126,10 @@ export function setupInputs(overrides: Partial<WorkspaceSetupInputs> = {}): Work
   };
 }
 
-export function renderResourceCanvas(root: Root, setup: WorkspaceSetupInputs): void {
+export function renderResourceCanvas(root: Root, setup: WorkspaceSetupInputs, language: "en" | "fr" = "en"): void {
   root.render(
     <ThemeProvider>
-      <I18nProvider initialLanguage="en">
+      <I18nProvider initialLanguage={language}>
         <ResourceCanvas
           api={{ ...setup.api, readArtifact: vi.fn() }}
           context={{ kind: "workspace" }}
