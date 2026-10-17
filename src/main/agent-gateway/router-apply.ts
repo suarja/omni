@@ -81,6 +81,9 @@ async function applySingleOperation(
     status: "failed",
     message: result.receipt.diagnostic ?? "The operation failed after producing a receipt.",
     receipt: result.receipt,
+    ...(result.receipt.kind === "link-storefront" && result.receipt.registered
+      ? { storefrontId: result.receipt.registered.sourceId }
+      : {}),
     ...(result.receipt.kind === "register-project" && result.receipt.project
       ? { projectId: result.receipt.project.id }
       : {}),
@@ -112,6 +115,9 @@ function replayOutcome(request: AgentRequest, result: AgentReceiptResponse): unk
   return {
     status: outcome,
     receipt: result.receipt,
+    ...(result.receipt.kind === "link-storefront" && result.receipt.registered
+      ? { storefrontId: result.receipt.registered.sourceId }
+      : {}),
     ...(result.receipt.kind === "register-project" && result.receipt.project
       ? { projectId: result.receipt.project.id }
       : {}),
@@ -182,6 +188,8 @@ async function executeApply(params: unknown, options: ApplyOptions): Promise<unk
     try {
       freshPlan = await options.previewPlan(parseAgentWriteRequest(resolved.request));
     } catch (error) {
+      if (resolved.request.kind === "link-storefront")
+        return { status: "stale", message: "The storefront folder or registry changed; preview the link again." };
       if (resolved.request.kind === "register-project")
         return { status: "stale", message: "The project folder or registry changed; preview registration again." };
       throw error;
@@ -211,6 +219,9 @@ async function executeApply(params: unknown, options: ApplyOptions): Promise<unk
     return {
       status: applied.status,
       receipt: representative,
+      ...(representative.kind === "link-storefront" && representative.registered
+        ? { storefrontId: representative.registered.sourceId }
+        : {}),
       ...(representative.kind === "register-project" && representative.project
         ? { projectId: representative.project.id }
         : {}),

@@ -10,7 +10,7 @@ function skillMd(bundle: Awaited<ReturnType<typeof readBundle>>, name: string): 
 }
 
 describe("Omni skills bundle", () => {
-  it("reads the ten bundled skills with a stable content hash", async () => {
+  it("reads the eleven bundled skills with a stable content hash", async () => {
     const root = bundleRoot({ appPath: process.cwd(), isPackaged: false });
     const bundle = await readBundle(root);
 
@@ -22,6 +22,7 @@ describe("Omni skills bundle", () => {
       "omni-lessons",
       "omni-marketplace-routing",
       "omni-project-sync",
+      "omni-share",
       "omni-skill-authoring",
       "omni-suggest",
       "omni-summarize",
@@ -81,6 +82,45 @@ describe("Omni skills bundle", () => {
     for (const privateText of [["lev", "els"].join(""), "revamping-a-screen", "f686bd54", "/Users/"])
       expect(example).not.toContain(privateText);
     expect(example).not.toMatch(/<(?:script|link)|https?:\/\//u);
+  });
+
+  it("routes sharing to one workflow and synchronizes the plugin copy", async () => {
+    const { readFile } = await import("node:fs/promises");
+    const bundle = await readBundle(bundleRoot({ appPath: process.cwd(), isPackaged: false }));
+    const share = skillMd(bundle, "omni-share");
+    for (const instruction of [
+      "share this plugin",
+      "share this skill",
+      "publish",
+      "lead magnet",
+      "storefront",
+      "omni_status",
+      "omni_preview_link_storefront",
+      "audience",
+      "vertical",
+      "public repository",
+      "generic",
+      "workshop",
+      "English",
+      "working examples",
+      "omni_preview_publish",
+      "conflictChoices",
+      "file and line",
+      "owner's approval in Omni",
+      "claude plugin",
+      "codex plugin",
+    ])
+      expect(share).toContain(instruction);
+    expect(share.trimEnd().split("\n").length).toBeLessThanOrEqual(100);
+    expect(skillMd(bundle, "omni-bootstrap")).toContain("For sharing or publishing, follow `omni-share`");
+    for (const item of bundle) {
+      const body = skillMd(bundle, item.name);
+      expect(await readFile(`plugins/omni/skills/${item.name}/SKILL.md`, "utf8")).toBe(body);
+      if (item.name !== "omni-share") {
+        expect(body).toContain("For sharing or publishing, follow `omni-share`");
+        expect(body).not.toContain("Publication always requires");
+      }
+    }
   });
 
   it("names every skill folder after its frontmatter name", async () => {

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0
+
+Agents can share on purpose.
+
+- New MCP tool `omni_preview_link_storefront`: an agent links a public storefront folder that Omni
+  does not know yet. Omni reads its `ORIGIN.md`, shows the recognized plugins and their workshop
+  source, writes nothing in the folder, and can undo the link.
+- New agent skill `omni-share`: "share this plugin", "make a marketplace for…" or "publish" choose
+  a storefront by audience, make the plugin generic in the workshop, preview, and wait for your
+  approval in Omni. The publication rule now lives in this one skill.
+
 ## 0.4.0
 
 A real first screen, and calm loading everywhere.

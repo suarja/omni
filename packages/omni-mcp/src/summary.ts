@@ -69,7 +69,11 @@ export function summarizePlan(plan: Plan, approval: Approval = "omni", reason?: 
     if (conflicts) parts.push(`${plural(conflicts, "conflict")} to review`);
   }
   if (
-    (plan.kind === "register-project" || plan.kind === "import-artifact" || plan.kind === "write-skill") &&
+    (plan.kind === "link-storefront" ||
+      plan.kind === "archive-storefront" ||
+      plan.kind === "register-project" ||
+      plan.kind === "import-artifact" ||
+      plan.kind === "write-skill") &&
     plan.notes?.length
   )
     parts.push(...plan.notes);

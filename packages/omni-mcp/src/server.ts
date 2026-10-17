@@ -1,4 +1,4 @@
-import { registerPublicationPreview } from "./publication-tool.js";
+import { registerPublicationPreview, registerStorefrontLinkPreview } from "./publication-tool.js";
 import { registerExternalLibraryTools } from "./external-library-tools.js";
 import type { ApprovalReason } from "../../../src/shared/agents-ipc.js";
 import { OMNI_APPROVAL_INSTRUCTIONS } from "./approval-text.js";
@@ -106,7 +106,12 @@ function normalize(result: GatewayResult): Record<string, unknown> {
 function previewResult(result: GatewayResult): Record<string, unknown> {
   const value = normalize(result);
   if (value.status !== undefined && value.status !== "ready") return value;
-  if (value.status === "ready" && typeof value.projectId === "string" && value.requestId === undefined) return value;
+  if (
+    value.status === "ready" &&
+    (typeof value.projectId === "string" || typeof value.storefrontId === "string") &&
+    value.requestId === undefined
+  )
+    return value;
   if (
     typeof value.requestId !== "string" ||
     (value.approval !== "conversation" && value.approval !== "omni") ||
@@ -339,6 +344,7 @@ function registerPreviewTools(server: McpServer, gateway: GatewayClientLike): vo
     },
     async (input) => toolResult(previewResult(await gateway.request("preview_register_project", input))),
   );
+  registerStorefrontLinkPreview(server, gateway, (result) => toolResult(previewResult(result)));
   registerPublicationPreview(server, gateway, (result) => toolResult(previewResult(result)));
   server.registerTool(
     "omni_preview_capture",

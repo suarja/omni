@@ -43,6 +43,8 @@ plugin provenance; it remains independent of the plugin installation.
 - `omni_catalog_search` — search the merged skill catalogue by text and/or tags.
 - `omni_suggest` — read the ranked skill suggestions for a project, with why and alreadyInProject.
 - `omni_session` — read one Activity session (title, task, transcript-tail evidence) by id.
+- `omni_preview_link_storefront` — preview linking a local storefront by absolute path or a path relative to the calling agent's working directory, with optional `reason`. Shows the folder, GitHub repository when recognized, ORIGIN.md workshop sources and base commits, and unlinked plugins with reasons. Already linked returns `ready` with `storefrontId` and no write. Apply via `omni_apply` under `agents.approval.personalMarketplace`, using the existing `marketplace-setting` reason. Undo archives the link; storefront files stay unchanged. Workshop, project and external source folders are refused.
+- `omni_preview_publish` — preview a complete workshop plugin for one existing or new storefront, with per-file conflict choices. Publication always requires owner approval in Omni; follow `omni-share`.
 - `omni_preview_capture` — preview capturing a project-local artifact.
 - `omni_preview_make_compatible` — preview a harness compatibility change.
 - `omni_preview_assign` — preview assigning an asset to projects.

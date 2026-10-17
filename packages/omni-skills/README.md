@@ -9,6 +9,7 @@ conversation consent policy.
 
 | Skill                      | Use when                                            |
 | -------------------------- | --------------------------------------------------- |
+| `omni-share`               | sharing a plugin through a public storefront        |
 | `omni-audit`               | audit identity, overlap, and skill responsibilities |
 | `omni-bootstrap`           | routing reusable skill work through Omni            |
 | `omni-skill-authoring`     | creating, writing or updating a skill               |

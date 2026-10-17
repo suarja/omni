@@ -153,3 +153,7 @@ export function parseStorefrontLinkResult(value: unknown): StorefrontLinkResult 
 export function parseStorefrontDriftReport(value: unknown): StorefrontDriftReport {
   return driftSchema.parse(value);
 }
+
+export function parseStorefrontInspection(value: unknown): StorefrontInspection {
+  return inspectionSchema.parse(value);
+}

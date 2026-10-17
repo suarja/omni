@@ -234,6 +234,7 @@ describe("Omni MCP server", () => {
       "omni_suggest",
       "omni_session",
       "omni_preview_register_project",
+      "omni_preview_link_storefront",
       "omni_preview_publish",
       "omni_preview_capture",
       "omni_preview_make_compatible",

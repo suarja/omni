@@ -1,3 +1,4 @@
+import { routeStorefrontLink } from "./router-storefront-link";
 import { resolveGatewayRequest, resolveGatewaySource } from "./package-resolution";
 import { isActiveAvailableProject } from "../../domain/active-projects";
 import { createSkillInventoryReader } from "./router-skill-inventory";
@@ -227,14 +228,24 @@ export function createAgentRouter(options: RouterOptions) {
   });
   const receipt = createAgentReceiptReader(options.requests, operationStore);
   const previewPlan = async (recordedRequest: AgentWriteRequest): Promise<AgentPlan> => {
+    if (recordedRequest.kind === "restore-skill") {
+      const result = await options.operations.previewOperation({
+        kind: "restore-import",
+        operationId: recordedRequest.operationId,
+      });
+      if (result.status !== "ready")
+        throw Object.assign(fail(result.diagnostic, result.reason), { registrationBlock: result });
+      return result.plan;
+    }
     if (
+      recordedRequest.kind === "link-storefront" ||
       recordedRequest.kind === "register-project" ||
       recordedRequest.kind === "write-skill" ||
       recordedRequest.kind === "publish-plugin"
     ) {
       const result = await options.operations.previewOperation(recordedRequest);
       if (result.status !== "ready") {
-        if (recordedRequest.kind === "register-project")
+        if (recordedRequest.kind === "register-project" || recordedRequest.kind === "link-storefront")
           throw Object.assign(fail(result.diagnostic, result.reason), { registrationBlock: result });
         throw fail(result.diagnostic);
       }
@@ -284,6 +295,12 @@ export function createAgentRouter(options: RouterOptions) {
           }
         : request;
     const plan = await previewPlan(recordedRequest);
+    if (plan.kind === "link-storefront" && plan.storefrontLink?.action === "existing")
+      return {
+        status: "ready",
+        storefrontId: plan.storefrontLink.storefrontId,
+        message: "The storefront is already linked. No write was needed.",
+      };
     if (plan.kind === "register-project" && plan.projectRegistration?.action === "existing")
       return {
         status: "ready",
@@ -378,6 +395,8 @@ export function createAgentRouter(options: RouterOptions) {
       if (method === "receipt") return receipt(params);
       const catalogueResult = catalogueRouter.handle(method, params);
       if (catalogueResult) return catalogueResult;
+      const linked = await routeStorefrontLink(method, params, client, preview, operationStore);
+      if (linked) return linked;
       if (method === "preview_register_project") {
         const value = object(params, method);
         keys(value, ["path", "reason"], method);

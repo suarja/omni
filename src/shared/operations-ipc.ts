@@ -1,3 +1,4 @@
+import type { LinkStorefrontRequest, StorefrontLinkPlan } from "./storefront-link-ipc";
 import type { RegisterProjectRequest, ProjectRegistrationPlan } from "./project-registration-ipc";
 import type {
   PublishPluginRequest,
@@ -53,6 +54,8 @@ export type { AddToProjectRequest } from "./operations-add-to-project-ipc";
 
 // One list of operation kinds: the type and both parsers derive from it.
 export const OPERATION_KINDS = [
+  "link-storefront",
+  "archive-storefront",
   "register-project",
   "archive-project",
   "install-external-skill",
@@ -117,6 +120,7 @@ export type OperationPlan = Readonly<{
   report?: import("./operations-compatible-ipc").CompatibilityReport;
   findings?: readonly SkillFinding[];
   notes?: readonly string[];
+  storefrontLink?: StorefrontLinkPlan;
   projectRegistration?: ProjectRegistrationPlan;
   harnesses?: readonly Readonly<{
     harness: "claude-code" | "codex";
@@ -256,6 +260,7 @@ export interface OperationsDesktopApi {
       | RetryPushRequest
       | PreviewMarketplaceRequest
       | PreviewApplyPlanRequest
+      | LinkStorefrontRequest
       | RegisterProjectRequest
       | DescribePluginRequest
       | ImportOperationRequest

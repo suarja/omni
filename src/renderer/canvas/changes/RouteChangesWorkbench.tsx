@@ -1,3 +1,4 @@
+import { LinkStorefrontWorkbench } from "./LinkStorefrontWorkbench";
 import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { RegisterProjectWorkbench } from "./RegisterProjectWorkbench";
 import { activeWorkshop } from "../../../domain/source-roles";
@@ -38,6 +39,16 @@ export function RouteChangesWorkbench({
       <EmptyState description={description} title={title} />
     </WorkflowWorkbench>
   );
+  if (route.screen === "operation-link-storefront")
+    return (
+      <LinkStorefrontWorkbench
+        api={props.api}
+        requestId={route.requestId}
+        onClose={onClose}
+        onNavigate={props.onNavigateToRoute}
+        onMarketplaceChanged={props.onMarketplaceChanged}
+      />
+    );
   if (route.screen === "operation-register-project")
     return (
       <RegisterProjectWorkbench

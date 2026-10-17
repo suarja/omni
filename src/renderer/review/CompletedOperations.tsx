@@ -49,6 +49,8 @@ export function operationLabel(
     return t("skillActions.historyDescribe", {
       name: receipt.displayTarget.split("/").at(-1) ?? receipt.displayTarget,
     });
+  if (receipt.kind === "link-storefront") return `${t("storefronts.link")} ${receipt.displayTarget}`;
+  if (receipt.kind === "archive-storefront") return `${t("projectView.undo")} ${receipt.displayTarget}`;
   if (receipt.kind === "register-project") return t("agents.registerProject", { name: receipt.displayTarget });
   if (receipt.kind === "archive-project") return t("agents.archiveProject", { name: receipt.displayTarget });
   if (receipt.kind === "create-marketplace") return t("reviewExtras.createMarketplace");
@@ -139,6 +141,8 @@ function relativeDate(timestamp: string, t: ReturnType<typeof useI18n>["t"]): st
 }
 
 export function isReceiptRestorable(receipt: OperationReceipt, receipts: readonly OperationReceipt[]): boolean {
+  if (receipt.kind === "link-storefront") return receipt.status === "applied" && !receipt.restored;
+  if (receipt.kind === "archive-storefront") return false;
   if (receipt.kind === "register-project") return receipt.status === "applied" && !receipt.restored;
   if (receipt.kind === "archive-project") return false;
   if (receipt.publication?.state === "pushed" || receipt.publication?.state === "push-outcome-unknown") return false;

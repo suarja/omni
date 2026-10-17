@@ -28,3 +28,30 @@ export function registerPublicationPreview(
     async (input) => present(await gateway.request("preview_publish", input)),
   );
 }
+
+export function registerStorefrontLinkPreview(
+  server: McpServer,
+  gateway: GatewayClientLike,
+  present: (result: GatewayResult) => CallToolResult,
+): void {
+  server.registerTool(
+    "omni_preview_link_storefront",
+    {
+      description:
+        "Preview linking an existing local storefront folder. Pass an absolute path or one relative to the calling agent's working directory. Reads ORIGIN.md and shows recognized workshop sources and commits, plus plugins that cannot be linked and why. Nothing is written in the storefront. Already linked returns ready with storefrontId and no write. Apply with omni_apply using the existing personal marketplace approval setting; Undo archives the link. " +
+        OMNI_APPROVAL_INSTRUCTIONS,
+      inputSchema: z
+        .object({
+          path: z
+            .string()
+            .trim()
+            .min(1)
+            .max(4096)
+            .refine((value) => !/[\u0000-\u001f\u007f-\u009f]/u.test(value)),
+          reason: z.string().trim().min(1).max(1024).optional(),
+        })
+        .strict(),
+    },
+    async (input) => present(await gateway.request("preview_link_storefront", input)),
+  );
+}

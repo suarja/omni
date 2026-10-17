@@ -33,6 +33,7 @@ export function samePlan(left: AgentPlan, right: AgentPlan): boolean {
   )
     return false;
   return (
+    JSON.stringify(left.storefrontLink) === JSON.stringify(right.storefrontLink) &&
     JSON.stringify(left.projectRegistration) === JSON.stringify(right.projectRegistration) &&
     left.kind === right.kind &&
     left.actions.length === right.actions.length &&

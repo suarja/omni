@@ -53,3 +53,16 @@ The expected first Omni call is `omni_bootstrap_status`, followed by
 `omni_status`, discovery, and a preview. Clear approval already given for that
 exact plan counts; do not ask again. All writes use Omni preview, `omni_apply`,
 and its receipt. Never write a replacement `SKILL.md` directly.
+
+## Sharing tools
+
+- `omni_status` reads the workshop, storefronts and their publication drift.
+- `omni_preview_link_storefront { path, reason? }` previews linking an existing local
+  storefront. Paths can be absolute or relative to the calling agent's working directory.
+  It shows origins and unlinked plugins, writes no storefront files, and uses the personal
+  marketplace approval setting. Already linked returns `storefrontId`; Undo archives the link.
+- `omni_preview_publish` previews a complete workshop plugin for one public destination.
+  Publication always waits for the owner's approval in Omni.
+- `omni_apply` applies an approved preview; `omni_receipt` reads its result.
+
+Use `omni-share` for sharing, publishing, or choosing a storefront for an audience or vertical.

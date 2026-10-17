@@ -90,6 +90,7 @@ export type Route =
       returnTo: Route;
       requestId?: string;
     }
+  | { screen: "operation-link-storefront"; requestId: string }
   | { screen: "operation-register-project"; requestId: string }
   | { screen: "operation-restore"; operationId: string }
   | { screen: "operation-receipt"; operationId: string; returnTo: Route }
@@ -111,6 +112,7 @@ export type OperationRoute = Extract<
       | "operation-import"
       | "operation-compatible"
       | "operation-receipt"
+      | "operation-link-storefront"
       | "operation-register-project"
       | "operation-restore"
       | "operation-restore-apply"
@@ -158,7 +160,12 @@ export function rootDestination(route: Route): Destination {
   if (route.screen === "add-to-project") return "projects";
   if (route.screen === "operation-compatible") return "library";
   if (route.screen === "worktree-cleanup") return rootDestination(route.returnTo);
-  if (route.screen === "operation-restore" || route.screen === "operation-register-project") return "review";
+  if (
+    route.screen === "operation-link-storefront" ||
+    route.screen === "operation-restore" ||
+    route.screen === "operation-register-project"
+  )
+    return "review";
   if (route.screen === "operation-receipt") return rootDestination(route.returnTo);
   if (route.screen === "operation-apply" || route.screen === "operation-restore-apply") return "review";
   if (route.screen === "operation-remove") return "projects";

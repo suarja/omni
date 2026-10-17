@@ -28,6 +28,7 @@ function targetName(request: AgentRequest): string {
   return request.plan.kind === "assign" ? "" : request.plan.displayTarget;
 }
 export function agentRequestAction(request: AgentRequest, t: ReturnType<typeof useI18n>["t"]): string {
+  if (request.request.kind === "link-storefront") return t("storefronts.link");
   if (request.request.kind === "register-project") return t("agents.registerProject", { name: targetName(request) });
   if (request.request.kind === "install-external-skill")
     return t("agents.assign", { artifact: request.request.skillName });
@@ -68,6 +69,8 @@ export function agentRelativeTime(createdAt: string, t: ReturnType<typeof useI18
   return t("agents.hoursAgo", { count: Math.floor(minutes / 60) });
 }
 export function agentRequestRoute(request: AgentRequest): Route {
+  if (request.request.kind === "link-storefront" || request.plan.kind === "archive-storefront")
+    return resolveCanvasRoute({ screen: "operation-link-storefront", requestId: request.requestId })!;
   if (request.request.kind === "register-project")
     return resolveCanvasRoute({ screen: "operation-register-project", requestId: request.requestId })!;
   if (request.request.kind === "publish-plugin")

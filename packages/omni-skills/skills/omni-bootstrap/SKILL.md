@@ -1,6 +1,6 @@
 ---
 name: omni-bootstrap
-description: Route reusable skill creation, updates, installation, assignment, synchronization, and drift checks through Omni. Use when the user asks to create, write, improve, remember, install, assign, sync, or audit a reusable skill. Do not use for executing an already-installed skill or for an explicitly project-local one-off skill.
+description: Route reusable skill creation, updates, installation, assignment, synchronization, drift checks, and sharing or publishing through Omni. Use when the user asks to create, write, improve, remember, install, assign, sync, or audit a reusable skill. Do not use for executing an already-installed skill or for an explicitly project-local one-off skill.
 ---
 
 # Route reusable skills through Omni
@@ -32,7 +32,9 @@ skill request on the Omni path instead of silently creating a project-local file
    `omni-project-sync`.
 8. For a lesson to retain, follow `omni-lessons`.
    For auditing identity, overlap, or skill responsibilities, follow `omni-audit`.
-9. For every write, use Omni preview, `omni_apply`, and its receipt. Clear approval already given for that exact plan counts; do not ask again.
+9. For sharing or publishing, follow `omni-share`. This includes a storefront, a lead magnet,
+   or a marketplace for a person, team or vertical.
+10. For every write, use Omni preview, `omni_apply`, and its receipt. Clear approval already given for that exact plan counts; do not ask again.
 
 An already-installed skill can be used directly for its task. Omni is needed
 when the reusable skill or its assignment is being managed.
@@ -60,7 +62,7 @@ If blocked, report the refusal and recovery text; do not bypass the path guard.
 
 For ordinary skill changes, previously given clear approval for this exact plan counts; do not ask again. If approval is not already clear, present the plan and wait for a clear yes; no or unclear means do nothing. For `approval: "omni"`: Approval happens in Omni for the reason returned with the preview. Tell the user in one line, then call omni_apply; it returns pending while the request waits. Call it again with the same requestId; the request does not expire. If the user approves in Omni later, omni_receipt shows the result. Route every write through Omni preview, `omni_apply`, and its receipt.
 
-Use the workshop reported by `omni_status` for all skill authoring and fixes. A source with `role: "storefront"` is a published copy. Never write skills or fixes into it. For a publication, call `omni_preview_publish` with the complete plugin id and one storefront destination, then `omni_apply`. Publication always requires the owner's approval in Omni, whatever the agent settings or prior conversation approval. Present blocking findings with file and line, fix the workshop content, and preview again.
+For sharing or publishing, follow `omni-share`; author and fix skills only in the active workshop, never in a storefront.
 
 Install external skills through Omni using `omni_list_external_library`, `omni_preview_install_external`, `omni_apply` and its receipt; never run `npx skills add` directly.
 

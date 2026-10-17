@@ -152,7 +152,7 @@ function RestorePreview({
       {plan.kind === "restore-add-to-project" ? (
         <p data-testid="restore-children-note">{t("operations.restore.childrenReverse")}</p>
       ) : null}
-      {plan.git.mode === "not-a-repository" && !plan.git.warnings[0] ? null : (
+      {plan.git.mode === "disabled" || (plan.git.mode === "not-a-repository" && !plan.git.warnings[0]) ? null : (
         <ItemList variant="nested">
           <ListItem
             name={t("operations.preview.git")}
@@ -299,53 +299,60 @@ export function RestoreWorkbench({
     ? new Date(receipt.appliedAt).toLocaleDateString(language === "fr" ? "fr-FR" : "en-US")
     : "—";
   const description =
-    receipt?.kind === "register-project"
-      ? t("agents.projectRegistrationEffect")
-      : receipt
-        ? receipt.kind === "install-agents"
-          ? t("agentsSetup.restoreDescription")
-          : receipt.kind === "register-mcp"
-            ? t("operations.restore.registerMcpDescription", {
+    receipt?.kind === "link-storefront"
+      ? preview?.kind === "ready"
+        ? preview.plan.notes?.join(" ")
+        : undefined
+      : receipt?.kind === "register-project"
+        ? t("agents.projectRegistrationEffect")
+        : receipt
+          ? receipt.kind === "install-agents"
+            ? t("agentsSetup.restoreDescription")
+            : receipt.kind === "register-mcp"
+              ? t("operations.restore.registerMcpDescription", {
+                  harness:
+                    receipt.harness === "codex" ? t("operations.harness.codex") : t("operations.harness.claudeCode"),
+                  date: captureDate,
+                })
+              : receipt.kind === "write-harness-setting"
+                ? t("operations.restore.harnessSettingDescription", { date: captureDate })
+                : receipt.kind === "apply-plan"
+                  ? t("operations.restore.applyDescription", { project: target, date: captureDate, units })
+                  : receipt.kind === "remove-binding"
+                    ? t("operations.restore.removeDescription", { units, date: captureDate })
+                    : receipt.kind === "make-compatible"
+                      ? t("operations.restore.compatibleDescription", {
+                          marketplace: target,
+                          date: captureDate,
+                          harness:
+                            receipt.harness === "codex"
+                              ? t("operations.harness.codex")
+                              : t("operations.harness.claudeCode"),
+                        })
+                      : receipt.kind === "write-skill"
+                        ? t("operations.restore.skillDescription", { date: captureDate })
+                        : receipt.kind === "add-to-project"
+                          ? t("operations.restore.addToProjectDescription", {
+                              ...compositeParts(target),
+                              date: captureDate,
+                            })
+                          : t("operations.restore.description", { date: captureDate, package: packageName(target) })
+          : undefined;
+  const heading =
+    receipt?.kind === "link-storefront"
+      ? `${t("projectView.undo")} ${target}`
+      : receipt?.kind === "register-project"
+        ? t("agents.archiveProject", { name: target })
+        : receipt?.kind === "install-agents"
+          ? t("agentsSetup.restoreHeading")
+          : receipt?.kind === "register-mcp"
+            ? t("operations.restore.registerMcpHeading", {
                 harness:
                   receipt.harness === "codex" ? t("operations.harness.codex") : t("operations.harness.claudeCode"),
-                date: captureDate,
               })
-            : receipt.kind === "write-harness-setting"
-              ? t("operations.restore.harnessSettingDescription", { date: captureDate })
-              : receipt.kind === "apply-plan"
-                ? t("operations.restore.applyDescription", { project: target, date: captureDate, units })
-                : receipt.kind === "remove-binding"
-                  ? t("operations.restore.removeDescription", { units, date: captureDate })
-                  : receipt.kind === "make-compatible"
-                    ? t("operations.restore.compatibleDescription", {
-                        marketplace: target,
-                        date: captureDate,
-                        harness:
-                          receipt.harness === "codex"
-                            ? t("operations.harness.codex")
-                            : t("operations.harness.claudeCode"),
-                      })
-                    : receipt.kind === "write-skill"
-                      ? t("operations.restore.skillDescription", { date: captureDate })
-                      : receipt.kind === "add-to-project"
-                        ? t("operations.restore.addToProjectDescription", {
-                            ...compositeParts(target),
-                            date: captureDate,
-                          })
-                        : t("operations.restore.description", { date: captureDate, package: packageName(target) })
-        : undefined;
-  const heading =
-    receipt?.kind === "register-project"
-      ? t("agents.archiveProject", { name: target })
-      : receipt?.kind === "install-agents"
-        ? t("agentsSetup.restoreHeading")
-        : receipt?.kind === "register-mcp"
-          ? t("operations.restore.registerMcpHeading", {
-              harness: receipt.harness === "codex" ? t("operations.harness.codex") : t("operations.harness.claudeCode"),
-            })
-          : receipt?.kind === "write-harness-setting"
-            ? t("operations.restore.harnessSettingHeading")
-            : t("operations.restore.heading", { name: artifactName });
+            : receipt?.kind === "write-harness-setting"
+              ? t("operations.restore.harnessSettingHeading")
+              : t("operations.restore.heading", { name: artifactName });
   const applied = result?.status === "applied";
   return (
     <WorkflowWorkbench

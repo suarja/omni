@@ -22,6 +22,8 @@ function reasonText(reason: ApprovalReason | undefined): string {
 function actionText(request: AgentRequest): string {
   const input = request.request;
   switch (input.kind) {
+    case "link-storefront":
+      return `Link storefront ${request.plan.kind === "assign" ? input.path : request.plan.displayTarget}`;
     case "register-project":
       return `Register project ${request.plan.kind === "assign" ? input.path : request.plan.displayTarget}`;
     case "install-external-skill":

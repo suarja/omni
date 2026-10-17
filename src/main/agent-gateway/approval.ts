@@ -8,6 +8,7 @@ export type ApprovalResolution = Readonly<{ mode: ApprovalMode; reason?: Approva
 type ApprovalEffects = Readonly<{
   sourceId?: string;
   publicPublication?: boolean;
+  registersPersonalSource?: boolean;
   writesMarketplace: boolean;
   projectsTouched: boolean;
   deletionCount: number;
@@ -69,6 +70,10 @@ export function deriveApprovalInput(
         : plans
       : [];
   return {
+    ...(operation.kind === "link-storefront" ||
+    (operation.kind === "restore-skill" && plans.some((plan) => plan.kind === "archive-storefront"))
+      ? { registersPersonalSource: true }
+      : {}),
     ...(operation.kind === "publish-plugin" ? { publicPublication: true } : {}),
     ...(sourceId ? { sourceId } : {}),
     writesMarketplace,
@@ -111,7 +116,10 @@ export async function resolveApproval(input: ApprovalInput): Promise<ApprovalRes
   if (input.hasConflict) return omni({ code: "conflict" });
   if (input.projectsTouched && input.settings.agents.approval.projects === "omni")
     return omni({ code: "projects-setting" });
-  if (input.writesMarketplace && input.settings.agents.approval.personalMarketplace === "omni")
+  if (
+    (input.writesMarketplace || input.registersPersonalSource) &&
+    input.settings.agents.approval.personalMarketplace === "omni"
+  )
     return omni({ code: "marketplace-setting" });
   return { mode: "conversation" };
 }

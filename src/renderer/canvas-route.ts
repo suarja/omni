@@ -14,6 +14,7 @@ export function resolveCanvasRoute(route: Route): CanvasRoute | null {
     case "operation-import":
     case "operation-compatible":
     case "operation-receipt":
+    case "operation-link-storefront":
     case "operation-register-project":
     case "operation-restore":
     case "operation-restore-apply":

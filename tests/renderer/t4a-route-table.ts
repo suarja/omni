@@ -52,6 +52,7 @@ export const routeTable = {
     harness: "codex",
     returnTo: workspace,
   },
+  "operation-link-storefront": { screen: "operation-link-storefront", requestId: "link-request" },
   "operation-register-project": { screen: "operation-register-project", requestId: "register-request" },
   "operation-restore": { screen: "operation-restore", operationId: "receipt" },
   "operation-receipt": { screen: "operation-receipt", operationId: "receipt", returnTo: workspace },

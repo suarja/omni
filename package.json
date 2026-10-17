@@ -1,6 +1,6 @@
 {
   "name": "omni",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "A local-first desktop tool for managing developer context.",
   "main": "out/main/index.js",

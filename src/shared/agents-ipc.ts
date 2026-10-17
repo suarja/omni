@@ -1,3 +1,4 @@
+import { linkStorefrontSchema, parseStorefrontLinkPlan, type LinkStorefrontRequest } from "./storefront-link-ipc";
 import {
   registerProjectSchema,
   parseProjectRegistrationPlan,
@@ -70,6 +71,7 @@ export const AGENTS_IPC_CHANNELS = {
 
 export type AgentHarness = "claude-code" | "codex";
 export type AgentWriteRequest =
+  | LinkStorefrontRequest
   | RegisterProjectRequest
   | import("./external-skill-intents").ExternalInstallIntent
   | PublishPluginRequest
@@ -369,6 +371,7 @@ function parseStoredAgentWriteRequest(value: unknown): StoredAgentWriteRequest {
 
 export function parseAgentWriteRequest(value: unknown): AgentWriteRequest {
   const request = record(value, "Agent write request");
+  if (request.kind === "link-storefront") return linkStorefrontSchema.parse(request);
   if (request.kind === "register-project") return registerProjectSchema.parse(request);
   if (request.kind === "install-external-skill") return externalInstallSchema.parse(request);
   if (request.kind === "import-artifact") {
@@ -460,6 +463,7 @@ function parsePlan(value: unknown): AgentPlan {
   keys(
     plan,
     [
+      "storefrontLink",
       "projectRegistration",
       "planId",
       "kind",
@@ -495,6 +499,7 @@ function parsePlan(value: unknown): AgentPlan {
     }
   }
   return {
+    ...(plan.storefrontLink === undefined ? {} : { storefrontLink: parseStorefrontLinkPlan(plan.storefrontLink) }),
     ...(plan.projectRegistration === undefined
       ? {}
       : { projectRegistration: parseProjectRegistrationPlan(plan.projectRegistration) }),
