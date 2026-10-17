@@ -1,7 +1,7 @@
 # `@omni/mcp`
 
 `@omni/mcp` is the stdio MCP server that gives Claude Code and Codex a thin client for the
-running Omni Desktop app. It reads and writes only through Omni's authenticated local socket.
+running Omni app. It reads and writes only through Omni's authenticated local socket.
 
 ## Install
 
@@ -18,7 +18,16 @@ omni-mcp --print-config claude
 omni-mcp --print-config codex
 ```
 
-The printed configuration includes `OMNI_USER_DATA` so the client uses Omni Desktop's user data directory. Hand-written configurations use the platform default; configurations installed by Omni provide the exact path explicitly.
+The printed configuration includes `OMNI_USER_DATA` so the client uses Omni's user data directory. Hand-written configurations use the platform default; configurations installed by Omni provide the exact path explicitly.
+
+## Bootstrap provenance
+
+`OMNI_MCP_SOURCE` accepts `codex-plugin`, `claude-plugin`, and `direct`.
+Absent or unsupported values become `unknown`.
+`OMNI_MCP_HARNESS` accepts `codex` and `claude-code`.
+Both plugin sources supply skills only for the active harness. Direct registration
+still checks installed skills. Settings registration writes `OMNI_USER_DATA` without
+plugin provenance; it remains independent of the plugin installation.
 
 ## Tools
 
@@ -39,7 +48,7 @@ The printed configuration includes `OMNI_USER_DATA` so the client uses Omni Desk
 - `omni_preview_assign` — preview assigning an asset to projects.
 - `omni_preview_create_skill` — preview creating a marketplace skill.
 - `omni_preview_update_skill` — preview updating a marketplace skill.
-- `omni_apply` — apply after a clear conversation yes or Omni Desktop approval; returns `applied`, `failed`, `declined`, `expired`, or `stale`.
+- `omni_apply` — apply after a clear conversation yes or Omni approval; returns `applied`, `failed`, `declined`, `expired`, or `stale`.
 
 ## Approval model
 
@@ -48,7 +57,7 @@ authenticated Desktop gateway when available. Other reads are served from the ru
 Every preview returns `approval: "conversation"` or
 `"omni"`. For conversation approval, present the one-sentence plan, ask the user, wait for a
 clear yes, then call `omni_apply`; no or unclear means no write. For Omni approval, tell the user
-once that the change waits in Omni Desktop → Review, then call `omni_apply`. The MCP server never
+once that the change waits in Omni → Review, then call `omni_apply`. The MCP server never
 writes marketplace or project files itself. `askInOmni: true` escalates a preview and never
 de-escalates it. If the app is unavailable, tools return an `app-not-running` result with
-instructions to open Omni Desktop.
+instructions to open Omni.

@@ -1,6 +1,6 @@
 {
-  "name": "omni-desktop",
-  "version": "0.2.0",
+  "name": "omni",
+  "version": "0.3.0",
   "private": true,
   "description": "A local-first desktop tool for managing developer context.",
   "main": "out/main/index.js",
@@ -10,6 +10,7 @@
     "demo:profile": "node scripts/demo-profile/cli.mjs",
     "build": "pnpm build:plugin-runtime && electron-vite build && node scripts/stage-omni-plugin-runtime.mjs && bash scripts/check-preload-bundle.sh",
     "build:plugin-runtime": "node scripts/build-omni-plugin-runtime.mjs",
+    "brand:build": "electron scripts/brand/build-brand.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "check:size": "bash scripts/check-line-counts.sh",

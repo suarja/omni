@@ -64,7 +64,7 @@ import {
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const profilePolicy = resolveProfilePolicy({ isPackaged: app.isPackaged });
 app.setPath("userData", profilePolicy.profilePath);
-if (!app.isPackaged && typeof app.setName === "function") app.setName("Omni Desktop (Development)");
+if (typeof app.setName === "function") app.setName(app.isPackaged ? "Omni" : "Omni (Development)");
 
 const hasSingleInstance = app.requestSingleInstanceLock();
 let mainWindow: BrowserWindow | undefined;
@@ -139,6 +139,12 @@ void (hasSingleInstance
       .whenReady()
       .then(async () => {
         const appPath = typeof app.getAppPath === "function" ? app.getAppPath() : process.cwd();
+        const iconPath = resolveResource(join("resources", "brand", "icon-512.png"), {
+          isPackaged: app.isPackaged,
+          resourcesPath: process.resourcesPath,
+          appPath,
+        });
+        if (process.platform === "darwin" && !app.isPackaged) app.dock?.setIcon(iconPath);
         const build = await loadBuildIdentity({
           appRoot: appPath,
           isPackaged: app.isPackaged,
@@ -148,7 +154,8 @@ void (hasSingleInstance
         });
         if (process.platform === "darwin" && typeof app.setAboutPanelOptions === "function") {
           app.setAboutPanelOptions({
-            applicationName: app.isPackaged ? "Omni Desktop" : "Omni Desktop (Development)",
+            iconPath,
+            applicationName: app.isPackaged ? "Omni" : "Omni (Development)",
             applicationVersion: build.version,
             version: `${build.channel} · ${build.commit}`,
           });
@@ -392,7 +399,7 @@ void (hasSingleInstance
         });
       })
       .catch((error: unknown) => {
-        console.error("Omni Desktop failed to start.", error);
+        console.error("Omni failed to start.", error);
         app.quit();
       })
   : Promise.resolve());

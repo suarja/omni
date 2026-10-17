@@ -187,7 +187,7 @@ export function createMarketplaceManifest(options: CreateMarketplaceManifestOpti
     name,
     createdAt: readTimestamp(options.createdAt, "Created at"),
     packages: [{ path: `packages/${id}` }],
-    createdBy: readText(options.createdBy ?? "omni-desktop/0.1.0", "Created by"),
+    createdBy: readText(options.createdBy ?? "omni/0.1.0", "Created by"),
   };
 }
 

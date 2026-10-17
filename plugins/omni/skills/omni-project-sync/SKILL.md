@@ -22,7 +22,7 @@ it wrote (bindings) and can tell when a copy drifted.
 5. To adopt a local edit into the marketplace: `omni_preview_capture { projectId,
 relativePath, target }` — the project's version becomes the marketplace version — then use
    the consent rule below and call `omni_apply`. To take the marketplace version instead, tell the user to open the project in
-   Omni Desktop and choose "Take the marketplace version" on the conflict.
+   Omni and choose "Take the marketplace version" on the conflict.
    To update linked copies from the current marketplace, use `omni_preview_sync_skill { sourceId, packageId, artifactPath, projectIds? }`, then `omni_apply` under the same consent rule.
    `omni_preview_update_skill` includes eligible linked copies by default; set `sourceOnly: true` for an explicit marketplace-only update. Both keep local edits.
 6. Unmanaged skills that exist in several projects are candidates for capture: say so, once.
@@ -58,9 +58,9 @@ If blocked, report the refusal and recovery text; do not bypass the path guard.
 
 <!-- Generated from packages/omni-skills/consent.md. -->
 
-For ordinary skill changes, previously given clear approval for this exact plan counts; do not ask again. If approval is not already clear, present the plan and wait for a clear yes; no or unclear means do nothing. For `approval: "omni"`: Approval happens in Omni Desktop for the reason returned with the preview. Tell the user in one line, then call omni_apply; it returns pending while the request waits. Call it again with the same requestId; the request does not expire. If the user approves in Omni later, omni_receipt shows the result. Route every write through Omni preview, `omni_apply`, and its receipt.
+For ordinary skill changes, previously given clear approval for this exact plan counts; do not ask again. If approval is not already clear, present the plan and wait for a clear yes; no or unclear means do nothing. For `approval: "omni"`: Approval happens in Omni for the reason returned with the preview. Tell the user in one line, then call omni_apply; it returns pending while the request waits. Call it again with the same requestId; the request does not expire. If the user approves in Omni later, omni_receipt shows the result. Route every write through Omni preview, `omni_apply`, and its receipt.
 
-Use the workshop reported by `omni_status` for all skill authoring and fixes. A source with `role: "storefront"` is a published copy. Never write skills or fixes into it. For a publication, call `omni_preview_publish` with the complete plugin id and one storefront destination, then `omni_apply`. Publication always requires the owner's approval in Omni Desktop, whatever the agent settings or prior conversation approval. Present blocking findings with file and line, fix the workshop content, and preview again.
+Use the workshop reported by `omni_status` for all skill authoring and fixes. A source with `role: "storefront"` is a published copy. Never write skills or fixes into it. For a publication, call `omni_preview_publish` with the complete plugin id and one storefront destination, then `omni_apply`. Publication always requires the owner's approval in Omni, whatever the agent settings or prior conversation approval. Present blocking findings with file and line, fix the workshop content, and preview again.
 
 Install external skills through Omni using `omni_list_external_library`, `omni_preview_install_external`, `omni_apply` and its receipt; never run `npx skills add` directly.
 

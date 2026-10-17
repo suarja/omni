@@ -1,5 +1,5 @@
 export const workspace = {
-  brandName: "Omni Desktop",
+  brandName: "Omni",
   back: "Retour",
   name: "Espace personnel",
   personalMarketplaceLabel: "MA MARKETPLACE",

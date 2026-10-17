@@ -8,10 +8,10 @@ import { fileURLToPath } from "node:url";
 const pluginRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const defaultUserDataPath =
   process.platform === "darwin"
-    ? join(homedir(), "Library", "Application Support", "omni-desktop")
+    ? join(homedir(), "Library", "Application Support", "Omni")
     : process.platform === "win32"
-      ? join(process.env.APPDATA ?? join(homedir(), "AppData", "Roaming"), "omni-desktop")
-      : join(process.env.XDG_CONFIG_HOME ?? join(homedir(), ".config"), "omni-desktop");
+      ? join(process.env.APPDATA ?? join(homedir(), "AppData", "Roaming"), "Omni")
+      : join(process.env.XDG_CONFIG_HOME ?? join(homedir(), ".config"), "Omni");
 const candidates = [
   process.env.OMNI_MCP_CLI,
   resolve(pluginRoot, "runtime/omni-mcp.mjs"),
@@ -31,7 +31,7 @@ for (const candidate of candidates) {
 }
 
 if (!cliPath) {
-  console.error("Omni MCP is unavailable. Open Omni Desktop or set OMNI_MCP_CLI to the built omni-mcp CLI path.");
+  console.error("Omni MCP is unavailable. Open Omni or set OMNI_MCP_CLI to the built omni-mcp CLI path.");
   process.exitCode = 1;
 } else {
   const child = spawn(process.execPath, [cliPath, ...process.argv.slice(2)], {

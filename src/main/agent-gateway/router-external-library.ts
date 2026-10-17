@@ -17,7 +17,7 @@ export async function routeExternalLibrary(
 ): Promise<Readonly<Record<string, unknown>> | undefined> {
   if (method === "list_external_library") {
     empty(params, method);
-    if (!library) throw fail("The external library is unavailable. Reopen Omni Desktop.");
+    if (!library) throw fail("The external library is unavailable. Reopen Omni.");
     const listed = await library.list();
     return { ...listed, sources: await Promise.all(listed.sources.map((source) => library.readSource(source.id))) };
   }

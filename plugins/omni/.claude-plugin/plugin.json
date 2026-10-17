@@ -1,0 +1,16 @@
+{
+  "name": "omni",
+  "version": "0.3.0",
+  "description": "Use Omni as the source of truth for reusable skills, projects, and agent setup.",
+  "author": {
+    "name": "Omni"
+  },
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "marketplace",
+    "Claude Code",
+    "MCP",
+    "drift"
+  ]
+}

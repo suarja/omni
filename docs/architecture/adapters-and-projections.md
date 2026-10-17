@@ -85,7 +85,7 @@ erase a usable inventory.
 ## Agent bootstrap topology
 
 The Codex plugin is a discovery entry, not the Desktop application. It provides the
-skills and a portable stdio MCP runtime. Omni Desktop remains the local authority: it
+skills and a portable stdio MCP runtime. Omni remains the local authority: it
 owns the authenticated socket, marketplace state, previews, approvals, receipts, and
 materialized runtime. The harness owns the session, model, quota, and agent loop.
 

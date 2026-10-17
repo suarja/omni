@@ -3,12 +3,12 @@ import { createDesktopWake, withDesktopWake } from "../../packages/omni-mcp/src/
 import type { GatewayResult } from "../../packages/omni-mcp/src/gateway-client";
 const unavailable: GatewayResult = {
   ok: false,
-  unavailable: { status: "app-not-running", message: "Open Omni Desktop to use the Omni tools." },
+  unavailable: { status: "app-not-running", message: "Open Omni to use the Omni tools." },
 };
 afterEach(() => vi.useRealTimers());
 function fixture(patch = {}) {
   let ready = false;
-  const findInstalledApp = vi.fn(async () => "/Applications/Omni Desktop.app");
+  const findInstalledApp = vi.fn(async () => "/Applications/Omni.app");
   const launch = vi.fn(async (_appPath: string, _signal: AbortSignal) => {
     ready = true;
   });
@@ -36,7 +36,7 @@ it("opens an installed Desktop in the background, waits for its socket and retri
   const f = fixture();
   expect(await f.client.request("status", {})).toEqual({ ok: true, result: { status: "ready" } });
   expect(f.launch).toHaveBeenCalledOnce();
-  expect(f.launch.mock.calls[0]![0]).toBe("/Applications/Omni Desktop.app");
+  expect(f.launch.mock.calls[0]![0]).toBe("/Applications/Omni.app");
   expect(f.request).toHaveBeenCalledTimes(2);
 });
 it.each([{ profileOverridden: true }, { platform: "linux" }])(
@@ -124,7 +124,7 @@ it("does not wake for gateway errors or rejected authentication", async () => {
     ok: false,
     unavailable: {
       status: "app-not-running",
-      message: "Omni Desktop rejected the agent token. Open Omni Desktop to refresh access.",
+      message: "Omni rejected the agent token. Open Omni to refresh access.",
     },
   });
   await f.client.request("status", {});

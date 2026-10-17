@@ -42,7 +42,7 @@ export function planVersionBump(packageSource, mcpSource, changelog, version) {
 export function artifactNames(version, arch) {
   parseVersion(version);
   if (!["arm64", "x64", "universal"].includes(arch)) throw new Error("Unsupported release architecture.");
-  return { zip: `Omni-Desktop-${version}-mac-${arch}.zip`, dmg: `Omni-Desktop-${version}-${arch}.dmg` };
+  return { zip: `Omni-${version}-mac-${arch}.zip`, dmg: `Omni-${version}-${arch}.dmg` };
 }
 
 /** @returns {{ mode: string, identity?: string, keychain?: string, notary?: { keyPath: string, keyId: string, issuer: string } }} */

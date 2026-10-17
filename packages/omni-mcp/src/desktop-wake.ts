@@ -70,8 +70,8 @@ function wakeFailure(result: GatewayResult, outcome: WakeOutcome): GatewayResult
   if (outcome === "not-attempted") return result;
   const message =
     outcome === "timeout"
-      ? "Omni Desktop did not become reachable within 20 seconds. Open Omni Desktop; this session reconnects by itself."
-      : "Omni Desktop could not be opened in the background. Open Omni Desktop; this session reconnects by itself.";
+      ? "Omni did not become reachable within 20 seconds. Open Omni; this session reconnects by itself."
+      : "Omni could not be opened in the background. Open Omni; this session reconnects by itself.";
   return { ok: false, unavailable: { status: "app-not-running", message } };
 }
 export function withDesktopWake(client: GatewayClientLike, wake: DesktopWake): GatewayClientLike {

@@ -57,10 +57,7 @@ export function createWakingGatewayClient(options: GatewayClientOptions = {}): G
     findInstalledApp: async () => {
       const status = await inspectBootstrapStatus({
         userDataPath: profile,
-        desktopInstallPaths: [
-          join("/Applications", "Omni Desktop.app"),
-          join(homedir(), "Applications", "Omni Desktop.app"),
-        ],
+        desktopInstallPaths: [join("/Applications", "Omni.app"), join(homedir(), "Applications", "Omni.app")],
       });
       return status.desktop.appPath;
     },

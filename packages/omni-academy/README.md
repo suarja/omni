@@ -1,6 +1,6 @@
 # Omni Academy
 
-The Academy is the shared, offline-first content set for Omni Desktop's Learn destination.
+The Academy is the shared, offline-first content set for Omni's Learn destination.
 The Markdown files under `content/en` and `content/fr` are the source of truth. The build
 script validates their frontmatter and internal links, then writes `academy.json`, the contract
 used by the desktop app and the future public `omni-academy` site.

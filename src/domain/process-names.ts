@@ -60,7 +60,7 @@ export function describeProcess(command: string): string {
     return "shell";
   }
   if (first === "git") return "Git";
-  if (first === "electron" && /omni-desktop|Omni\.app|out\/main/iu.test(normalized)) return "Electron (Omni)";
+  if (first === "electron" && /Omni\.app|out\/main/iu.test(normalized)) return "Electron (Omni)";
   if (first === "electron-vite" || /(?:^|[\s/])electron-vite(?:\s|$)/iu.test(normalized)) return "electron-vite";
   if (hasNumberedVitestWorker(normalized)) return "vitest workers";
   if (/(?:^|[\s/(])vitest(?:[\s)/]|$)/iu.test(normalized)) return "vitest";

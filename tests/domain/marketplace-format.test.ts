@@ -14,7 +14,7 @@ describe("Omni marketplace format", () => {
       createMarketplaceManifest({
         name: "My Tools",
         createdAt: "2026-09-12T12:00:00.000Z",
-        createdBy: "omni-desktop/0.1.0",
+        createdBy: "omni/0.1.0",
       }),
     ).toEqual({
       format: "omni.marketplace/1",
@@ -22,7 +22,7 @@ describe("Omni marketplace format", () => {
       name: "My Tools",
       createdAt: "2026-09-12T12:00:00.000Z",
       packages: [{ path: "packages/my-tools" }],
-      createdBy: "omni-desktop/0.1.0",
+      createdBy: "omni/0.1.0",
     });
   });
 

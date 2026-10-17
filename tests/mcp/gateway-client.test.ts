@@ -42,11 +42,11 @@ describe("Omni gateway client", () => {
     const original = process.platform;
     try {
       Object.defineProperty(process, "platform", { value: "win32", configurable: true });
-      expect(defaultUserDataPath()).toMatch(/AppData[\\/]Roaming[\\/]omni-desktop$/u);
+      expect(defaultUserDataPath()).toMatch(/AppData[\\/]Roaming[\\/]Omni$/u);
       Object.defineProperty(process, "platform", { value: "linux", configurable: true });
-      expect(defaultUserDataPath()).toMatch(/[\\/]\.config[\\/]omni-desktop$/u);
+      expect(defaultUserDataPath()).toMatch(/[\\/]\.config[\\/]Omni$/u);
       Object.defineProperty(process, "platform", { value: "darwin", configurable: true });
-      expect(defaultUserDataPath()).toMatch(/Library[\\/]Application Support[\\/]omni-desktop$/u);
+      expect(defaultUserDataPath()).toMatch(/Library[\\/]Application Support[\\/]Omni$/u);
     } finally {
       Object.defineProperty(process, "platform", { value: original, configurable: true });
     }
@@ -94,7 +94,7 @@ describe("Omni gateway client", () => {
 
     await expect(client.request("status", {})).resolves.toEqual({
       ok: false,
-      unavailable: { status: "app-not-running", message: "Open Omni Desktop to use the Omni tools." },
+      unavailable: { status: "app-not-running", message: "Open Omni to use the Omni tools." },
     });
     await client.close();
   });
@@ -110,7 +110,7 @@ describe("Omni gateway client", () => {
     expect(result.ok).toBe(false);
     if (!result.ok && "unavailable" in result) {
       expect(result.unavailable.status).toBe("app-not-running");
-      expect(result.unavailable.message).not.toBe("Open Omni Desktop to use the Omni tools.");
+      expect(result.unavailable.message).not.toBe("Open Omni to use the Omni tools.");
     }
     await client.close();
   });

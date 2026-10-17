@@ -1,4 +1,4 @@
-# Omni Desktop documentation
+# Omni documentation
 
 - [Product premise](product/README.md) describes the local-first workflow and safety boundaries.
 - [Architecture](architecture/README.md) explains state, adapters, reconciliation, and ownership.

@@ -56,7 +56,7 @@ function parseBuildInfo(raw: string, options: BuildIdentityOptions): BuildIdenti
   try {
     value = JSON.parse(raw);
   } catch {
-    throw new Error("Packaged Omni Desktop build-info.json is invalid JSON.");
+    throw new Error("Packaged Omni build-info.json is invalid JSON.");
   }
   if (typeof value !== "object" || value === null || Array.isArray(value))
     throw new Error("Build metadata must be an object.");
@@ -78,7 +78,7 @@ export async function loadBuildIdentity(options: BuildIdentityOptions): Promise<
   const read = options.readBuildInfo ?? (async (path: string) => readFile(path, "utf8").catch(() => undefined));
   const raw = await read(join(options.appRoot, "build-info.json"));
   if (raw !== undefined) return parseBuildInfo(raw, options);
-  if (options.isPackaged) throw new Error("Packaged Omni Desktop build is missing build-info.json.");
+  if (options.isPackaged) throw new Error("Packaged Omni build is missing build-info.json.");
   return {
     version: options.fallbackVersion,
     commit: "development",
@@ -106,12 +106,12 @@ export function resolveProfilePolicy(options: ProfilePolicyOptions): ProfilePoli
   const explicit = argument ?? environment;
   if (explicit?.trim()) {
     const profilePath = explicit.trim();
-    if (!isAbsolute(profilePath)) throw new Error("Explicit Omni Desktop profile path must be an absolute path.");
+    if (!isAbsolute(profilePath)) throw new Error("Explicit Omni profile path must be an absolute path.");
     const root = join(options.homePath ?? homedir(), "Library", "Application Support");
     const reservedChannel = channelValue === "release" ? "development" : "release";
-    const reservedProfile = resolve(root, reservedChannel === "release" ? "omni-desktop" : "omni-desktop-dev");
+    const reservedProfile = resolve(root, reservedChannel === "release" ? "Omni" : "Omni Dev");
     if (resolve(profilePath) === reservedProfile) {
-      throw new Error(`Explicit Omni Desktop profile path is reserved for the ${reservedChannel} profile.`);
+      throw new Error(`Explicit Omni profile path is reserved for the ${reservedChannel} profile.`);
     }
     return {
       channel: channelValue,
@@ -122,7 +122,7 @@ export function resolveProfilePolicy(options: ProfilePolicyOptions): ProfilePoli
   const root = join(options.homePath ?? homedir(), "Library", "Application Support");
   return {
     channel: channelValue,
-    profilePath: join(root, channelValue === "release" ? "omni-desktop" : "omni-desktop-dev"),
+    profilePath: join(root, channelValue === "release" ? "Omni" : "Omni Dev"),
     source: "default",
   };
 }

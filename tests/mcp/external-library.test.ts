@@ -23,7 +23,7 @@ it("exposes read-only library state and routes external install previews through
     const tools = (await client.listTools()).tools;
     expect(tools.find((tool) => tool.name === "omni_list_external_library")).toBeDefined();
     expect(tools.find((tool) => tool.name === "omni_preview_install_external")?.description).toContain(
-      "Approval happens in Omni Desktop",
+      "Approval happens in Omni",
     );
     await client.callTool({ name: "omni_list_external_library", arguments: {} });
     expect(request).toHaveBeenLastCalledWith("list_external_library", {});

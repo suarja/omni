@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildSigningPlan, notarize, signApplication, assessApplication } from "../../scripts/release/signing.mjs";
 import { createDistribution } from "../../scripts/release/distribution.mjs";
 
-const app = "/tmp/example/Omni Desktop.app";
+const app = "/tmp/example/Omni.app";
 const config = {
   mode: "developer-id",
   identity: "Developer ID Application: Example Person (ABCDE12345)",
@@ -11,7 +11,7 @@ const config = {
 const binaries = [
   `${app}/Contents/Frameworks/Example.framework/Versions/A/Example`,
   `${app}/Contents/Resources/omni-mcp`,
-  `${app}/Contents/MacOS/Omni Desktop`,
+  `${app}/Contents/MacOS/Omni`,
 ];
 const targets = [...binaries.slice(0, 2), `${app}/Contents/Frameworks/Example.framework`, app];
 
@@ -85,7 +85,7 @@ describe("signed distribution command execution", () => {
       fs,
     });
     const stapled = calls.findIndex(([, args]) => args[0] === "stapler" && args[1] === "staple" && args[2] === app);
-    const zip = calls.findIndex(([, args]) => args.at(-1) === "/tmp/example/Omni-Desktop-1.2.3-mac-arm64.zip");
+    const zip = calls.findIndex(([, args]) => args.at(-1) === "/tmp/example/Omni-1.2.3-mac-arm64.zip");
     expect(zip).toBeGreaterThan(stapled);
     expect(calls.some(([command, args]) => command === "/usr/bin/hdiutil" && args.includes("UDZO"))).toBe(true);
     expect(calls.some(([, args]) => args[0] === "stapler" && args[1] === "staple" && args[2].endsWith(".dmg"))).toBe(

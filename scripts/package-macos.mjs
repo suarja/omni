@@ -6,7 +6,12 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { normalizeElectronFramework } from "./macos-framework.mjs";
-import { assertCleanSnapshot, assertSafeDestination, inspectRuntimeImports } from "./release-policy.mjs";
+import {
+  applicationBrandingPlan,
+  assertCleanSnapshot,
+  assertSafeDestination,
+  inspectRuntimeImports,
+} from "./release-policy.mjs";
 import { assertVersionAgreement, releaseManifest, signingConfiguration } from "./release/policy.mjs";
 import { signApplication } from "./release/signing.mjs";
 import { createDistribution } from "./release/distribution.mjs";
@@ -37,7 +42,7 @@ async function hashDirectory(path) {
 }
 
 async function copyApplication(snapshot, destination, metadata, config, identity) {
-  const app = join(destination, "Omni Desktop.app");
+  const app = join(destination, "Omni.app");
   await cp(join(root, "node_modules/electron/dist/Electron.app"), app, { recursive: true, verbatimSymlinks: true });
   const resources = join(app, "Contents/Resources");
   await rm(join(resources, "default_app.asar"), { force: true });
@@ -57,7 +62,7 @@ async function copyApplication(snapshot, destination, metadata, config, identity
   await writeFile(
     join(appRoot, "package.json"),
     JSON.stringify(
-      { name: "omni-desktop", productName: "Omni Desktop", version: metadata.version, main: "out/main/index.js" },
+      { name: "omni", productName: "Omni", version: metadata.version, main: "out/main/index.js" },
       null,
       2,
     ) + "\n",
@@ -66,20 +71,21 @@ async function copyApplication(snapshot, destination, metadata, config, identity
   await cp(join(root, "node_modules/electron/dist/LICENSE"), join(resources, "ELECTRON-LICENSE"));
   await cp(join(root, "node_modules/electron/dist/LICENSES.chromium.html"), join(resources, "LICENSES.chromium.html"));
   const plist = join(app, "Contents/Info.plist");
+  const branding = applicationBrandingPlan(snapshot, app);
+  await rm(branding.obsoleteIcon, { force: true });
+  await cp(branding.iconSource, branding.iconDestination);
   for (const [key, value] of Object.entries({
-    CFBundleDisplayName: "Omni Desktop",
-    CFBundleName: "Omni Desktop",
+    ...branding.plistEntries,
     CFBundleIdentifier: identity.bundleId,
-    CFBundleExecutable: "Omni Desktop",
     CFBundleShortVersionString: metadata.version,
     CFBundleVersion: metadata.version,
   })) {
     run("/usr/libexec/PlistBuddy", ["-c", `Set :${key} ${value}`, plist]);
   }
-  await rename(join(app, "Contents/MacOS/Electron"), join(app, "Contents/MacOS/Omni Desktop"));
+  await rename(join(app, "Contents/MacOS/Electron"), join(app, "Contents/MacOS/Omni"));
   const launcher =
     '#!/bin/sh\nOMNI_APP_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)\n' +
-    'export ELECTRON_RUN_AS_NODE=1\nexec "$OMNI_APP_ROOT/MacOS/Omni Desktop" "$OMNI_APP_ROOT/Resources/app/plugins/omni/runtime/omni-mcp.mjs" "$@"\n';
+    'export ELECTRON_RUN_AS_NODE=1\nexec "$OMNI_APP_ROOT/MacOS/Omni" "$OMNI_APP_ROOT/Resources/app/plugins/omni/runtime/omni-mcp.mjs" "$@"\n';
   await writeFile(join(resources, "omni-mcp"), launcher, { mode: 0o755 });
   if (config.mode === "developer-id") {
     run("xcrun", [

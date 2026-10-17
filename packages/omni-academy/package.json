@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "MIT",
-  "description": "Offline Academy content for Omni Desktop and the future omni-academy site.",
+  "description": "Offline Academy content for Omni and the future omni-academy site.",
   "engines": {
     "node": ">=23"
   },

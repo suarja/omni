@@ -1,4 +1,4 @@
-# Releasing Omni Desktop
+# Releasing Omni
 
 Omni releases are built from a clean Git snapshot. Local commits, remote tags, draft creation
 and publication are separate actions. The workflow creates a **draft**; the maintainer reviews
@@ -83,8 +83,8 @@ A rejected submission fails the job and reports its notary log ID. Retrieve the 
 
 Artifacts use the following names, with actual version and architecture substituted:
 
-- `Omni-Desktop-<version>-mac-<arch>.zip`
-- `Omni-Desktop-<version>-<arch>.dmg`
+- `Omni-<version>-mac-<arch>.zip`
+- `Omni-<version>-<arch>.dmg`
 - `SHA256SUMS`, including both artifacts and `release.json`
 - `release.json`, including source commit, version, architecture, signing mode, notarization,
   artifact names and hashes, plus separate signature and Gatekeeper results
@@ -116,14 +116,10 @@ transfer cannot be canceled by this API, and an already staged native update may
 on a later normal quit. The quiet notification and Settings action restart only after an
 explicit click. Preferences live under the existing profile in `omni/app-updates.json`.
 
-The bundle ID changes from `local.omni.desktop` to the centralized public identity. `userData`
-remains `~/Library/Application Support/omni-desktop`; DEV remains `omni-desktop-dev`.
-Do not remove or migrate the profile. macOS may treat the new signature/bundle as a new login
-item or request TCC permissions again. Check Login Items manually, remove the old entry if
-needed and toggle Omni's setting to register the new identity. Existing saved login decisions
-are preserved. Electron safeStorage access may prompt again after the identity change;
-existing encrypted key files are preserved, and decryption on an upgraded install requires
-owner testing. Do not delete keychain entries as a migration shortcut.
+The bundle ID is `io.github.suarja.omni`, defined in `resources/release-identity.json`.
+The release profile is `~/Library/Application Support/Omni`; DEV uses
+`~/Library/Application Support/Omni Dev`. Each starts fresh. There is no profile migration,
+previous-folder lookup or bundle-ID compatibility path.
 
 ## Roll back a publication
 

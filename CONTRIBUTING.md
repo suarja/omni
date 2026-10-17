@@ -1,4 +1,4 @@
-# Contributing to Omni Desktop
+# Contributing to Omni
 
 Read the [product premise](docs/product/README.md), [architecture](docs/architecture/README.md),
 and [harness conventions](docs/conventions/README.md) before changing behavior.

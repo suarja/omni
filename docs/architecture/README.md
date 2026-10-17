@@ -1,4 +1,4 @@
-# Omni Desktop architecture
+# Omni architecture
 
 This page describes the local application boundaries.
 

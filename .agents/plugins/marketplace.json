@@ -1,11 +1,12 @@
 {
-  "name": "personal",
+  "name": "omni",
   "interface": {
-    "displayName": "Personal"
+    "displayName": "Omni"
   },
   "plugins": [
     {
       "name": "omni",
+      "description": "Use Omni as the source of truth for reusable skills, projects, and agent setup.",
       "source": {
         "source": "local",
         "path": "./plugins/omni"

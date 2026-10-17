@@ -22,8 +22,8 @@ export type GatewayClientOptions = Readonly<{
   version?: string;
 }>;
 
-const DEFAULT_UNAVAILABLE = "Open Omni Desktop to use the Omni tools.";
-const AUTH_UNAVAILABLE = "Omni Desktop rejected the agent token. Open Omni Desktop to refresh access.";
+const DEFAULT_UNAVAILABLE = "Open Omni to use the Omni tools.";
+const AUTH_UNAVAILABLE = "Omni rejected the agent token. Open Omni to refresh access.";
 const REQUEST_TIMEOUT_MS = 30_000;
 const APPLY_TIMEOUT_MS = 10 * 60 * 1000;
 
@@ -46,9 +46,9 @@ function userDataPath(): string {
 
 export function defaultUserDataPath(): string {
   const home = homedir();
-  if (process.platform === "darwin") return join(home, "Library", "Application Support", "omni-desktop");
-  if (process.platform === "win32") return join(home, "AppData", "Roaming", "omni-desktop");
-  return join(home, ".config", "omni-desktop");
+  if (process.platform === "darwin") return join(home, "Library", "Application Support", "Omni");
+  if (process.platform === "win32") return join(home, "AppData", "Roaming", "Omni");
+  return join(home, ".config", "Omni");
 }
 
 function frameId(value: unknown): number | undefined {
@@ -98,7 +98,7 @@ export class GatewayClient implements GatewayClientLike {
       } catch (error: unknown) {
         this.disconnect();
         if (error instanceof RequestTimeoutError)
-          return { ok: false, error: { code: error.code, message: "The Omni Desktop request timed out." } };
+          return { ok: false, error: { code: error.code, message: "The Omni request timed out." } };
         if (!(error instanceof UnavailableError) || !error.retryable || attempt === 1)
           return {
             ok: false,

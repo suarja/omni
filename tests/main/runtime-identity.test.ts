@@ -13,7 +13,7 @@ describe("runtime identity", () => {
       }),
     ).toEqual({
       channel: "development",
-      profilePath: "/Users/example/Library/Application Support/omni-desktop-dev",
+      profilePath: "/Users/example/Library/Application Support/Omni Dev",
       source: "default",
     });
   });
@@ -34,7 +34,7 @@ describe("runtime identity", () => {
       resolveProfilePolicy({
         isPackaged: false,
         homePath: "/Users/example",
-        argv: ["--user-data-dir", "/Users/example/Library/Application Support/omni-desktop"],
+        argv: ["--user-data-dir", "/Users/example/Library/Application Support/Omni"],
         env: {},
       }),
     ).toThrow("reserved for the release profile");
@@ -42,7 +42,7 @@ describe("runtime identity", () => {
       resolveProfilePolicy({
         isPackaged: true,
         homePath: "/Users/example",
-        argv: ["--user-data-dir=/Users/example/Library/Application Support/omni-desktop-dev"],
+        argv: ["--user-data-dir=/Users/example/Library/Application Support/Omni Dev"],
         env: {},
       }),
     ).toThrow("reserved for the development profile");
@@ -125,6 +125,6 @@ describe("runtime identity", () => {
         arch: "arm64",
         readBuildInfo: async () => undefined,
       }),
-    ).rejects.toThrow("Packaged Omni Desktop build is missing build-info.json");
+    ).rejects.toThrow("Packaged Omni build is missing build-info.json");
   });
 });

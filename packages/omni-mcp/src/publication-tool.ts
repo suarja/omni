@@ -14,7 +14,7 @@ export function registerPublicationPreview(
     "omni_preview_publish",
     {
       description:
-        "Preview publishing a complete workshop plugin to an existing or new public storefront. Checks block unsafe content. Fix content in the workshop. Publishing always waits for the owner's approval in Omni Desktop, whatever the agent settings. Call omni_apply with the returned requestId to wait for that approval and receipt. " +
+        "Preview publishing a complete workshop plugin to an existing or new public storefront. Checks block unsafe content. Fix content in the workshop. Publishing always waits for the owner's approval in Omni, whatever the agent settings. Call omni_apply with the returned requestId to wait for that approval and receipt. " +
         OMNI_APPROVAL_INSTRUCTIONS,
       inputSchema: z
         .object({

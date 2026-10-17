@@ -30,10 +30,10 @@ export async function createDistribution({
   await zip(join(destination, artifacts.zip));
   const stage = join(scratch, "dmg-root");
   await fs.mkdir(stage);
-  await fs.cp(app, join(stage, "Omni Desktop.app"), { recursive: true, verbatimSymlinks: true });
+  await fs.cp(app, join(stage, "Omni.app"), { recursive: true, verbatimSymlinks: true });
   await fs.symlink("/Applications", join(stage, "Applications"));
   const dmg = join(destination, artifacts.dmg);
-  await run("/usr/bin/hdiutil", ["create", "-volname", "Omni Desktop", "-srcfolder", stage, "-format", "UDZO", dmg]);
+  await run("/usr/bin/hdiutil", ["create", "-volname", "Omni", "-srcfolder", stage, "-format", "UDZO", dmg]);
   if (config.mode === "developer-id") {
     await run("/usr/bin/codesign", [
       "--force",

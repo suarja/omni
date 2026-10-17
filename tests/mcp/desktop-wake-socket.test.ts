@@ -54,7 +54,7 @@ it("reconnects an authenticated socket call after one fake background launch", a
     createDesktopWake({
       profileOverridden: false,
       platform: "darwin",
-      findInstalledApp: async () => "/Applications/Omni Desktop.app",
+      findInstalledApp: async () => "/Applications/Omni.app",
       launch,
       probe: (signal) => probeDesktopSocket(f.socketPath, signal),
     }),
@@ -71,7 +71,7 @@ it("keeps a custom-profile runtime unavailable without waking the installed app"
     createDesktopWake({
       profileOverridden: true,
       platform: "darwin",
-      findInstalledApp: async () => "/Applications/Omni Desktop.app",
+      findInstalledApp: async () => "/Applications/Omni.app",
       launch,
       probe: (signal) => probeDesktopSocket(f.socketPath, signal),
     }),

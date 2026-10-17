@@ -1,11 +1,11 @@
 ---
 name: omni-bootstrap
-description: Route reusable skill creation, updates, installation, assignment, synchronization, and drift checks through Omni Desktop. Use when the user asks to create, write, improve, remember, install, assign, sync, or audit a reusable skill. Do not use for executing an already-installed skill or for an explicitly project-local one-off skill.
+description: Route reusable skill creation, updates, installation, assignment, synchronization, and drift checks through Omni. Use when the user asks to create, write, improve, remember, install, assign, sync, or audit a reusable skill. Do not use for executing an already-installed skill or for an explicitly project-local one-off skill.
 ---
 
-# Route reusable skills through Omni Desktop
+# Route reusable skills through Omni
 
-Omni Desktop is the source of truth for reusable skills. This entrypoint keeps a
+Omni is the source of truth for reusable skills. This entrypoint keeps a
 skill request on the Omni path instead of silently creating a project-local file.
 
 1. Call `omni_bootstrap_status` first when available. It distinguishes the
@@ -16,7 +16,7 @@ skill request on the Omni path instead of silently creating a project-local file
    `install-desktop`, `open-desktop`, `register-mcp`, or `install-skills`.
 2. If `omni_bootstrap_status` is unavailable, the plugin/MCP is not loaded. For
    Codex, recommend installing the Omni Codex plugin. For Claude Code, recommend
-   Omni Desktop → Settings → Agents → Enable Omni for Claude Code. If the harness
+   Omni → Settings → Agents → Enable Omni for Claude Code. If the harness
    is unknown, say that the local state cannot be inspected and present both paths;
    do not claim that Desktop is absent.
 3. If the diagnostic says Desktop is not detected, recommend installing Desktop
@@ -58,9 +58,9 @@ If blocked, report the refusal and recovery text; do not bypass the path guard.
 
 <!-- Generated from packages/omni-skills/consent.md. -->
 
-For ordinary skill changes, previously given clear approval for this exact plan counts; do not ask again. If approval is not already clear, present the plan and wait for a clear yes; no or unclear means do nothing. For `approval: "omni"`: Approval happens in Omni Desktop for the reason returned with the preview. Tell the user in one line, then call omni_apply; it returns pending while the request waits. Call it again with the same requestId; the request does not expire. If the user approves in Omni later, omni_receipt shows the result. Route every write through Omni preview, `omni_apply`, and its receipt.
+For ordinary skill changes, previously given clear approval for this exact plan counts; do not ask again. If approval is not already clear, present the plan and wait for a clear yes; no or unclear means do nothing. For `approval: "omni"`: Approval happens in Omni for the reason returned with the preview. Tell the user in one line, then call omni_apply; it returns pending while the request waits. Call it again with the same requestId; the request does not expire. If the user approves in Omni later, omni_receipt shows the result. Route every write through Omni preview, `omni_apply`, and its receipt.
 
-Use the workshop reported by `omni_status` for all skill authoring and fixes. A source with `role: "storefront"` is a published copy. Never write skills or fixes into it. For a publication, call `omni_preview_publish` with the complete plugin id and one storefront destination, then `omni_apply`. Publication always requires the owner's approval in Omni Desktop, whatever the agent settings or prior conversation approval. Present blocking findings with file and line, fix the workshop content, and preview again.
+Use the workshop reported by `omni_status` for all skill authoring and fixes. A source with `role: "storefront"` is a published copy. Never write skills or fixes into it. For a publication, call `omni_preview_publish` with the complete plugin id and one storefront destination, then `omni_apply`. Publication always requires the owner's approval in Omni, whatever the agent settings or prior conversation approval. Present blocking findings with file and line, fix the workshop content, and preview again.
 
 Install external skills through Omni using `omni_list_external_library`, `omni_preview_install_external`, `omni_apply` and its receipt; never run `npx skills add` directly.
 

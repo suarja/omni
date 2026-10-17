@@ -173,7 +173,7 @@ describe("source layout detector", () => {
         name: "My Marketplace",
         createdAt: "2026-09-12T12:00:00.000Z",
         packages: [{ path: "packages/my-marketplace" }],
-        createdBy: "omni-desktop/0.1.0",
+        createdBy: "omni/0.1.0",
       }),
     );
     await writeFixtureFile(

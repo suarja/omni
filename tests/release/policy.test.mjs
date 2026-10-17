@@ -40,8 +40,8 @@ describe("release policy", () => {
   });
   it("names architecture-specific update and installer artifacts", () => {
     expect(artifactNames("1.2.3", "arm64")).toEqual({
-      zip: "Omni-Desktop-1.2.3-mac-arm64.zip",
-      dmg: "Omni-Desktop-1.2.3-arm64.dmg",
+      zip: "Omni-1.2.3-mac-arm64.zip",
+      dmg: "Omni-1.2.3-arm64.dmg",
     });
     expect(() => artifactNames("1.2.3", "../bad")).toThrow();
   });

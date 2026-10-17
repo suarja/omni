@@ -1,0 +1,14 @@
+{
+  "name": "omni",
+  "description": "The official Omni plugin for reusable skills and local agent setup.",
+  "owner": {
+    "name": "Omni"
+  },
+  "plugins": [
+    {
+      "name": "omni",
+      "description": "Use Omni as the source of truth for reusable skills, projects, and agent setup.",
+      "source": "./plugins/omni"
+    }
+  ]
+}

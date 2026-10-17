@@ -161,7 +161,7 @@ describe("Omni MCP server", () => {
     const result = await connected.client.callTool({ name: "omni_status", arguments: {} });
     expect(textResult(result)).toEqual({
       status: "app-not-running",
-      message: "Open Omni Desktop to use the Omni tools.",
+      message: "Open Omni to use the Omni tools.",
     });
 
     await connected.close();
@@ -248,7 +248,7 @@ describe("Omni MCP server", () => {
     for (const tool of tools.tools.filter(
       (tool) => tool.name.startsWith("omni_preview_") || tool.name === "omni_apply",
     )) {
-      expect(tool.description).toContain("Approval happens in Omni Desktop: <reason>.");
+      expect(tool.description).toContain("Approval happens in Omni: <reason>.");
       expect(tool.description).toContain("same requestId; the request does not expire");
     }
     await connected.client.callTool({ name: "omni_bootstrap_status", arguments: {} });
@@ -461,7 +461,7 @@ describe("Omni MCP server", () => {
         if (method === "session")
           return {
             ok: false,
-            unavailable: { status: "app-not-running", message: "Open Omni Desktop to use the Omni tools." },
+            unavailable: { status: "app-not-running", message: "Open Omni to use the Omni tools." },
           };
         throw new Error(`Unexpected method ${method}`);
       },
@@ -487,7 +487,7 @@ describe("Omni MCP server", () => {
     });
     expect(textResult(session)).toEqual({
       status: "app-not-running",
-      message: "Open Omni Desktop to use the Omni tools.",
+      message: "Open Omni to use the Omni tools.",
     });
     await connected.close();
   });

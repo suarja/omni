@@ -6,7 +6,7 @@ import { defaultUserDataPath } from "./gateway-client.js";
 import { RUNTIME_VERSION } from "./version.js";
 
 export type BootstrapHarness = "claude-code" | "codex";
-export type BootstrapSource = "codex-plugin" | "direct" | "unknown";
+export type BootstrapSource = "codex-plugin" | "claude-plugin" | "direct" | "unknown";
 
 export type BootstrapStatus = Readonly<{
   status: "ready" | "desktop-not-running" | "desktop-not-detected" | "needs-registration" | "needs-skills";
@@ -71,23 +71,16 @@ function defaultDesktopInstallPaths(home: string): readonly string[] {
   const configured = process.env.OMNI_DESKTOP_APP_PATH;
   const standard =
     process.platform === "darwin"
-      ? [join("/Applications", "Omni Desktop.app"), join(home, "Applications", "Omni Desktop.app")]
+      ? [join("/Applications", "Omni.app"), join(home, "Applications", "Omni.app")]
       : process.platform === "win32"
-        ? [
-            join(
-              process.env.LOCALAPPDATA ?? join(home, "AppData", "Local"),
-              "Programs",
-              "Omni Desktop",
-              "Omni Desktop.exe",
-            ),
-          ]
-        : [join("/opt", "Omni Desktop", "omni-desktop"), join(home, ".local", "share", "omni-desktop", "omni-desktop")];
+        ? [join(process.env.LOCALAPPDATA ?? join(home, "AppData", "Local"), "Programs", "Omni", "Omni.exe")]
+        : [join("/opt", "Omni", "omni"), join(home, ".local", "share", "omni", "omni")];
   return configured ? [configured, ...standard] : standard;
 }
 
 function sourceFromEnvironment(): BootstrapSource {
   const value = process.env.OMNI_MCP_SOURCE;
-  return value === "codex-plugin" || value === "direct" ? value : "unknown";
+  return value === "codex-plugin" || value === "claude-plugin" || value === "direct" ? value : "unknown";
 }
 
 function harnessFromEnvironment(): BootstrapHarness | undefined {
@@ -119,7 +112,7 @@ async function harnessStatus(
   const installed = await exists(join(home, paths.skills, "omni-bootstrap", "SKILL.md"));
   const skill = installed
     ? "installed"
-    : source === "codex-plugin" && activeHarness === harness
+    : (source === "codex-plugin" || source === "claude-plugin") && activeHarness === harness
       ? "provided-by-plugin"
       : "missing";
   return {
@@ -140,19 +133,19 @@ function actionFor(
     return {
       kind: "install-desktop",
       message:
-        "Omni Desktop was not detected in its standard locations. Install it, or open the existing app if it is installed elsewhere.",
+        "Omni was not detected in its standard locations. Install it, or open the existing app if it is installed elsewhere.",
     };
   if (desktop.status === "installed")
-    return { kind: "open-desktop", message: "Open Omni Desktop; this session reconnects by itself." };
+    return { kind: "open-desktop", message: "Open Omni; this session reconnects by itself." };
   if (source === "unknown" && !selected.registered)
     return {
       kind: "register-mcp",
-      message: "Register Omni MCP for this harness from Omni Desktop → Settings → Agents.",
+      message: "Register Omni MCP for this harness from Omni → Settings → Agents.",
     };
-  if (selected.skill === "missing" && source !== "codex-plugin")
+  if (selected.skill === "missing")
     return {
       kind: "install-skills",
-      message: "Install Omni skills for this harness from Omni Desktop → Settings → Agents.",
+      message: "Install Omni skills for this harness from Omni → Settings → Agents.",
     };
   return { kind: "ready", message: "Omni is ready. Use omni_status before managing reusable skills." };
 }

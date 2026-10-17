@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0
+
+The app is now called Omni.
+
+- New name, app icon and identity: `Omni.app`, data in `~/Library/Application Support/Omni`.
+  Settings from 0.2.0 are not carried over; connect your marketplace again on first launch.
+- This repository is an `omni` plugin marketplace for Claude Code and Codex, and the plugin
+  starts Omni's MCP server in each agent.
+- A new README with a demo.
+
 ## 0.2.0
 
 First public release.

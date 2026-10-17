@@ -40,6 +40,14 @@
     "resources/academy/install-marketplace-menu.png",
     "resources/academy/undo-receipt.png",
     "resources/academy/undo-restore.png",
-    "resources/academy/undo-review.png"
+    "resources/academy/undo-review.png",
+    "resources/brand/Omni.icns",
+    "resources/brand/banner.png",
+    "resources/brand/demo.gif",
+    "resources/brand/icon-512.png",
+    "resources/brand/icon-dark.svg",
+    "resources/brand/icon.svg",
+    "resources/brand/mark-dark.svg",
+    "resources/brand/mark.svg"
   ]
 }

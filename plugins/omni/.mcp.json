@@ -2,10 +2,10 @@
   "mcpServers": {
     "omni": {
       "command": "node",
-      "args": ["scripts/omni-mcp.mjs"],
+      "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/omni-mcp.mjs"],
       "env": {
-        "OMNI_MCP_SOURCE": "codex-plugin",
-        "OMNI_MCP_HARNESS": "codex"
+        "OMNI_MCP_SOURCE": "claude-plugin",
+        "OMNI_MCP_HARNESS": "claude-code"
       }
     }
   }

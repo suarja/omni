@@ -136,7 +136,7 @@ async function executeApply(params: unknown, options: ApplyOptions): Promise<unk
       requestId,
       ...(resolved.approvalReason ? { approvalReason: resolved.approvalReason } : {}),
       message:
-        "Approval is pending in Omni Desktop. Call omni_apply again with the same requestId; the request does not expire.",
+        "Approval is pending in Omni. Call omni_apply again with the same requestId; the request does not expire.",
     };
   if (resolved.status === "declined") return { status: "declined" as const };
   if (resolved.request.kind === "assign" && !resolved.intentId)

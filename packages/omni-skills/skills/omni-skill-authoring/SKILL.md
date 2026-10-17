@@ -5,7 +5,7 @@ description: Create or update a skill in the user's Omni marketplace through the
 
 # Skill authoring through Omni
 
-Omni Desktop is the single source of truth for the user's skills. A skill written by hand
+Omni is the single source of truth for the user's skills. A skill written by hand
 into one project drifts; a skill written through Omni lands in the marketplace with valid
 structure and provenance, is projected to every harness, committed, and applied to the
 projects that carry it. Never write `SKILL.md` files directly when the Omni tools are
@@ -17,7 +17,7 @@ available.
    harness before assuming any part of the path is available. Follow `nextAction` when
    it is not ready; never infer an absent Desktop from an unavailable tool.
 2. `omni_status` — confirm the app is running and note the personal marketplace id. If the
-   answer is `app-not-running`, tell the user to open Omni Desktop and stop.
+   answer is `app-not-running`, tell the user to open Omni and stop.
 3. `omni_find_skill { query }` — check whether a skill with the same intent already exists
    (name, description, identity findings). If one exists, prefer `omni_preview_update_skill`.
 4. Choose the owning plugin with `omni_list_marketplace` (see `omni-marketplace-routing`).
@@ -47,9 +47,9 @@ receipts keep the canonical observed id.
 
 <!-- Generated from packages/omni-skills/consent.md. -->
 
-For ordinary skill changes, previously given clear approval for this exact plan counts; do not ask again. If approval is not already clear, present the plan and wait for a clear yes; no or unclear means do nothing. For `approval: "omni"`: Approval happens in Omni Desktop for the reason returned with the preview. Tell the user in one line, then call omni_apply; it returns pending while the request waits. Call it again with the same requestId; the request does not expire. If the user approves in Omni later, omni_receipt shows the result. Route every write through Omni preview, `omni_apply`, and its receipt.
+For ordinary skill changes, previously given clear approval for this exact plan counts; do not ask again. If approval is not already clear, present the plan and wait for a clear yes; no or unclear means do nothing. For `approval: "omni"`: Approval happens in Omni for the reason returned with the preview. Tell the user in one line, then call omni_apply; it returns pending while the request waits. Call it again with the same requestId; the request does not expire. If the user approves in Omni later, omni_receipt shows the result. Route every write through Omni preview, `omni_apply`, and its receipt.
 
-Use the workshop reported by `omni_status` for all skill authoring and fixes. A source with `role: "storefront"` is a published copy. Never write skills or fixes into it. For a publication, call `omni_preview_publish` with the complete plugin id and one storefront destination, then `omni_apply`. Publication always requires the owner's approval in Omni Desktop, whatever the agent settings or prior conversation approval. Present blocking findings with file and line, fix the workshop content, and preview again.
+Use the workshop reported by `omni_status` for all skill authoring and fixes. A source with `role: "storefront"` is a published copy. Never write skills or fixes into it. For a publication, call `omni_preview_publish` with the complete plugin id and one storefront destination, then `omni_apply`. Publication always requires the owner's approval in Omni, whatever the agent settings or prior conversation approval. Present blocking findings with file and line, fix the workshop content, and preview again.
 
 Install external skills through Omni using `omni_list_external_library`, `omni_preview_install_external`, `omni_apply` and its receipt; never run `npx skills add` directly.
 

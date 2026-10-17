@@ -21,10 +21,10 @@ it("uses macOS open with background argv and never invokes a shell", async () =>
   vi.doMock("node:child_process", () => ({ execFile }));
   const { launchDesktopInBackground: launch } = await import("../../packages/omni-mcp/src/desktop-wake-adapter");
   const signal = new AbortController().signal;
-  await launch("/Applications/Omni Desktop.app", signal);
+  await launch("/Applications/Omni.app", signal);
   expect(execFile).toHaveBeenCalledExactlyOnceWith(
     "open",
-    ["-g", "-a", "/Applications/Omni Desktop.app"],
+    ["-g", "-a", "/Applications/Omni.app"],
     { signal, timeout: 20_000 },
     expect.any(Function),
   );

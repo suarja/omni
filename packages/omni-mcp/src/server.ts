@@ -186,14 +186,6 @@ function registerReadTools(server: McpServer, gateway: GatewayClientLike): void 
       toolResult(
         await inspectBootstrapStatus({
           runtimePath: process.env.OMNI_MCP_RUNTIME_PATH ?? process.argv[1] ?? "unknown",
-          source:
-            process.env.OMNI_MCP_SOURCE === "codex-plugin" || process.env.OMNI_MCP_SOURCE === "direct"
-              ? process.env.OMNI_MCP_SOURCE
-              : "unknown",
-          harness:
-            process.env.OMNI_MCP_HARNESS === "codex" || process.env.OMNI_MCP_HARNESS === "claude-code"
-              ? process.env.OMNI_MCP_HARNESS
-              : undefined,
           gatewayProbe: async () => {
             const result = await gateway.request("status", {});
             return result.ok && (result.result as { status?: unknown }).status === "ready";
@@ -205,7 +197,7 @@ function registerReadTools(server: McpServer, gateway: GatewayClientLike): void 
     "omni_status",
     {
       description:
-        "Read Omni Desktop status, marketplace, and registered projects. Use before planning work; writes still require approval in the app.",
+        "Read Omni status, marketplace, and registered projects. Use before planning work; writes still require approval in the app.",
       inputSchema: empty,
     },
     async () => toolResult(normalize(await gateway.request("status", {}))),
@@ -509,7 +501,7 @@ function registerApplyTool(server: McpServer, gateway: GatewayClientLike): void 
     "omni_apply",
     {
       description:
-        "Apply a preview covered by the user's clear authorization or by Omni Desktop approval. Prior authorization for the same scope counts; do not ask again. Returns the operation outcome and receipts; inspect recovery before retrying a partial or recovery-required result. " +
+        "Apply a preview covered by the user's clear authorization or by Omni approval. Prior authorization for the same scope counts; do not ask again. Returns the operation outcome and receipts; inspect recovery before retrying a partial or recovery-required result. " +
         OMNI_APPROVAL_INSTRUCTIONS,
       inputSchema: z.object({ requestId: id }).strict(),
     },
@@ -525,7 +517,7 @@ export function createOmniServer(gateway: GatewayClientLike = createWakingGatewa
     { name: "omni", version: RUNTIME_VERSION },
     {
       instructions:
-        "Omni Desktop is the source of truth for reusable skills. Call omni_bootstrap_status first when the installation path is unclear; it distinguishes the plugin, MCP runtime, Desktop installation, Desktop reachability, harness registration, and skills. Then call omni_status before skill work. Never write a reusable SKILL.md directly. Present previews and use omni_apply when the user has already clearly authorized the same scope; ask once only when authorization is missing or scope changes. If Desktop is unavailable, follow nextAction and do not silently create a local replacement. For Omni approval, use the returned reason. " +
+        "Omni is the source of truth for reusable skills. Call omni_bootstrap_status first when the installation path is unclear; it distinguishes the plugin, MCP runtime, Desktop installation, Desktop reachability, harness registration, and skills. Then call omni_status before skill work. Never write a reusable SKILL.md directly. Present previews and use omni_apply when the user has already clearly authorized the same scope; ask once only when authorization is missing or scope changes. If Desktop is unavailable, follow nextAction and do not silently create a local replacement. For Omni approval, use the returned reason. " +
         OMNI_APPROVAL_INSTRUCTIONS,
     },
   );

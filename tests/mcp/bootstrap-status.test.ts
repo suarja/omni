@@ -2,14 +2,17 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { Client, InMemoryTransport } from "../../packages/omni-mcp/testing/sdk";
+import { createOmniServer } from "../../packages/omni-mcp/src/server";
 import { inspectBootstrapStatus } from "../../packages/omni-mcp/src/bootstrap-status";
 import { RUNTIME_VERSION } from "../../packages/omni-mcp/src/version";
 
 const roots: string[] = [];
 
 afterEach(async () => {
+  vi.unstubAllEnvs();
   await Promise.all(roots.splice(0).map((root) => rm(root, { recursive: true, force: true })));
 });
 
@@ -59,7 +62,7 @@ describe("Omni bootstrap status", () => {
 
   it("distinguishes an installed but closed Desktop from an absent one", async () => {
     const { homeDir, userDataPath, runtimePath, root } = await setup();
-    const appPath = join(root, "Omni Desktop.app");
+    const appPath = join(root, "Omni.app");
     await mkdir(appPath, { recursive: true });
 
     const status = await inspectBootstrapStatus({
@@ -96,6 +99,77 @@ describe("Omni bootstrap status", () => {
       status: "ready",
       desktop: { status: "running" },
       nextAction: { kind: "ready" },
+    });
+  });
+
+  it.each([
+    ["codex-plugin", "codex", "claude-code"],
+    ["claude-plugin", "claude-code", "codex"],
+  ] as const)("recognizes %s skills only in the active harness", async (source, harness, otherHarness) => {
+    const { homeDir, userDataPath, runtimePath } = await setup();
+    vi.stubEnv("OMNI_MCP_SOURCE", source);
+    vi.stubEnv("OMNI_MCP_HARNESS", harness);
+    const status = await inspectBootstrapStatus({
+      homeDir,
+      userDataPath,
+      runtimePath,
+      desktopInstallPaths: [],
+      gatewayProbe: async () => true,
+    });
+    expect(status).toMatchObject({
+      status: "ready",
+      plugin: { active: true, source },
+      harnesses: {
+        [harness]: { skill: "provided-by-plugin", registered: false },
+        [otherHarness]: { skill: "missing" },
+      },
+      nextAction: { kind: "ready" },
+    });
+  });
+
+  it("preserves Claude plugin provenance through the MCP diagnostic tool", async () => {
+    const { homeDir, userDataPath, runtimePath } = await setup();
+    vi.stubEnv("HOME", homeDir);
+    vi.stubEnv("OMNI_USER_DATA", userDataPath);
+    vi.stubEnv("OMNI_MCP_RUNTIME_PATH", runtimePath);
+    vi.stubEnv("OMNI_MCP_SOURCE", "claude-plugin");
+    vi.stubEnv("OMNI_MCP_HARNESS", "claude-code");
+    const [serverTransport, clientTransport] = InMemoryTransport.createLinkedPair();
+    const server = createOmniServer({
+      request: async () => ({ ok: true, result: { status: "ready" } }),
+      close: async () => {},
+    });
+    const client = new Client({ name: "bootstrap-test", version: "1" });
+    try {
+      await server.connect(serverTransport);
+      await client.connect(clientTransport);
+      const result = await client.callTool({ name: "omni_bootstrap_status", arguments: {} });
+      expect(result.structuredContent).toMatchObject({
+        status: "ready",
+        plugin: { active: true, source: "claude-plugin" },
+        harnesses: { "claude-code": { skill: "provided-by-plugin" }, codex: { skill: "missing" } },
+      });
+    } finally {
+      await client.close();
+      await server.close();
+    }
+  });
+
+  it("treats an unsupported source as unknown instead of supplying plugin skills", async () => {
+    const { homeDir, userDataPath, runtimePath } = await setup();
+    vi.stubEnv("OMNI_MCP_SOURCE", "untrusted-plugin");
+    vi.stubEnv("OMNI_MCP_HARNESS", "claude-code");
+    const status = await inspectBootstrapStatus({
+      homeDir,
+      userDataPath,
+      runtimePath,
+      desktopInstallPaths: [],
+      gatewayProbe: async () => true,
+    });
+    expect(status).toMatchObject({
+      status: "needs-registration",
+      plugin: { active: false, source: "unknown" },
+      harnesses: { "claude-code": { skill: "missing" } },
     });
   });
 

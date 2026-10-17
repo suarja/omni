@@ -71,7 +71,7 @@ export async function writeDesktopManifest(options: DesktopManifestOptions): Pro
   await mkdir(dirname(path), { recursive: true });
   const content = Buffer.from(
     `${JSON.stringify({
-      name: "Omni Desktop",
+      name: "Omni",
       version: options.version,
       ...(options.build ? { build: options.build } : {}),
       ...(options.profilePath ? { profilePath: options.profilePath } : {}),

@@ -52,7 +52,7 @@ describe("Omni MCP runtime", () => {
     ).resolves.toBe(desktopManifestPath(userDataPath));
     const manifest = JSON.parse(await readFile(desktopManifestPath(userDataPath), "utf8")) as Record<string, unknown>;
     expect(manifest).toEqual({
-      name: "Omni Desktop",
+      name: "Omni",
       version: "1.2.3",
       runtimePath: "/tmp/omni-mcp.mjs",
       startedAt: expect.any(String),
@@ -77,17 +77,17 @@ describe("Omni MCP runtime", () => {
       userDataPath: root,
       version: build.version,
       build,
-      profilePath: "/Users/example/Library/Application Support/omni-desktop",
-      appPath: "/Applications/Omni Desktop.app/Contents/Resources/app",
+      profilePath: "/Users/example/Library/Application Support/Omni",
+      appPath: "/Applications/Omni.app/Contents/Resources/app",
       startedAt: build.builtAt,
     });
 
     expect(JSON.parse(await readFile(desktopManifestPath(root), "utf8"))).toMatchObject({
-      name: "Omni Desktop",
+      name: "Omni",
       version: "1.2.3",
       build,
-      profilePath: "/Users/example/Library/Application Support/omni-desktop",
-      appPath: "/Applications/Omni Desktop.app/Contents/Resources/app",
+      profilePath: "/Users/example/Library/Application Support/Omni",
+      appPath: "/Applications/Omni.app/Contents/Resources/app",
     });
   });
 });

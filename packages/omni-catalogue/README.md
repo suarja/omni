@@ -1,7 +1,7 @@
 # Omni catalogue
 
 `catalogue.json`: a snapshot of the public [skills.sh](https://skills.sh) leaderboard — the
-open directory of agent skills — that Omni Desktop ships and reads at level 0 (no account, no
+open directory of agent skills — that Omni ships and reads at level 0 (no account, no
 network at run time). It feeds the
 **Catalogue** tab in the Library (`src/main/catalogue/`) alongside the personal and
 external marketplaces the app already observes.

@@ -129,9 +129,7 @@ describe("MCP plan summaries", () => {
 
 it("explains Omni approval and pending retry with the reason", () => {
   const reason = { code: "deletes-files", count: 2 } as const;
-  expect(summarizePlan({ actions: [] }, "omni", reason)).toContain(
-    "Approval happens in Omni Desktop: Deletes 2 files.",
-  );
+  expect(summarizePlan({ actions: [] }, "omni", reason)).toContain("Approval happens in Omni: Deletes 2 files.");
   expect(summarizeSkillPreview({}, "omni", reason)).toContain("call omni_apply");
   expect(summarizeApply({ status: "pending", requestId: "request", approvalReason: reason })).toMatch(
     /Deletes 2 files.*same requestId.*does not expire.*omni_receipt/s,

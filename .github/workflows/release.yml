@@ -1,7 +1,7 @@
 name: Draft macOS release
 on:
   push:
-    tags: ['v*']
+    tags: ["v*"]
 permissions:
   contents: read
 concurrency:
@@ -20,7 +20,7 @@ jobs:
       - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '24'
+          node-version: "24"
           cache: pnpm
       - name: Validate release source
         env:
@@ -94,6 +94,6 @@ jobs:
           set -euo pipefail
           options=()
           if [[ "$RELEASE_TAG" == *-* ]]; then options+=(--prerelease); fi
-          gh release create "$RELEASE_TAG" --verify-tag --draft ${options[@]+"${options[@]}"} --title "Omni Desktop $RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" \
+          gh release create "$RELEASE_TAG" --verify-tag --draft ${options[@]+"${options[@]}"} --title "Omni $RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" \
             "$RUNNER_TEMP/omni-artifacts/"*.zip "$RUNNER_TEMP/omni-artifacts/"*.dmg \
             "$RUNNER_TEMP/omni-artifacts/SHA256SUMS" "$RUNNER_TEMP/omni-artifacts/release.json"

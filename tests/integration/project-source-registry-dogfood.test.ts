@@ -88,7 +88,7 @@ describe("real project and source registry dogfood", () => {
     try {
       const omniProject = await registerRealProject(store, {
         id: "omni-desktop",
-        displayName: "Omni Desktop",
+        displayName: "Omni",
         canonicalPath: projectRoot,
         createdAt: "2026-09-09T12:00:00.000Z",
       });
@@ -136,15 +136,19 @@ describe("real project and source registry dogfood", () => {
       }
 
       if (projectObservation.status === "observed" && personalObservation.status === "observed") {
-        const projectSkill = projectObservation.observation.inventory.artifacts.find((artifact) =>
-          artifact.displayPath.includes(".cursor/skills"),
+        const projectManifest = projectObservation.observation.inventory.artifacts.find(
+          (artifact) => artifact.relativePath === ".claude-plugin/marketplace.json",
         );
-        const sourceSkill = personalObservation.observation.inventory.artifacts.find((artifact) =>
-          artifact.displayPath.includes(".cursor/skills"),
+        const sourceManifest = personalObservation.observation.inventory.artifacts.find(
+          (artifact) => artifact.relativePath === ".claude-plugin/marketplace.json",
         );
-        expect(projectSkill).toBeDefined();
+        const sourceSkill = personalObservation.observation.inventory.artifacts.find(
+          (artifact) => artifact.relativePath === "plugins/omni/skills/omni-bootstrap/SKILL.md",
+        );
+        expect(projectManifest).toBeDefined();
+        expect(sourceManifest).toBeDefined();
+        expect(projectManifest?.id).not.toBe(sourceManifest?.id);
         expect(sourceSkill).toBeDefined();
-        expect(projectSkill?.id).not.toBe(sourceSkill?.id);
       }
 
       const archivedState = await readyState(store);

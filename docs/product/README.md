@@ -1,6 +1,6 @@
-# Omni Desktop product premise
+# Omni product premise
 
-Omni Desktop is an open-source, local-first desktop application for a solo developer who
+Omni is an open-source, local-first desktop application for a solo developer who
 uses several agent harnesses across several projects. It manages marketplaces, plugins,
 skills, project bindings, provenance, drift, and deterministic changes.
 
