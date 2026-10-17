@@ -56,6 +56,8 @@ jobs:
           security create-keychain -p "$MACOS_CERT_PASSWORD" "$RUNNER_TEMP/omni-release.keychain-db"
           security set-keychain-settings -lut 21600 "$RUNNER_TEMP/omni-release.keychain-db"
           security unlock-keychain -p "$MACOS_CERT_PASSWORD" "$RUNNER_TEMP/omni-release.keychain-db"
+          # codesign resolves the private key through the user search list, even with --keychain.
+          security list-keychains -d user -s "$RUNNER_TEMP/omni-release.keychain-db" $(security list-keychains -d user | tr -d '"')
           security import "$RUNNER_TEMP/certificate.p12" -k "$RUNNER_TEMP/omni-release.keychain-db" -P "$MACOS_CERT_PASSWORD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CERT_PASSWORD" "$RUNNER_TEMP/omni-release.keychain-db" > /dev/null
           identity="$(security find-identity -v -p codesigning "$RUNNER_TEMP/omni-release.keychain-db" | awk -F '"' '/Developer ID Application:/ {print $2}')"
