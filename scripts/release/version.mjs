@@ -27,7 +27,11 @@ export async function runVersionCommand(args, cwd = root) {
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    await runVersionCommand(process.argv.slice(2));
+    const args = process.argv.slice(2);
+    await runVersionCommand(args);
+    // The committed plugin runtime embeds the MCP version; rebuild it with every bump.
+    if (args[0] !== "--check")
+      execFileSync(process.execPath, [join(root, "scripts/build-omni-plugin-runtime.mjs")], { cwd: root, stdio: "inherit" });
   } catch (error) {
     console.error(error.message);
     process.exitCode = 1;
