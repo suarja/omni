@@ -94,6 +94,6 @@ jobs:
           set -euo pipefail
           options=()
           if [[ "$RELEASE_TAG" == *-* ]]; then options+=(--prerelease); fi
-          gh release create "$RELEASE_TAG" --verify-tag --draft "${options[@]}" --title "Omni Desktop $RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" \
+          gh release create "$RELEASE_TAG" --verify-tag --draft ${options[@]+"${options[@]}"} --title "Omni Desktop $RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" \
             "$RUNNER_TEMP/omni-artifacts/"*.zip "$RUNNER_TEMP/omni-artifacts/"*.dmg \
             "$RUNNER_TEMP/omni-artifacts/SHA256SUMS" "$RUNNER_TEMP/omni-artifacts/release.json"
