@@ -11,6 +11,8 @@ vi.mock("electron", () => ({
   dialog: {},
   ipcMain: { handle: vi.fn() },
 }));
+// Real Git repositories and pushes, like the other operation integration suites.
+vi.setConfig({ testTimeout: 20000, hookTimeout: 20000 });
 
 it.each(["__proto__", "constructor", "prototype"])(
   "installs and updates the %s skill without unsafe name-keyed records",
