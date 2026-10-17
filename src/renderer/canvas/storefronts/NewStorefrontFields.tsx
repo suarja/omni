@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { useEffect, useState, type ReactElement } from "react";
 import type { DesktopApi } from "../../../shared/ipc";
 import type { NewStorefront } from "../../../shared/publication-operations-ipc";
@@ -135,7 +136,7 @@ export function NewStorefrontFields(
           </button>
         </p>
       ) : !capabilities ? (
-        <p role="status">{t("storefronts.readingGithub")}</p>
+        <LoadingSkeleton label={t("storefronts.readingGithub")} variant="inline" />
       ) : null}
       {repository && props.purpose === "publish" ? (
         <span className="skill-hint">

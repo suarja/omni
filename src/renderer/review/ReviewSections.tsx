@@ -9,7 +9,7 @@ import { Badge, type BadgeTone } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import { EmptyState } from "../components/ui/EmptyState";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { tCount, useI18n } from "../i18n";
 import { entryForRef, type DestinationAuditState } from "../destination-state";
@@ -203,7 +203,7 @@ export function PendingApproval({
         {requestsError ? (
           <AgentRequestsError t={t} />
         ) : requestsLoading ? (
-          <LoadingItem label={t("reviewExtras.loading")} />
+          <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.review") })} />
         ) : null}
         {!rows.length && !requests.length && !requestsError && !requestsLoading ? (
           <ListItem dim name={t("review.pending.empty")} />
@@ -238,7 +238,7 @@ export function Findings({
       <SectionHeading count={findings.length} title={t("review.findingsTitle")} />
       <ItemList>
         {audit.status === "running" && !findings.length ? (
-          <LoadingItem label={t("review.session.running")} />
+          <LoadingSkeleton label={t("review.session.running")} />
         ) : findings.length ? (
           findings.map(({ entry, finding, label }, index) => (
             <FindingRow

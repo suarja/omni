@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { activeWorkshop } from "../../domain/source-roles";
 import { harnessLabel } from "./project-view-model";
 import { useEffect, useState, type ReactElement } from "react";
@@ -169,7 +170,9 @@ export function ResourceSheet(
           />
           <section className="canvas-use-section">
             <h3>{t("canvas.recordedUses")}</h3>
-            {props.details.uses.status === "loading" ? <p>{t("canvas.bindingLoading")}</p> : null}
+            {props.details.uses.status === "loading" ? (
+              <LoadingSkeleton label={t("canvas.bindingLoading")} variant="rows" />
+            ) : null}
             {props.details.uses.status === "unavailable" ? <p>{t("canvas.bindingUnavailable")}</p> : null}
             {props.details.uses.status === "ready" && props.details.uses.bindings.length === 0 ? (
               <p>{t("canvas.noUses")}</p>
@@ -272,7 +275,9 @@ export function ResourceSheet(
               {original ? t("canvas.rendered") : t("canvas.original")}
             </button>
           </div>
-          {state.status === "loading" ? <p aria-live="polite">{t("canvas.loading")}</p> : null}
+          {state.status === "loading" ? (
+            <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.document") })} variant="document" />
+          ) : null}
           {!path ? <p>{t("canvas.fileUnavailable")}</p> : null}
           {documentMessage ? (
             <div className="canvas-document-error">

@@ -132,3 +132,26 @@ describe("resource document reads", () => {
     expect(container.textContent).toContain("idle");
   });
 });
+
+it("keeps an already read document visible while the same path refreshes", async () => {
+  (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
+  const container = document.createElement("div");
+  document.body.append(container);
+  const root = createRoot(container);
+  const readArtifact = vi
+    .fn()
+    .mockResolvedValueOnce({ status: "read", content: "# Safe", byteLength: 6, truncated: false })
+    .mockImplementationOnce(() => new Promise(() => {}));
+  const ensure = vi.fn().mockResolvedValue("grant");
+  try {
+    await act(async () => root.render(<Harness readArtifact={readArtifact} ensure={ensure} />));
+    await act(async () => container.querySelector("button")!.click());
+    expect(container.querySelector("[data-status]")?.textContent).toBe("README.md:read");
+    await act(async () => container.querySelector("button")!.click());
+    expect(readArtifact).toHaveBeenCalledTimes(2);
+    expect(container.querySelector("[data-status]")?.textContent).toBe("README.md:read");
+  } finally {
+    act(() => root.unmount());
+    container.remove();
+  }
+});

@@ -106,7 +106,7 @@ export function useMarketplacePage(): Readonly<{
     }),
     sections,
     error: error ?? (!loading && !inventory ? t("canvas.notRead") : null),
-    loading,
+    loading: loading && !inventory,
     actions: (
       <>
         <button

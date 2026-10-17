@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactElement } from "react";
 
 import type { ResourceSnapshot } from "../../../domain/resource-catalogue";
@@ -344,7 +345,7 @@ export function CopyManagementWorkbench(
               </div>
             ) : null}
             {targetReadable && hasMultipleCopies && comparison.state.status === "loading" ? (
-              <p aria-live="polite">{t("skillManagement.comparisonLoading")}</p>
+              <LoadingSkeleton label={t("skillManagement.comparisonLoading")} variant="rows" />
             ) : null}
             {targetReadable && hasMultipleCopies && comparisonUnavailableKey ? (
               <div className="copy-management-unavailable" role="alert">

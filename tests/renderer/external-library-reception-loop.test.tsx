@@ -114,7 +114,7 @@ describe("external library reception reads", () => {
         list: 1,
         source: 2,
         mac: 1,
-        settings: 1,
+        settings: 2,
         project: cycle * 2,
         grants: cycle * 4,
         document: cycle,

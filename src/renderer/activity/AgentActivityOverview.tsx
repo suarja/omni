@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useState, type ReactElement } from "react";
 
 import type { DesktopApi } from "../../shared/ipc";
@@ -111,14 +112,21 @@ export function AgentActivityOverview({
             dataTestId="activity-tile-agents"
             icon="agent"
             meta={
-              loaded
-                ? `${tCount("activity.sessions", snapshot.sessions.length, {}, language)} · ${tCount(
-                    "activity.processes",
-                    snapshot.processes.length,
-                    {},
-                    language,
-                  )}`
-                : t(failure ? "activity.unavailableShort" : "activity.loading")
+              loaded ? (
+                `${tCount("activity.sessions", snapshot.sessions.length, {}, language)} · ${tCount(
+                  "activity.processes",
+                  snapshot.processes.length,
+                  {},
+                  language,
+                )}`
+              ) : failure ? (
+                t("activity.unavailableShort")
+              ) : (
+                <LoadingSkeleton
+                  label={t("canvas.loadingSurface", { surface: t("canvas.activity") })}
+                  variant="inline"
+                />
+              )
             }
             name={t("activity.agentsHeading")}
             onClick={() => onNavigateToRoute({ screen: "activity-agents" })}
@@ -130,14 +138,18 @@ export function AgentActivityOverview({
           dataTestId="activity-tile-worktrees"
           icon="git"
           meta={
-            loaded
-              ? `${tCount("activity.projects", projectCount, {}, language)} · ${tCount(
-                  "activity.checkouts",
-                  snapshot.worktrees.length,
-                  {},
-                  language,
-                )}`
-              : t(failure ? "activity.unavailableShort" : "activity.loading")
+            loaded ? (
+              `${tCount("activity.projects", projectCount, {}, language)} · ${tCount(
+                "activity.checkouts",
+                snapshot.worktrees.length,
+                {},
+                language,
+              )}`
+            ) : failure ? (
+              t("activity.unavailableShort")
+            ) : (
+              <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.activity") })} variant="inline" />
+            )
           }
           name={t("activity.worktreesHeading")}
           onClick={() => onNavigateToRoute({ screen: "activity-worktrees" })}

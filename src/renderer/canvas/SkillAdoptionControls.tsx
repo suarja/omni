@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { activeWorkshop } from "../../domain/source-roles";
 import { useMemo, type ReactElement } from "react";
 
@@ -127,7 +128,7 @@ export function SkillAdoptionControls(
           {choices.sourceId ? (
             <>
               {choices.status === "loading" ? (
-                <p aria-live="polite">{t("skillManagement.loadingSourceSkills")}</p>
+                <LoadingSkeleton label={t("skillManagement.loadingSourceSkills")} variant="rows" />
               ) : null}
               {choices.status === "unavailable" ? (
                 <div className="canvas-skill-adoption-message">

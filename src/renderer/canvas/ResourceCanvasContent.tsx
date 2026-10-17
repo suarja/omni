@@ -20,6 +20,8 @@ import { useCanvasCamera } from "./spatial/use-canvas-camera";
 import { useCanvasNavigation } from "./spatial/use-canvas-navigation";
 import { displayGroupLabel } from "./spatial/canvas-labels";
 import { CanvasStage } from "./CanvasStage";
+import { layoutWorkspaceMap, type WorkspaceMapLayout } from "./setup/workspace-map-layout";
+import type { WorkspaceMapIntent } from "./setup/WorkspaceSetupMap";
 import "./canvas.css";
 import "./setup/setup.css";
 import { WorkspaceSetupSheet } from "./setup/WorkspaceSetupSheet";
@@ -42,6 +44,7 @@ export type { ResourceCanvasProps } from "./resource-canvas-types";
 export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement {
   const { t } = useI18n();
   const rail = useCanvasRail();
+  if (!rail) throw new Error("Workspace canvas requires the canvas rail provider.");
   const [localSession] = useState(createCanvasSession);
   const session = props.session ?? localSession;
   const catalogue = useMemo(() => createResourceCatalogue(props.snapshot), [props.snapshot]);
@@ -105,6 +108,8 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
   const setupMenuButton = useRef<HTMLButtonElement>(null);
   const fallbackSetup = useMemo(() => createFallbackWorkspaceSetup(props.snapshot), [props.snapshot]);
   const setup = useWorkspaceSetup(props.setup ?? fallbackSetup, props.context);
+  const workspaceMap = rail.workspaceMap;
+  const mapVisible = props.context.kind === "workspace" && !workspaceMap.hidden && workspaceMap.progress.count < 3;
   const artifactRoute = props.context.kind === "artifact";
   const sheetRef = infoRef ?? (artifactRoute ? props.context : null);
   const details = sheetRef ? catalogue.inspect(sheetRef) : null;
@@ -172,23 +177,22 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
       ? navigation.selection.relativePath
       : details?.resource.relativePath;
   const viewportRef = useRef<HTMLDivElement>(null);
-  const emptyLayout = useMemo(
-    () => layoutCanvas(navigation.projection, { width: 0, height: 0 }),
-    [navigation.projection],
-  );
+  const layoutForSize = (size: Readonly<{ width: number; height: number }>): WorkspaceMapLayout =>
+    props.context.kind === "workspace"
+      ? layoutWorkspaceMap(navigation.projection, size, workspaceMap.progress, mapVisible)
+      : layoutCanvas(navigation.projection, size);
+  const emptyLayout = layoutForSize({ width: 0, height: 0 });
   const camera = useCanvasCamera({
     viewportRef,
+    minimumFitScale: props.context.kind === "workspace" ? 0.5 : undefined,
     viewKey: navigation.viewKey,
     layout: emptyLayout,
-    layoutForSize: (size) => layoutCanvas(navigation.projection, size),
+    layoutForSize,
     initialCamera: navigation.initialCamera,
     disabled: setupApplying || copyManagementOpen,
     onCameraChange: navigation.storeCamera,
   });
-  const spatialLayout = useMemo(
-    () => layoutCanvas(navigation.projection, camera.size),
-    [camera.size, navigation.projection],
-  );
+  const spatialLayout = layoutForSize(camera.size);
   const closeSheet = useCallback((): void => {
     if (setupApplyingRef.current) return;
     if (skillSheetSelection) {
@@ -419,7 +423,7 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
     }
     navigateSearchResult(resource);
   };
-  const openSetup = (intent: "marketplace" | "project" | "agents", opener: HTMLElement): void => {
+  const openSetup = (intent: WorkspaceMapIntent, opener: HTMLElement): void => {
     if (setupApplyingRef.current) return;
     trigger.current = setupMenuButton.current ?? opener;
     setSearchOpen(false);
@@ -429,6 +433,8 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
     setSetupWriteActive(false);
     if (intent === "agents") {
       rail?.open("settings");
+    } else if (intent === "create-marketplace" || intent === "connect-marketplace") {
+      setup.actions.openPersonalMarketplace(intent === "create-marketplace" ? "create" : "connect");
     } else setup.actions.open(intent);
   };
   const closeSetup = (): void => {
@@ -537,7 +543,13 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
             <kbd>⌘K</kbd>
           </button>
           <CanvasAddButton />
-          <button type="button" className="canvas-secondary-button" aria-pressed={help} onClick={() => setHelp(!help)}>
+          <button
+            data-setup-help
+            type="button"
+            className="canvas-secondary-button"
+            aria-pressed={help}
+            onClick={() => setHelp(!help)}
+          >
             {t("projectView.help")}
           </button>
           <button
@@ -553,6 +565,22 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
           </button>
         </div>
       </header>
+      {help && props.context.kind === "workspace" && workspaceMap.hidden && workspaceMap.progress.count < 3 ? (
+        <div className="workspace-setup-help">
+          <button
+            className="canvas-secondary-button"
+            data-testid="workspace-setup-show"
+            type="button"
+            disabled={!workspaceMap.canSave || workspaceMap.saving}
+            onClick={() => {
+              void workspaceMap.setHidden(false);
+              setHelp(false);
+            }}
+          >
+            {t("canvasSetup.showSetup")}
+          </button>
+        </div>
+      ) : null}
       {props.diagnostic ? (
         <p className="project-error" role="alert">
           {props.diagnostic}
@@ -572,6 +600,8 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
         contextIsWorkspace={props.context.kind === "workspace"}
         currentLabel={currentLabel}
         layout={spatialLayout}
+        mapGeometry={spatialLayout.map}
+        workspaceMap={workspaceMap}
         canvas={props}
         listing={listing}
         onDetails={() => {

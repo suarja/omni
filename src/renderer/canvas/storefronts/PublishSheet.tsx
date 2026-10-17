@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { githubDestinationRepository, storefrontDestination } from "../../../domain/storefront-destination";
 import { PublicationEffects } from "./PublicationEffects";
 import { useContentChecks } from "./use-content-checks";
@@ -218,7 +219,9 @@ function PublicationForm(props: Readonly<{ onApplyingChange: (busy: boolean) => 
         </>
       }
     >
-      {loading ? <p role="status">{t("skillActions.marketplaceLoading")}</p> : null}
+      {loading && !marketplace?.inventory ? (
+        <LoadingSkeleton label={t("skillActions.marketplaceLoading")} variant="rows" />
+      ) : null}
       {!pluginId && !retry ? (
         <>
           <p className="sh-sub">{t("storefronts.pickerHint")}</p>

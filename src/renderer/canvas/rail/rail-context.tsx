@@ -1,4 +1,5 @@
 import { usePersonalMarketplace } from "../use-personal-marketplace";
+import { useWorkspaceMap } from "../setup/use-workspace-map";
 import {
   routeForCanvasPage,
   routeForExternal,
@@ -61,6 +62,7 @@ function projectKey(snapshot: ResourceSnapshot, id: string): string {
   ]);
 }
 function useRailState(canvas: ResourceCanvasProps) {
+  const workspaceMap = useWorkspaceMap(canvas.railServices?.api ?? canvas.api, canvas.snapshot.registry);
   const contextStorefrontId =
     canvas.context.kind === "entry" &&
     canvas.context.entry.kind === "source" &&
@@ -236,6 +238,7 @@ function useRailState(canvas: ResourceCanvasProps) {
   }
   return {
     canvas,
+    workspaceMap,
     storefronts,
     externalLibrary,
     personal,

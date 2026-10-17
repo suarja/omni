@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -17,6 +18,7 @@ export type CameraInputs = Readonly<{
   viewportRef: RefObject<HTMLDivElement | null>;
   viewKey: string;
   layout: CanvasLayout;
+  minimumFitScale?: number;
   layoutForSize?: (size: Size) => CanvasLayout;
   initialCamera?: Camera;
   resizeAnchor?: "center" | "origin";
@@ -25,6 +27,7 @@ export type CameraInputs = Readonly<{
 }>;
 export type CameraControls = Readonly<{
   camera: Camera;
+  ready: boolean;
   size: Size;
   onPointerDown: PointerEventHandler<HTMLDivElement>;
   onPointerMove: PointerEventHandler<HTMLDivElement>;
@@ -49,10 +52,6 @@ type Gesture = {
 
 const initialCamera: Camera = { x: 0, y: 0, scale: 1 };
 const dragThreshold = 4;
-
-function cameraSignature(camera: Camera | undefined): string {
-  return camera ? `${camera.x}:${camera.y}:${camera.scale}` : "none";
-}
 
 function pointerPosition(viewport: HTMLDivElement, clientX: number, clientY: number): PointerPosition {
   const bounds = viewport.getBoundingClientRect();
@@ -84,15 +83,14 @@ function pointerDistance(points: readonly PointerPosition[]): number {
 }
 
 export function useCanvasCamera(input: CameraInputs): CameraControls {
-  const cameraInputSignature = cameraSignature(input.initialCamera);
   const [camera, setCamera] = useState<Camera>(input.initialCamera ?? initialCamera);
+  const [readyView, setReadyView] = useState<string | null>(null);
   const cameraRef = useRef(camera);
   const [size, setSize] = useState<Size>({ width: 0, height: 0 });
   const sizeRef = useRef(size);
   const onCameraChangeRef = useRef(input.onCameraChange);
   const initializedViews = useRef(new Set<string>());
   const activeView = useRef(input.viewKey);
-  const activeCameraSignature = useRef(cameraInputSignature);
   const pointers = useRef(new Map<number, PointerPosition>());
   const gesture = useRef<Gesture | null>(null);
   const fittingLayout = input.layoutForSize?.(size) ?? input.layout;
@@ -108,23 +106,19 @@ export function useCanvasCamera(input: CameraInputs): CameraControls {
     onCameraChangeRef.current(next);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onCameraChangeRef.current = input.onCameraChange;
   }, [input.onCameraChange]);
 
-  useEffect(() => {
-    if (activeView.current === input.viewKey && activeCameraSignature.current === cameraInputSignature) return;
+  useLayoutEffect(() => {
+    if (activeView.current === input.viewKey) return;
     activeView.current = input.viewKey;
-    activeCameraSignature.current = cameraInputSignature;
-    const restored = input.initialCamera;
-    const next = restored ?? initialCamera;
-    cameraRef.current = next;
-    setCamera(next);
-    if (restored) initializedViews.current.add(input.viewKey);
-    else initializedViews.current.delete(input.viewKey);
-  }, [cameraInputSignature, input.initialCamera, input.viewKey]);
+    setReadyView(null);
+    // Session writes echo the live camera; only a new visit may restore or fit it.
+    initializedViews.current.delete(input.viewKey);
+  }, [input.viewKey]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const viewport = input.viewportRef.current;
     if (!viewport) return;
     let previous: Size | undefined;
@@ -159,12 +153,15 @@ export function useCanvasCamera(input: CameraInputs): CameraControls {
     };
   }, [commitCamera, input.resizeAnchor, input.viewKey, input.viewportRef]);
 
-  useEffect(() => {
-    if (size.width <= 0 || size.height <= 0 || initializedViews.current.has(input.viewKey)) return;
-    const next = input.initialCamera ?? fitCamera(fittingLayout.bounds, size);
+  useLayoutEffect(() => {
+    const measured = sizeRef.current;
+    if (measured.width <= 0 || measured.height <= 0 || initializedViews.current.has(input.viewKey)) return;
+    const measuredLayout = input.layoutForSize?.(measured) ?? input.layout;
+    const next = input.initialCamera ?? fitCamera(measuredLayout.bounds, measured, input.minimumFitScale);
     initializedViews.current.add(input.viewKey);
     commitCamera(next);
-  }, [boundsSignature, cameraInputSignature, commitCamera, input.initialCamera, input.viewKey, size]);
+    setReadyView(input.viewKey);
+  }, [boundsSignature, commitCamera, input.initialCamera, input.viewKey, input.minimumFitScale, size]);
 
   useEffect(() => {
     if (!input.disabled) return;
@@ -327,10 +324,10 @@ export function useCanvasCamera(input: CameraInputs): CameraControls {
       } else if (event.key === "0") {
         event.preventDefault();
         if (sizeRef.current.width > 0 && sizeRef.current.height > 0)
-          commitCamera(fitCamera(fittingLayout.bounds, sizeRef.current));
+          commitCamera(fitCamera(fittingLayout.bounds, sizeRef.current, input.minimumFitScale));
       }
     },
-    [boundsSignature, commitCamera, input.disabled],
+    [boundsSignature, commitCamera, input.disabled, input.minimumFitScale],
   );
 
   const zoomAtCenter = useCallback(
@@ -348,8 +345,8 @@ export function useCanvasCamera(input: CameraInputs): CameraControls {
   );
   const fit = useCallback((): void => {
     if (input.disabled || sizeRef.current.width <= 0 || sizeRef.current.height <= 0) return;
-    commitCamera(fitCamera(fittingLayout.bounds, sizeRef.current));
-  }, [boundsSignature, commitCamera, input.disabled]);
+    commitCamera(fitCamera(fittingLayout.bounds, sizeRef.current, input.minimumFitScale));
+  }, [boundsSignature, commitCamera, input.disabled, input.minimumFitScale]);
   const recenter = useCallback((): void => {
     if (input.disabled || sizeRef.current.width <= 0 || sizeRef.current.height <= 0) return;
     commitCamera(recenterCamera(cameraRef.current, sizeRef.current));
@@ -357,6 +354,7 @@ export function useCanvasCamera(input: CameraInputs): CameraControls {
 
   return {
     camera,
+    ready: readyView === input.viewKey && activeView.current === input.viewKey,
     size,
     onPointerDown,
     onPointerMove,

@@ -39,12 +39,7 @@
 .canvas-setup-receipt-details li, .canvas-setup-receipt-details p { margin: 0; color: var(--canvas-muted); font-size: var(--canvas-meta); line-height: 1.45; overflow-wrap: anywhere; }
 .canvas-setup-form .ui-callout { overflow-wrap: anywhere; }
 .canvas-setup-sheet :focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
-.canvas-setup-empty { display: grid; justify-items: center; gap: 12px; max-width: 580px; margin: 24px auto 4px; text-align: center; }
-.canvas-setup-empty h1 { margin: 0; color: var(--canvas-ink); font: 400 var(--canvas-title)/1.2 Georgia, serif; }
-.canvas-setup-empty p { max-width: 470px; margin: 0; color: var(--canvas-muted); line-height: 1.5; }
-.canvas-setup-empty .canvas-setup-actions { justify-content: center; }
 @media (max-width: 500px) {
-  .canvas-setup-empty { margin: 0 auto; padding: 6px 4px; }
   .canvas-setup-actions { gap: 6px; }
   .canvas-setup-inline { flex-direction: column; }
   .canvas-setup-body { flex: 1; }

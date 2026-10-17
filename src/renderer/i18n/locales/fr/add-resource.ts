@@ -26,7 +26,7 @@ export const addResource = {
   addedProject: "{name} ajouté à l'espace",
   cancel: "Annuler",
   external: "Source externe",
-  mine: "Une autre marketplace à moi",
+  firstMine: "Ma première marketplace",
   sourceFolder: "Dossier de la source",
   externalHint:
     "Un dépôt de skills publié par d'autres, cloné sur cet ordinateur. Omni le lit sans jamais le modifier ; vous pourrez installer ses skills ou les copier dans votre marketplace.",

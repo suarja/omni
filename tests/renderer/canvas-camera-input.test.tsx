@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { act, useLayoutEffect, useRef, type ReactElement } from "react";
+import { act, useRef, type ReactElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -87,8 +87,8 @@ describe("canvas camera input", () => {
         disabled,
         onCameraChange: () => undefined,
       });
-      useLayoutEffect(() => {
-        const viewport = viewportRef.current;
+      const measureRef = (viewport: HTMLDivElement | null): void => {
+        viewportRef.current = viewport;
         if (!viewport) return;
         Object.defineProperties(viewport, {
           clientWidth: { configurable: true, value: 800 },
@@ -105,7 +105,7 @@ describe("canvas camera input", () => {
           height: 600,
           toJSON: () => ({}),
         });
-      }, []);
+      };
       return (
         <div
           aria-label="Canvas"
@@ -116,7 +116,7 @@ describe("canvas camera input", () => {
           onPointerDown={camera.onPointerDown}
           onPointerMove={camera.onPointerMove}
           onPointerUp={camera.onPointerUp}
-          ref={viewportRef}
+          ref={measureRef}
           tabIndex={0}
         >
           <button type="button">Node control</button>

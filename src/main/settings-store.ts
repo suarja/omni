@@ -129,10 +129,11 @@ function migrate(value: unknown): Settings {
           "ai",
           "features",
           ...(Number(source.schemaVersion) >= 7 ? ["externalLibrary"] : []),
-          ...(source.schemaVersion === 8 ? ["login"] : []),
+          ...(source.schemaVersion === 8 ? ["login", "workspaceSetupHidden"] : []),
         ];
   if (Object.keys(source).some((key) => !allowedKeys.includes(key))) throw new Error("Settings are invalid.");
   const parsed = parseSettingsSetRequest({
+    ...(source.schemaVersion === 8 ? { workspaceSetupHidden: source.workspaceSetupHidden } : {}),
     commitChanges: git.commitChanges,
     agents: Number(source.schemaVersion) >= 6 ? source.agents : withDefaultGuard(source.agents),
     ai: source.ai,
@@ -141,6 +142,7 @@ function migrate(value: unknown): Settings {
   });
   return {
     schemaVersion: 8,
+    ...(parsed.workspaceSetupHidden === undefined ? {} : { workspaceSetupHidden: parsed.workspaceSetupHidden }),
     git: { commitChanges: parsed.commitChanges },
     agents: parsed.agents,
     ai: parsed.ai,
@@ -186,6 +188,10 @@ export function createSettingsStore(filePath: string): SettingsStore {
       const current = await read();
       const next: Settings = {
         schemaVersion: 8,
+        // Writers that do not own setup visibility must retain the saved preference.
+        ...((parsed.workspaceSetupHidden ?? current.workspaceSetupHidden) === undefined
+          ? {}
+          : { workspaceSetupHidden: parsed.workspaceSetupHidden ?? current.workspaceSetupHidden }),
         git: { commitChanges: parsed.commitChanges },
         agents: { ...parsed.agents, installedByVersion: current.agents.installedByVersion },
         ai: parsed.ai,

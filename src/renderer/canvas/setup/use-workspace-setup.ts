@@ -29,6 +29,7 @@ export type WorkspaceSetupState = Readonly<{
 
 export type WorkspaceSetupActions = Readonly<{
   open: (intent: WorkspaceSetupIntent) => void;
+  openPersonalMarketplace: (mode: "create" | "connect") => void;
   close: () => void;
   setMarketplaceMode: (mode: "connect" | "create") => void;
   setOwnership: (ownership: "personal" | "external") => void;
@@ -246,6 +247,14 @@ export function useWorkspaceSetup(
     }));
   }, []);
 
+  const openPersonalMarketplace = useCallback(
+    (mode: "create" | "connect"): void => {
+      open("marketplace");
+      setState((current) => ({ ...current, ownership: "personal", marketplaceMode: mode }));
+    },
+    [open],
+  );
+
   const setMarketplaceMode = useCallback((mode: "connect" | "create"): void => {
     setState((current) => ({ ...current, marketplaceMode: mode, error: null }));
   }, []);
@@ -458,6 +467,7 @@ export function useWorkspaceSetup(
     state: stateWithDiagnostic,
     actions: {
       open,
+      openPersonalMarketplace,
       close,
       setMarketplaceMode,
       setOwnership,

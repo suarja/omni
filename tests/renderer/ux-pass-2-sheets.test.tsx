@@ -392,9 +392,10 @@ it("uses typed project tiles and puts management in the stage heading", async ()
     "2 skills — un nœud par skill, pastilles par agent",
   );
 });
-it("shows the workspace stage title and exact toolbar controls", async () => {
+it("shows compact setup progress without a repeated workspace stage title and retains toolbar controls", async () => {
   await render();
-  expect(container.querySelector(".canvas-stage-heading .stage-title")?.textContent).toBe("Espace de travail");
+  expect(container.querySelector(".canvas-stage-heading .stage-title")).toBeNull();
+  expect(container.querySelector("[data-testid=workspace-setup-progress]")?.textContent).toContain("Configuration");
   const toolbar = container.querySelector(".canvas-header")!;
   expect(toolbar.querySelector(".canvas-search-trigger")?.textContent).toBe("Rechercher un skill, un projet⌘K");
   expect(toolbar.textContent).toContain("? Aide");

@@ -23,6 +23,8 @@ type SheetSettings = Readonly<{
   intelligence: AiSettings;
   status: AgentStatus | null;
   loaded: boolean;
+  settingsLoaded: boolean;
+  pathsLoaded: boolean;
   rotating: boolean;
   error: boolean;
   features: FeatureFlags;
@@ -45,6 +47,8 @@ export function useSheetSettings(api: DesktopApi | null): SheetSettings {
   const [externalLibrary, setExternalLibrary] = useState(DEFAULT_EXTERNAL_LIBRARY_SETTINGS);
   const [intelligence, setIntelligence] = useState<AiSettings>(DEFAULT_AI_SETTINGS);
   const [status, setStatus] = useState<AgentStatus | null>(null);
+  const [settingsLoaded, setSettingsLoaded] = useState(!api?.getSettings);
+  const [pathsLoaded, setPathsLoaded] = useState(!api?.getOperationPaths);
   const [loaded, setLoaded] = useState(!api?.getAgentStatus);
   const [rotating, setRotating] = useState(false);
   const [error, setError] = useState(false);
@@ -55,7 +59,10 @@ export function useSheetSettings(api: DesktopApi | null): SheetSettings {
       .then((value) => {
         if (active) setPaths({ marketplace: value.marketplace?.displayRoot, store: value.store.displayRoot });
       })
-      .catch(() => undefined);
+      .catch(() => undefined)
+      .finally(() => {
+        if (active) setPathsLoaded(true);
+      });
     void api
       ?.getSettings?.()
       .then((value) => {
@@ -69,6 +76,9 @@ export function useSheetSettings(api: DesktopApi | null): SheetSettings {
       })
       .catch(() => {
         if (active) setError(true);
+      })
+      .finally(() => {
+        if (active) setSettingsLoaded(true);
       });
     void api
       ?.getAgentStatus?.()
@@ -164,6 +174,8 @@ export function useSheetSettings(api: DesktopApi | null): SheetSettings {
     intelligence,
     status,
     loaded,
+    settingsLoaded,
+    pathsLoaded,
     rotating,
     error,
     features,

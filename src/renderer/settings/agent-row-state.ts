@@ -10,7 +10,7 @@ export function agentRowState(
   version: string,
   t: TranslationFunction,
 ): Readonly<{ line: string; dot: "off" | "wait" | "ok" }> {
-  if (!agent) return { line: t("agentsSetup.activityChecking"), dot: "off" };
+  if (!agent) return { line: t("agentsSetup.statusUnavailable"), dot: "off" };
   if (!agent.detected) return { line: t("agentSettings.notDetected"), dot: "off" };
   if (updating) return { line: t("agentSettings.updating"), dot: "wait" };
   const edited = agent.skills.filter((skill) => skill.state === "outdated");

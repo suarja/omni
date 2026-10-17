@@ -15,7 +15,7 @@ import { Callout } from "../../components/ui/Callout";
 import { Card, CardHeader } from "../../components/ui/Card";
 import { WorkflowFooter } from "./WorkflowFooter";
 import { ItemList, ListItem } from "../../components/ui/ItemList";
-import { LoadingItem } from "../../components/ui/LoadingItem";
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { tCount, useI18n } from "../../i18n";
 import type { Route } from "../../navigation";
 
@@ -388,7 +388,7 @@ export function RestoreWorkbench({
               <Card>
                 <CardHeader title={t("operations.restore.preview")} />
                 <ItemList variant="nested">
-                  <LoadingItem label={t("operations.restore.loading")} />
+                  <LoadingSkeleton label={t("operations.restore.loading")} />
                 </ItemList>
               </Card>
             ) : null}

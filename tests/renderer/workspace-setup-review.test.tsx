@@ -101,8 +101,8 @@ describe("workspace setup review regressions", () => {
       displayParent: "Scratch",
     });
     vi.spyOn(api, "previewOperation").mockResolvedValue({ status: "ready", plan });
-    if (rendered.container.querySelector("[data-testid='canvas-setup-empty-marketplace']"))
-      click("[data-testid='canvas-setup-empty-marketplace']");
+    if (rendered.container.querySelector("[data-testid='workspace-setup-connect-marketplace']"))
+      click("[data-testid='workspace-setup-connect-marketplace']");
     else {
       click("[data-testid='canvas-setup-menu-trigger']");
       click(".canvas-setup-menu button:nth-child(2)");
@@ -275,7 +275,7 @@ describe("workspace setup review regressions", () => {
       registryRevision: 2,
     });
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click("[data-testid='canvas-setup-empty-project']");
+    click("[data-testid='workspace-setup-project']");
     click("[data-testid='canvas-setup-inspect-project']");
     await flush();
     click("[data-testid='canvas-setup-register-project']");

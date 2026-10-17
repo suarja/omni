@@ -79,6 +79,7 @@ export type CanvasLayout = Readonly<{
   wires: readonly Readonly<{
     id: string;
     d: string;
+    dashed?: boolean;
     kind?: CanvasRelation["kind"];
     attention?: SkillAttentionSummary;
   }>[];

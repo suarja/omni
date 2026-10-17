@@ -8,7 +8,7 @@ import { Button } from "../components/ui/Button";
 import { Callout } from "../components/ui/Callout";
 import { Card, CardHeader } from "../components/ui/Card";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useI18n } from "../i18n";
 import type { Route } from "../navigation";
 import { formatModelContext } from "./ai-models";
@@ -101,7 +101,7 @@ export function AiFunctionSection({ api, onNavigateToRoute, task }: AiFunctionSe
         {t("canvas.back")}
       </Button>
       <h3>{taskLabel(task, t)}</h3>
-      {!loaded ? <LoadingItem label={t("settings.ai.loading")} /> : null}
+      {!loaded ? <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.settings") })} /> : null}
       {error ? (
         <Callout title={t("settings.ai.functionPage.saveUnavailable")} tone="error">
           {error}

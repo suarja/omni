@@ -5,7 +5,7 @@ import { formatAgentJobContext } from "../../shared/agent-jobs-ipc";
 import type { DesktopApi } from "../../shared/ipc";
 import { IconWrap } from "../components/ui/IconWrap";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingBoundary, LoadingSkeleton } from "../components/ui/Skeleton";
 import { Breadcrumbs } from "../components/ui/Breadcrumbs";
 import { PageHead } from "../components/ui/PageHead";
 import { SearchField } from "../components/ui/SearchField";
@@ -95,7 +95,7 @@ export function AgentsView({
               `${agentName(harness.harness)}${language === "fr" ? " : " : ": "}${harnessSummary(harness, t, language)}`,
           )
           .join(" — ") || t("agentsSetup.activityNotDetected")
-      : t("agentsSetup.activityChecking");
+      : undefined;
 
   return (
     <div className="shell-page destination-page activity-page">
@@ -135,49 +135,55 @@ export function AgentsView({
         description={agentDescription}
         title={t("activity.agentsHeading")}
       />
-      <ItemList>
-        {!loaded ? (
-          <LoadingItem label={t("activity.loading")} />
-        ) : entries.length ? (
-          entries.map((entry) => {
-            const processes = entryProcesses(snapshot, entry);
-            const session = entry.session;
-            const totals = totalsFor(session.id);
-            const side = session.job
-              ? `${formatAgentJobContext(session.job.context)} · ${session.job.tokens.input + session.job.tokens.output} tokens · $${session.job.costUsd.toFixed(2)}`
-              : `${totals.cpuPercent.toFixed(1)} % · ${formatSize(totals.rssMb)}`;
-            return (
-              <div key={session.id}>
-                <ListItem
-                  dataTestId={`activity-agent-item-${session.id}`}
-                  leading={<IconWrap name="agent" size="sm" />}
-                  name={entry.hostProcess ? session.name : sessionRowName(session, t)}
-                  badges={flagBadges(entryFlags(snapshot, entry), t)}
-                  onClick={() => onNavigateToRoute({ screen: "activity-agent", sessionId: session.id })}
-                  side={side}
-                  sub={
-                    entry.hostProcess
-                      ? tCount("activity.processes", processes.length, {}, language)
-                      : sessionRowSub(session)
-                  }
-                />
-                {session.job?.status === "running" && api?.stopAgentJob ? (
-                  <Button
-                    dataTestId={`activity-job-stop-${session.job.jobId}`}
-                    onClick={() => void api.stopAgentJob!({ jobId: session.job!.jobId }).then(() => refresh())}
-                    size="small"
-                    tone="ghost"
-                  >
-                    {t("activity.stop")}
-                  </Button>
-                ) : null}
-              </div>
-            );
-          })
-        ) : (
-          <ListItem dim name={t("activity.agentsEmpty")} />
-        )}
-      </ItemList>
+      <LoadingBoundary
+        loading={!loaded}
+        label={t("canvas.loadingSurface", { surface: t("canvas.activity") })}
+        minHeight={216}
+      >
+        <ItemList>
+          {!loaded ? (
+            <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.activity") })} />
+          ) : entries.length ? (
+            entries.map((entry) => {
+              const processes = entryProcesses(snapshot, entry);
+              const session = entry.session;
+              const totals = totalsFor(session.id);
+              const side = session.job
+                ? `${formatAgentJobContext(session.job.context)} · ${session.job.tokens.input + session.job.tokens.output} tokens · $${session.job.costUsd.toFixed(2)}`
+                : `${totals.cpuPercent.toFixed(1)} % · ${formatSize(totals.rssMb)}`;
+              return (
+                <div key={session.id}>
+                  <ListItem
+                    dataTestId={`activity-agent-item-${session.id}`}
+                    leading={<IconWrap name="agent" size="sm" />}
+                    name={entry.hostProcess ? session.name : sessionRowName(session, t)}
+                    badges={flagBadges(entryFlags(snapshot, entry), t)}
+                    onClick={() => onNavigateToRoute({ screen: "activity-agent", sessionId: session.id })}
+                    side={side}
+                    sub={
+                      entry.hostProcess
+                        ? tCount("activity.processes", processes.length, {}, language)
+                        : sessionRowSub(session)
+                    }
+                  />
+                  {session.job?.status === "running" && api?.stopAgentJob ? (
+                    <Button
+                      dataTestId={`activity-job-stop-${session.job.jobId}`}
+                      onClick={() => void api.stopAgentJob!({ jobId: session.job!.jobId }).then(() => refresh())}
+                      size="small"
+                      tone="ghost"
+                    >
+                      {t("activity.stop")}
+                    </Button>
+                  ) : null}
+                </div>
+              );
+            })
+          ) : (
+            <ListItem dim name={t("activity.agentsEmpty")} />
+          )}
+        </ItemList>
+      </LoadingBoundary>
     </div>
   );
 }

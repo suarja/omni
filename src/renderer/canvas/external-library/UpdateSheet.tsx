@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { harnessLabel } from "../project-view-model";
 import { useState, type ReactElement } from "react";
 import type { SkillIntent } from "../../../shared/skill-management-ipc";
@@ -110,7 +111,7 @@ export function UpdateSheet(
               {errors.has(use.id) ? (
                 <p role="alert">{errors.get(use.id)}</p>
               ) : !comparison ? (
-                <p role="status">{t("projectView.loading")}</p>
+                <LoadingSkeleton label={t("projectView.loading")} variant="rows" />
               ) : comparison.base.status === "not-found" && use.state === "modified" ? (
                 <>
                   <p>{t("externalLibrary.missingBase")}</p>

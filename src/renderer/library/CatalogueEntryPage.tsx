@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useEffect, useRef, useState, type ReactElement } from "react";
 
 import type { CatalogueEntryResponse, CatalogueEntryView, CatalogueSkillMdState } from "../../shared/catalogue-ipc";
 import type { DesktopApi } from "../../shared/ipc";
@@ -9,7 +9,7 @@ import { Callout } from "../components/ui/Callout";
 import { Card, CardHeader } from "../components/ui/Card";
 import { EmptyState } from "../components/ui/EmptyState";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { PageHead } from "../components/ui/PageHead";
 import { AssetContent } from "../assets/AssetContent";
 import { useI18n } from "../i18n";
@@ -80,10 +80,13 @@ export function CatalogueEntryPage({
   const [preparing, setPreparing] = useState(false);
   const [prepareError, setPrepareError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
+  const previousEntry = useRef<string | undefined>(undefined);
 
   useEffect(() => {
     let active = true;
-    setState("loading");
+    const key = JSON.stringify([ownerRepo, skill]);
+    if (previousEntry.current !== key) setState("loading");
+    previousEntry.current = key;
     if (!api?.getCatalogueEntry) return;
     void api
       .getCatalogueEntry({ ownerRepo, skill })
@@ -163,8 +166,9 @@ export function CatalogueEntryPage({
     return (
       <div className="shell-page destination-page" data-testid="catalogue-entry-page">
         {breadcrumbs}
+        <PageHead title={skill} />
         <ItemList>
-          <LoadingItem label={t("library.loading")} />
+          <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.library") })} />
         </ItemList>
       </div>
     );

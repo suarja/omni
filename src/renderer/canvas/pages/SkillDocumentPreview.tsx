@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactElement } from "react";
 import { createPortal } from "react-dom";
 import type { EntryRef } from "../../../domain/project-source-registry";
@@ -133,7 +134,10 @@ export function SkillDocumentPreview(
                   )}
                 </p>
               ) : (
-                <p role="status">{t("canvas.loading")}</p>
+                <LoadingSkeleton
+                  label={t("canvas.loadingSurface", { surface: t("canvas.document") })}
+                  variant="document"
+                />
               )}
             </SheetFrame>,
             layer,

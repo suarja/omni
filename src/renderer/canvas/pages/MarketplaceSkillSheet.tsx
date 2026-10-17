@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import type { ReactElement } from "react";
 import { useI18n } from "../../i18n";
 import { useCanvasRail } from "../rail/rail-context";
@@ -55,12 +56,23 @@ export function MarketplaceSkillSheet(
   if (!marketplace || !plugin || !artifact || !path)
     return (
       <SheetFrame
-        title={t("canvas.unavailable")}
+        title={
+          rail.personal.loading
+            ? (selected?.path.split("/").at(-1) ?? t("projectView.marketplace"))
+            : t("canvas.unavailable")
+        }
         kicker={t("projectView.marketplace")}
         testId="marketplace-skill-sheet"
         onClose={rail.close}
       >
-        <p role="alert">{t("canvas.notRead")}</p>
+        {rail.personal.loading ? (
+          <LoadingSkeleton
+            label={t("canvas.loadingSurface", { surface: t("projectView.marketplace") })}
+            variant="document"
+          />
+        ) : (
+          <p role="alert">{t("canvas.notRead")}</p>
+        )}
       </SheetFrame>
     );
   const name = path.split("/").at(-1)!;

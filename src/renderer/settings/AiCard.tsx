@@ -6,7 +6,7 @@ import type { AiSettings } from "../../shared/settings-ipc";
 import type { AiFunctionId } from "../../shared/ai-gateway-ipc";
 import { Card, CardHeader } from "../components/ui/Card";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingBoundary, LoadingSkeleton } from "../components/ui/Skeleton";
 import { useI18n } from "../i18n";
 import type { Route } from "../navigation";
 import { useFeatures } from "../features";
@@ -141,84 +141,93 @@ export function AiCard({
   const toggleCategory = (key: keyof AiSettings["dataCategories"], value: boolean): void => {
     onIntelligenceChange({ ...intelligence, dataCategories: { ...intelligence.dataCategories, [key]: value } });
   };
-  const usageSub = usage
-    ? t("settings.ai.usage.format", {
-        calls: numberValue(usage.calls, language),
-        cost: numberValue(usage.costUsd, language, 2),
-        tokens: numberValue(usage.inputTokens + usage.outputTokens, language),
-      })
-    : t("settings.ai.loading");
+  const usageSub = usage ? (
+    t("settings.ai.usage.format", {
+      calls: numberValue(usage.calls, language),
+      cost: numberValue(usage.costUsd, language, 2),
+      tokens: numberValue(usage.inputTokens + usage.outputTokens, language),
+    })
+  ) : (
+    <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.settings") })} variant="inline" />
+  );
 
   return (
     <Card className="settings-group" data-testid="settings-ai">
       <CardHeader title={t("settings.groups.ai")} />
-      <ItemList variant="nested">
-        {!loaded ? <LoadingItem label={t("settings.ai.loading")} /> : null}
-        {loaded ? (
+      <LoadingBoundary
+        loading={!loaded}
+        label={t("canvas.loadingSurface", { surface: t("canvas.settings") })}
+        variant="settings"
+        minHeight={192}
+      >
+        <ItemList variant="nested">
+          {!loaded ? <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.settings") })} /> : null}
+          {loaded ? (
+            <ListItem
+              className="settings-row"
+              dataTestId="settings-ai-connection"
+              name={t("settings.ai.connection.label")}
+              onClick={() => onNavigateToRoute?.({ screen: "settings-ai-connection" })}
+              sub={connectionSub(connection, presets, t)}
+            />
+          ) : null}
+          {loaded ? <ListItem className="settings-row" name={t("settings.ai.functions.label")} /> : null}
+          {loaded
+            ? taskRows.map((row) => (
+                <ListItem
+                  className="settings-row"
+                  dataTestId={`settings-ai-function-${row.id}`}
+                  key={row.id}
+                  name={row.label}
+                  onClick={() => onNavigateToRoute?.({ screen: "settings-ai-function", task: row.id })}
+                  sub={row.sub}
+                />
+              ))
+            : null}
           <ListItem
             className="settings-row"
-            dataTestId="settings-ai-connection"
-            name={t("settings.ai.connection.label")}
-            onClick={() => onNavigateToRoute?.({ screen: "settings-ai-connection" })}
-            sub={connectionSub(connection, presets, t)}
-          />
-        ) : null}
-        {loaded ? <ListItem className="settings-row" name={t("settings.ai.functions.label")} /> : null}
-        {loaded
-          ? taskRows.map((row) => (
-              <ListItem
-                className="settings-row"
-                dataTestId={`settings-ai-function-${row.id}`}
-                key={row.id}
-                name={row.label}
-                onClick={() => onNavigateToRoute?.({ screen: "settings-ai-function", task: row.id })}
-                sub={row.sub}
-              />
-            ))
-          : null}
-        <ListItem
-          className="settings-row"
-          name={
-            <span className="settings-copy">
-              <span className="settings-label">{t("settings.ai.categories.label")}</span>
-              <span className="settings-description">{t("settings.ai.categories.hint")}</span>
-            </span>
-          }
-        />
-        {(
-          [
-            ["marketplaceContent", "settings.ai.categories.marketplaceContent"],
-            ["stackFiles", "settings.ai.categories.stackFiles"],
-            ["transcripts", "settings.ai.categories.transcripts"],
-            ["processCommands", "settings.ai.categories.processCommands"],
-          ] as const
-        ).map(([key, labelKey]) => (
-          <ListItem
-            className="settings-row settings-row--indented"
-            key={key}
             name={
               <span className="settings-copy">
-                <span className="settings-label">{t(labelKey)}</span>
-                {key === "transcripts" || key === "processCommands" ? (
-                  <span className="settings-description">{t("settings.ai.categories.disabledByDefault")}</span>
-                ) : null}
+                <span className="settings-label">{t("settings.ai.categories.label")}</span>
+                <span className="settings-description">{t("settings.ai.categories.hint")}</span>
               </span>
             }
-            side={
-              <label className="settings-checkbox">
-                <input
-                  aria-label={t(labelKey)}
-                  checked={intelligence.dataCategories[key]}
-                  data-testid={`settings-ai-category-${key}`}
-                  onChange={(event) => toggleCategory(key, event.target.checked)}
-                  type="checkbox"
-                />
-              </label>
-            }
           />
-        ))}
-        <ListItem className="settings-row" name={t("settings.ai.usage.label")} sub={usageSub} />
-      </ItemList>
+          {(
+            [
+              ["marketplaceContent", "settings.ai.categories.marketplaceContent"],
+              ["stackFiles", "settings.ai.categories.stackFiles"],
+              ["transcripts", "settings.ai.categories.transcripts"],
+              ["processCommands", "settings.ai.categories.processCommands"],
+            ] as const
+          ).map(([key, labelKey]) => (
+            <ListItem
+              className="settings-row settings-row--indented"
+              key={key}
+              name={
+                <span className="settings-copy">
+                  <span className="settings-label">{t(labelKey)}</span>
+                  {key === "transcripts" || key === "processCommands" ? (
+                    <span className="settings-description">{t("settings.ai.categories.disabledByDefault")}</span>
+                  ) : null}
+                </span>
+              }
+              side={
+                <label className="settings-checkbox">
+                  <input
+                    aria-label={t(labelKey)}
+                    checked={intelligence.dataCategories[key]}
+                    data-testid={`settings-ai-category-${key}`}
+                    onChange={(event) => toggleCategory(key, event.target.checked)}
+                    type="checkbox"
+                  />
+                </label>
+              }
+            />
+          ))}
+          <ListItem className="settings-row" name={t("settings.ai.usage.label")} sub={usageSub} />
+        </ItemList>
+      </LoadingBoundary>
     </Card>
   );
 }

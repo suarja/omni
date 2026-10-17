@@ -22,7 +22,7 @@ export function useStorefronts(canvas: ResourceCanvasProps): Readonly<{
   const [drift, setDrift] = useState<Extract<StorefrontDriftReport, { status: "ready" }> | null>(null);
   const [details, setDetails] = useState<ReadonlyMap<string, StorefrontDetails>>(new Map());
   const [receipts, setReceipts] = useState<readonly OperationReceipt[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(Boolean(api?.readStorefrontDrift || api?.readStorefrontDetails));
   const [error, setError] = useState(false);
   const ticket = useRef(0);
   const reload = useCallback(async (): Promise<void> => {
@@ -30,8 +30,6 @@ export function useStorefronts(canvas: ResourceCanvasProps): Readonly<{
     const sourceIds = JSON.parse(sourceKey) as string[];
     setLoading(true);
     setError(false);
-    setDrift(null);
-    setDetails(new Map());
     const results = await Promise.allSettled([
       api?.readStorefrontDrift?.(),
       api?.listOperations?.(),

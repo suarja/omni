@@ -10,6 +10,7 @@ import type { ReadArtifactResponse } from "../../src/shared/artifact-ipc";
 import type { DesktopApi } from "../../src/shared/ipc";
 import type { OperationReceipt } from "../../src/shared/operations-ipc";
 import { I18nProvider, t } from "../../src/renderer/i18n";
+import { AgentSessionView } from "../../src/renderer/activity/AgentSessionView";
 import { AgentActivityOverview } from "../../src/renderer/activity/AgentActivityOverview";
 import { FeaturesProvider } from "../../src/renderer/features";
 import { DEFAULT_FEATURES } from "../../src/shared/settings-ipc";
@@ -56,13 +57,29 @@ describe("loading rows resolve to real content, never to premature empty copy (D
     vi.restoreAllMocks();
   });
 
+  it("waits for session evidence before reporting that a session is unavailable", async () => {
+    const pending = deferred<{ status: "ready"; snapshot: Parameters<typeof Object>[0] }>();
+    const api = { getActivitySnapshot: vi.fn(() => pending.promise) } as unknown as DesktopApi;
+    rendered = render(<AgentSessionView api={api} sessionId="not-yet-read" />);
+    expect(rendered.container.textContent).not.toContain(t("activity.sessionUnavailable"));
+    expect(rendered.container.querySelector("[aria-busy=true]")).not.toBeNull();
+    await act(async () => {
+      pending.resolve({
+        status: "ready",
+        snapshot: { sessions: [], processes: [], worktrees: [], platformSupported: true },
+      });
+      await pending.promise;
+    });
+    expect(rendered.container.textContent).toContain(t("activity.sessionUnavailable"));
+  });
+
   it("Activity overview: a fake getActivitySnapshot resolving later never shows a false zero", async () => {
     const pending = deferred<{ status: "ready"; snapshot: Parameters<typeof Object>[0] }>();
     const api = { getActivitySnapshot: vi.fn(() => pending.promise) } as unknown as DesktopApi;
     rendered = render(<AgentActivityOverview api={api} />);
 
     const meta = () => rendered?.container.querySelector("[data-testid='activity-tile-agents'] .activity-tile__meta");
-    expect(meta()?.textContent).toBe(t("activity.loading"));
+    expect(meta()?.querySelector("[aria-busy=true]")).not.toBeNull();
 
     await act(async () => {
       pending.resolve({

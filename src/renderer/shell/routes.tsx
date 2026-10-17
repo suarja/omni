@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import type { ReactElement } from "react";
 import { ChangesWorkbench } from "../canvas/changes/ChangesWorkbench";
 import { EmptyState } from "../components/ui/EmptyState";
@@ -222,5 +223,5 @@ function renderAuxiliaryRoute(
   if (route.screen === "worktree-cleanup") {
     return <HarnessSettingPage api={props.api} onNavigateToRoute={props.onNavigateToRoute} returnTo={route.returnTo} />;
   }
-  return <EmptyState description={t("bootstrap.loadingDescription")} title={t("bootstrap.loading")} />;
+  return <LoadingSkeleton label={t("bootstrap.loading")} />;
 }

@@ -16,6 +16,14 @@ describe("canvas camera geometry", () => {
     expect(panCamera({ x: 10, y: 20, scale: 0.8 }, { x: 100, y: 60 })).toEqual({ x: 110, y: 80, scale: 0.8 });
   });
 
+  it("can fit the entire first-run map below its welcome on a narrow viewport", () => {
+    const bounds = { left: -175, top: -228, right: 175, bottom: 524 };
+    const size = { width: 320, height: 474 };
+    const camera = fitCamera(bounds, size, 0.5);
+    expect(camera.y + bounds.top * camera.scale).toBeGreaterThanOrEqual(0);
+    expect(camera.y + bounds.bottom * camera.scale).toBeLessThanOrEqual(size.height);
+  });
+
   it("clamps zoom and recenters without changing scale", () => {
     expect(zoomCamera({ x: 0, y: 0, scale: 1 }, 3, { x: 10, y: 20 }).scale).toBe(1.8);
     expect(recenterCamera({ x: -30, y: 90, scale: 0.8 }, { width: 800, height: 600 })).toEqual({

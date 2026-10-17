@@ -116,7 +116,7 @@ export function useExternalPage(sourceId?: string): Readonly<{
     banner,
     actions,
     error: failure,
-    loading: library.loading && !library.list,
+    loading: library.loading && (sourceId ? !details : !library.list),
     legend: (
       <>
         <span className="project-chip is-installed">{t("externalLibrary.projectChip")}</span>

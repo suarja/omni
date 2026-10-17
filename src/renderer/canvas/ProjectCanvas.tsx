@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { ProjectLegend } from "./ProjectLegend";
 import { findRowUse } from "./external-library/presentation";
 import { activeWorkshop } from "../../domain/source-roles";
@@ -349,13 +350,17 @@ export function ProjectCanvas(props: ResourceCanvasProps & Readonly<{ projectId:
             }
           />
           <span className="stage-note">
-            {data
-              ? translateCount(
-                  t,
-                  group ? "canvas.groupNote" : "canvas.projectNote",
-                  group ? data.skills.filter((row) => row.origin.kind === group).length : data.skills.length,
-                )
-              : t("canvas.notRead")}
+            {data ? (
+              translateCount(
+                t,
+                group ? "canvas.groupNote" : "canvas.projectNote",
+                group ? data.skills.filter((row) => row.origin.kind === group).length : data.skills.length,
+              )
+            ) : readError ? (
+              t("canvas.unavailable")
+            ) : (
+              <LoadingSkeleton label={t("projectView.loading")} variant="inline" />
+            )}
           </span>
           {!group ? (
             <button

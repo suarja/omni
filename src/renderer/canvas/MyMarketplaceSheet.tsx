@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useCanvasRail } from "./rail/rail-context";
 import { PluginPublicationActions, PluginPublicationChips } from "./storefronts/PluginPublicationActions";
 import { useEffect, useRef, useState, type ReactElement } from "react";
@@ -124,8 +125,8 @@ export function MyMarketplaceSheet(
           </>
         }
         subtitle={
-          loading
-            ? t("skillActions.marketplaceLoading")
+          loading && !marketplace?.inventory
+            ? undefined
             : marketplace && !readError
               ? `${marketplace.source.displayRoot} · ${t(marketplace.inventory?.marketplace?.visibility === "public" ? "skillActions.public" : "skillActions.private")} · ${t(gitLabel)}`
               : undefined
@@ -149,8 +150,8 @@ export function MyMarketplaceSheet(
         }
       >
         <section className="project-sheet-section">
-          {loading ? (
-            <p role="status">{t("skillActions.marketplaceLoading")}</p>
+          {loading && !marketplace?.inventory ? (
+            <LoadingSkeleton label={t("skillActions.marketplaceLoading")} variant="rows" />
           ) : readError ? null : (
             <>
               <h3>

@@ -68,7 +68,7 @@ describe("workspace setup flow", () => {
       if (entryPoint === "rail") {
         click(rendered.container, "[data-testid='canvas-setup-menu-trigger']");
         click(rendered.container, "[data-testid='canvas-setup-add-project']");
-      } else click(rendered.container, "[data-testid='canvas-setup-empty-project']");
+      } else click(rendered.container, "[data-testid='workspace-setup-project']");
       click(rendered.container, "[data-testid='canvas-setup-inspect-project']");
       await flush();
       click(rendered.container, "[data-testid='canvas-setup-register-project']");
@@ -111,7 +111,11 @@ describe("workspace setup flow", () => {
       );
       const heading = rendered.container.querySelector(".canvas-stage-heading");
       expect(heading?.textContent).not.toContain("Some locations could not be observed.");
-      expect(heading?.textContent).toContain("Loading registered resources");
+      expect(heading?.querySelector(".stage-title")).toBeNull();
+      expect(rendered.container.querySelector("[data-testid=workspace-setup-progress]")?.textContent).toContain(
+        "2 of 3",
+      );
+      expect(rendered.container.querySelector('[aria-busy=true][aria-label="Loading Workspace"]')).not.toBeNull();
       await act(async () =>
         renderResourceCanvas(
           rendered.root,
@@ -163,10 +167,10 @@ describe("workspace setup flow", () => {
       registryRevision: 2,
     });
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    expect(rendered.container.querySelector("[data-testid='canvas-setup-empty-marketplace']")).not.toBeNull();
-    expect(rendered.container.querySelector("[data-testid='canvas-setup-empty-project']")).not.toBeNull();
+    expect(rendered.container.querySelector("[data-testid='workspace-setup-connect-marketplace']")).not.toBeNull();
+    expect(rendered.container.querySelector("[data-testid='workspace-setup-project']")).not.toBeNull();
 
-    click(rendered.container, "[data-testid='canvas-setup-empty-project']");
+    click(rendered.container, "[data-testid='workspace-setup-project']");
     click(rendered.container, "[data-testid='canvas-setup-inspect-project']");
     await flush();
     click(rendered.container, "[data-testid='canvas-setup-register-project']");
@@ -210,7 +214,7 @@ describe("workspace setup flow", () => {
       registryRevision: 2,
     });
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-marketplace']");
+    click(rendered.container, "[data-testid='workspace-setup-connect-marketplace']");
     click(rendered.container, "[data-testid='canvas-setup-choice-existing']");
     click(rendered.container, "[data-testid='canvas-setup-connect-source']");
     await flush();
@@ -325,7 +329,7 @@ describe("workspace setup flow", () => {
     const refreshRegistry = vi.spyOn(setup.commands, "refreshRegistry");
     const observeEntry = vi.spyOn(setup.commands, "observeEntry");
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-marketplace']");
+    click(rendered.container, "[data-testid='workspace-setup-connect-marketplace']");
     click(rendered.container, "[data-testid='canvas-setup-choice-existing']");
     click(rendered.container, "[data-testid='canvas-setup-choice-create']");
     await flush();

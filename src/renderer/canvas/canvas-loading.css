@@ -1,0 +1,7 @@
+.canvas-loading-nodes { position: absolute; inset: 0; pointer-events: none; }
+.canvas-loading-node { position: absolute; width: 264px; min-height: 72px; }
+.page-stage-heading ~ .canvas-viewport .ui-loading-boundary > .ui-loading-skeleton--cards { padding: 98px 40px 0; }
+.canvas-document, .skill-document-container { min-height: 216px; }
+.canvas-sheet-body:has(> .ui-loading-skeleton--document) { min-height: 216px; }
+
+.project-loading-grid { position: absolute; left: 40px; top: 70px; }

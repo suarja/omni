@@ -12,7 +12,7 @@ import { Button } from "../components/ui/Button";
 import { Callout } from "../components/ui/Callout";
 import { Card, CardFoot, CardHeader } from "../components/ui/Card";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useI18n } from "../i18n";
 import type { Route } from "../navigation";
 import { useFeatures } from "../features";
@@ -199,7 +199,7 @@ export function AiConnectionSection({ api, onNavigateToRoute }: AiConnectionSect
           {error}
         </Callout>
       ) : null}
-      {!loaded ? <LoadingItem label={t("settings.ai.loading")} /> : null}
+      {!loaded ? <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.settings") })} /> : null}
       {loaded && !connection?.connection ? (
         <Card>
           <CardHeader title={t("settings.ai.connectionPage.chooseProvider")} />

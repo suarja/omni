@@ -201,7 +201,7 @@ it("uses the exact accepted marketplace header wording", async () => {
   expect(actions.textContent).not.toContain("＋");
 });
 
-it("uses a generic loading message while the marketplace is being observed", async () => {
+it("keeps the marketplace title and shows a named skeleton during its first observation", async () => {
   await mount();
   // Clear the cached observation to exercise an actual pending inventory read.
   const { api } = createFixture();
@@ -221,6 +221,9 @@ it("uses a generic loading message while the marketplace is being observed", asy
       </I18nProvider>,
     ),
   );
-  expect(container.querySelector(".page-status")?.textContent).not.toContain("project skills");
-  expect(container.querySelector(".page-status")?.textContent).toBe("Loading…");
+  expect(container.querySelector(".stage-title")?.textContent).toContain("My marketplace");
+  expect(container.querySelector("[data-testid=loading-skeleton]")?.getAttribute("aria-label")).toBe(
+    "Loading My marketplace · Personal Skills",
+  );
+  expect(container.querySelector(".page-status")).toBeNull();
 });

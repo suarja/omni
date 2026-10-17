@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { findRowUse, needsComparison } from "./external-library/presentation";
 import { useCanvasRail } from "./rail/rail-context";
 import { useState, type ReactElement } from "react";
@@ -303,7 +304,7 @@ export function ProjectSkillsSheet(
                   ))}
                 </>
               ) : (
-                t("projectView.loading")
+                <LoadingSkeleton label={t("projectView.loading")} variant="settings" />
               )}
             </div>
             <input

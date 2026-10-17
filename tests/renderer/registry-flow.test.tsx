@@ -232,7 +232,11 @@ describe("project and marketplace registry flow", () => {
     );
     await flushEffects();
     for (const action of ["marketplace", "project", "agents"])
-      expect(rendered?.container.querySelector(`[data-testid='canvas-setup-empty-${action}']`)).toBeTruthy();
+      expect(
+        rendered?.container.querySelector(
+          `[data-testid='workspace-setup-${action === "marketplace" ? "connect-marketplace" : action}']`,
+        ),
+      ).toBeTruthy();
     expect(rendered?.container.querySelector(".sidebar")).toBeNull();
     expect(rendered?.container.querySelector("[data-testid='onboarding-step-welcome']")).toBeNull();
   });
@@ -357,7 +361,7 @@ describe("project and marketplace registry flow", () => {
     await flushEffects();
     expect(api.openEntry).not.toHaveBeenCalled();
     expect(api.observeProject).not.toHaveBeenCalled();
-    expect(rendered?.container.textContent).toContain("Add marketplace");
+    expect(rendered?.container.textContent).toContain("Create my marketplace");
   });
   it("does not commit an in-flight selection after a refresh replaces its registry generation", async () => {
     const refreshed = deferred<typeof registry>();

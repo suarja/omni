@@ -170,13 +170,17 @@ export function buildProjectGraph(
           : {}),
       });
     });
-    instructions.forEach((instruction, index) =>
+    let extraInstructionSlot = 3;
+    instructions.forEach((instruction) =>
       nodes.push({
-        id: `instructions:${index}`,
+        id: `instructions:${instruction.path}`,
         title: t("projectView.instructionTitle", { name: instruction.path }),
         kind: "artifact",
         x: 396,
-        y: -80 + index * 144,
+        // Keep two primary instruction slots above the fixed startup-cost card.
+        y:
+          -80 +
+          (instruction.path === "AGENTS.md" ? 0 : instruction.path === "CLAUDE.md" ? 1 : extraInstructionSlot++) * 144,
         concept: "instructions",
         meta: instruction.aliases.length
           ? t("projectView.aliases", { names: instruction.aliases.join(", ") })
@@ -188,7 +192,7 @@ export function buildProjectGraph(
       title: t("projectView.startup"),
       kind: "group",
       x: 396,
-      y: instructions.length ? -80 + instructions.length * 144 : 0,
+      y: 208,
       concept: "cost",
       meta: data
         ? translateCount(t, "projectView.startupMeta", countActiveSkills(data), {

@@ -14,17 +14,26 @@ export function projectExternalLibrary(
   );
   const id = resourceNodeId(externalLibraryRef);
   const children = projection.children.filter((node) => !previous.has(node.id));
-  children.push({
-    kind: "resource",
-    id,
-    resource: {
-      ref: externalLibraryRef,
-      label: "External library",
-      kind: "external-source",
-      state: "observed",
-      availability: "available",
-    },
-  });
+  const hasSources =
+    sources.length > 0 ||
+    projection.children.some(
+      (node) =>
+        node.kind === "resource" &&
+        node.resource.kind === "external-source" &&
+        node.resource.ref.entry.id !== "external-library",
+    );
+  if (hasSources)
+    children.push({
+      kind: "resource",
+      id,
+      resource: {
+        ref: externalLibraryRef,
+        label: "External library",
+        kind: "external-source",
+        state: "observed",
+        availability: "available",
+      },
+    });
   const projects = new Set(
     sources.flatMap((source) =>
       source.projects.map((project) => resourceNodeId({ kind: "entry", entry: { kind: "project", id: project.id } })),
@@ -35,7 +44,7 @@ export function projectExternalLibrary(
   const relations = projection.relations.filter(
     (relation) => !previous.has(relation.from) && !previous.has(relation.to),
   );
-  for (const child of children)
+  for (const child of hasSources ? children : [])
     if (projects.has(child.id)) relations.push({ from: id, to: child.id, kind: "desired-use" });
   return { ...projection, children, relations };
 }

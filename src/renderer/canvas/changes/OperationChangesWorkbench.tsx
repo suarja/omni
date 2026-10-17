@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { useEffect, useRef, useState, type ReactElement } from "react";
 import { SheetFrame } from "../SheetFrame";
 import type { DesktopApi } from "../../../shared/ipc";
@@ -502,11 +503,7 @@ export function OperationChangesWorkbench(props: OperationChangesWorkbenchProps)
             {t("skillManagement.backToCopies")}
           </button>
         ) : null}
-        {!preview && operation.busy ? (
-          <p className="changes-note" role="status">
-            {t("skillManagement.loading")}
-          </p>
-        ) : null}
+        {!preview && operation.busy ? <LoadingSkeleton label={t("skillManagement.loading")} variant="rows" /> : null}
         {!preview && recoveries.length ? (
           <section className="changes-recoveries">
             <h3>{t("skillManagement.pendingRecovery")}</h3>

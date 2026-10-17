@@ -86,7 +86,7 @@ function wireAttention(node: CanvasNode): Pick<CanvasLayout["wires"][number], "a
   return attention && attention.state !== "quiet" ? { attention } : {};
 }
 
-function workspaceWires(projection: CanvasProjection, nodes: readonly PositionedNode[]): WireLayout {
+export function layoutWorkspaceRelations(projection: CanvasProjection, nodes: readonly PositionedNode[]): WireLayout {
   const wires: { id: string; d: string; kind?: "publication" }[] = [];
   const ports: Point[] = [];
   for (const relation of projection.relations) {
@@ -186,7 +186,7 @@ function overviewWires(center: PositionedNode, children: readonly PositionedNode
 }
 
 function layoutWires(projection: CanvasProjection, nodes: readonly PositionedNode[], viewport: Size): WireLayout {
-  if (projection.key === "workspace") return workspaceWires(projection, nodes);
+  if (projection.key === "workspace") return layoutWorkspaceRelations(projection, nodes);
   if (!projection.center || !nodes.length) return { wires: [], ports: [] };
   const center = nodes[0]!;
   const children = nodes.slice(1);

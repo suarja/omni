@@ -18,11 +18,11 @@ export function zoomCamera(camera: Camera, nextScale: number, anchor: Point): Ca
   };
 }
 
-export function fitCamera(bounds: Bounds, viewport: Size): Camera {
+export function fitCamera(bounds: Bounds, viewport: Size, minimumScale = 0.8): Camera {
   if (viewport.width <= 0 || viewport.height <= 0) return { x: 0, y: 0, scale: 1 };
   const width = Math.max(1, bounds.right - bounds.left);
   const height = Math.max(1, bounds.bottom - bounds.top);
-  const scale = clamp(Math.min((viewport.width - 80) / width, (viewport.height - 124) / height), 0.8, 1);
+  const scale = clamp(Math.min((viewport.width - 80) / width, (viewport.height - 124) / height), minimumScale, 1);
   return {
     scale,
     x: viewport.width / 2 - ((bounds.left + bounds.right) * scale) / 2,

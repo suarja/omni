@@ -28,7 +28,7 @@ it("keeps public catalogue and worktree routes off by default", () => {
 
 it("uses French setup copy without an English canvas fallback", () => {
   expect(fr.canvasSetup.titles.project).toBe("Ajouter un projet");
-  expect(fr.canvasSetup.emptyTitle).toBe("Votre espace de travail commence par ce que vous connectez");
+  expect(fr.canvasSetup.welcomeTitle).toBe("Bienvenue dans Omni");
 });
 
 it("keeps composition gated after a Settings link is normalized to the canvas", () => {

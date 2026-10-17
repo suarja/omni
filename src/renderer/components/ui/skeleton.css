@@ -1,0 +1,24 @@
+.ui-skeleton { display: block; box-sizing: border-box; position: relative; overflow: hidden; flex-shrink: 0; min-height: 1em; background: var(--canvas-sheet-inset, var(--color-panel-bottom)); border: 1px solid var(--canvas-sheet-edge, var(--color-border-strong)); border-radius: 10px; }
+.ui-skeleton--line { width: 100%; height: .8em; min-height: .8em; border-radius: 4px; }
+.ui-skeleton--circle { width: 34px; height: 34px; border-radius: 50%; }
+.ui-skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, var(--canvas-sheet-edge, var(--color-border-strong)), transparent); transform: translateX(-100%); animation: ui-skeleton-shimmer 1.4s ease-in-out infinite; opacity: .45; }
+@keyframes ui-skeleton-shimmer { to { transform: translateX(100%); } }
+.ui-loading-skeleton { width: 100%; box-sizing: border-box; }
+.ui-skeleton-shapes { visibility: hidden; }
+.ui-loading-skeleton[data-visible="true"] > .ui-skeleton-shapes { visibility: visible; }
+.ui-loading-skeleton[data-visible="false"] .ui-skeleton::after { animation: none; }
+.ui-skeleton-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.ui-skeleton-row { display: flex; box-sizing: border-box; min-height: 72px; align-items: center; gap: 12px; padding: 12px; }
+.ui-skeleton-copy { display: grid; flex: 1; min-width: 0; gap: 8px; }
+.ui-loading-skeleton--rows .ui-skeleton-row { border: 1px solid var(--canvas-sheet-edge, var(--color-border-strong)); border-radius: 10px; }
+.ui-item-list > .ui-loading-skeleton--rows .ui-skeleton-row { margin-bottom: 10px; }
+.ui-item-list--nested > .ui-loading-skeleton--rows .ui-skeleton-row, .ui-card .ui-loading-skeleton--rows .ui-skeleton-row { min-height: 64px; border: 0; }
+.ui-loading-skeleton--document .ui-skeleton-row { min-height: 64px; padding: 12px 0; }
+.ui-loading-skeleton--settings .ui-skeleton-row { min-height: 64px; padding: 12px 0; }
+.ui-loading-skeleton--inline { display: inline-block; width: 9em; max-width: 100%; vertical-align: middle; }
+.ui-loading-skeleton--cards > .ui-skeleton-shapes { display: grid; grid-template-columns: repeat(4, 264px); gap: 20px; }
+.ui-loading-skeleton--cards .ui-skeleton-row { width: 264px; border: 1px solid var(--canvas-sheet-edge, var(--color-border-strong)); border-radius: 10px; }
+.ui-loading-boundary { min-width: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .ui-skeleton::after { animation: none; transform: none; background: none; }
+}

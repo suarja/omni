@@ -66,7 +66,12 @@ async function render() {
     pickOperationParent: vi.fn(),
     previewOperation: vi.fn(),
     applyOperation: vi.fn(),
-    getAgentStatus: vi.fn(),
+    getAgentStatus: vi.fn(async () => ({
+      socketPath: "socket",
+      tokenCreatedAt: "now",
+      counts: { pending: 0, today: 0, total: 0 },
+      harnesses: [],
+    })),
   };
   const registerProject = vi.fn(async () => ({
     status: "ready",

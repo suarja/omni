@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import type { ReactElement } from "react";
 
 import type { SkillVariantDestination } from "../skill-variant-destinations";
@@ -68,7 +69,7 @@ export function CopyManagementDecision(
             value={props.sourceValue}
           />
           {props.sourceStatus === "loading" ? (
-            <p aria-live="polite">{t("skillManagement.loadingSourceSkills")}</p>
+            <LoadingSkeleton label={t("skillManagement.loadingSourceSkills")} variant="rows" />
           ) : null}
           {props.sourceStatus === "unavailable" ? (
             <div className="copy-management-recovery">

@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { Glossary } from "./Glossary";
 import type { ReactElement, ReactNode } from "react";
 
@@ -168,7 +169,15 @@ function renderNode(
           <span
             className={`canvas-node-meta${resource && metadata?.get(nodeKey(resource.ref)) === t("canvas.notRead") ? " is-faint" : ""}`}
           >
-            {(resource ? metadata?.get(nodeKey(resource.ref)) : undefined) ??
+            {resource &&
+            (resource.state === "loading" || resource.state === "unobserved") &&
+            metadata?.get(nodeKey(resource.ref)) === t("canvas.notRead") ? (
+              <LoadingSkeleton
+                label={t("canvas.loadingSurface", { surface: t("canvas.workspace") })}
+                variant="inline"
+              />
+            ) : (
+              ((resource ? metadata?.get(nodeKey(resource.ref)) : undefined) ??
               resource?.description ??
               (resource
                 ? t(
@@ -187,7 +196,8 @@ function renderNode(
                       .join(" · ")
                   : groupNode?.projectSkillGroup?.locations.length
                     ? translateCount(t, "projectView.skillCount", groupNode.projectSkillGroup.locations.length)
-                    : "")}
+                    : ""))
+            )}
           </span>
         </span>
       </button>
@@ -268,6 +278,7 @@ export function CanvasGraph(
             d={wire.d}
             data-kind={wire.kind}
             data-wire-id={wire.id}
+            data-dashed={wire.dashed || undefined}
             data-attention={wire.attention?.state}
             data-attention-reasons={wire.attention?.reasons.join(",")}
             key={wire.id}

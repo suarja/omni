@@ -1,3 +1,4 @@
+import { LoadingBoundary } from "../../components/ui/Skeleton";
 import { routeForCanvasPage } from "../pages/page-navigation";
 import { activeWorkshop } from "../../../domain/source-roles";
 import {
@@ -191,20 +192,24 @@ export function RailHistorySheet(): ReactElement | null {
       busy={false}
       onClose={rail.close}
     >
-      {state === "loading" ? (
-        <p role="status">{t("reviewExtras.loading")}</p>
-      ) : state === "error" ? (
-        <p role="alert">{t("rail.historyUnavailable")}</p>
-      ) : !ordered.length ? (
-        <p>{t("rail.historyEmpty")}</p>
-      ) : (
-        [...new Set(ordered.map((receipt) => historyDay(receipt.appliedAt, t, language)))].map((day) => (
-          <section className="rail-section" key={day}>
-            <h3>{day}</h3>
-            {ordered.filter((receipt) => historyDay(receipt.appliedAt, t, language) === day).map(renderRow)}
-          </section>
-        ))
-      )}
+      <LoadingBoundary
+        loading={state === "loading"}
+        label={t("canvas.loadingSurface", { surface: t("canvas.review") })}
+        minHeight={216}
+      >
+        {state === "error" ? (
+          <p role="alert">{t("rail.historyUnavailable")}</p>
+        ) : !ordered.length ? (
+          <p>{t("rail.historyEmpty")}</p>
+        ) : (
+          [...new Set(ordered.map((receipt) => historyDay(receipt.appliedAt, t, language)))].map((day) => (
+            <section className="rail-section" key={day}>
+              <h3>{day}</h3>
+              {ordered.filter((receipt) => historyDay(receipt.appliedAt, t, language) === day).map(renderRow)}
+            </section>
+          ))
+        )}
+      </LoadingBoundary>
       <details className="rail-section">
         <summary>{t("rail.appliedByAgents")}</summary>
         {ordered

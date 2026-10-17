@@ -1,4 +1,6 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import type { ReactElement } from "react";
+import "./canvas-loading.css";
 import type { ProjectSkillHarness, ProjectSkillRow } from "../../shared/project-skills-ipc";
 import { CanvasGlyph, type CanvasGlyphName } from "./CanvasGlyph";
 import { useI18n } from "../i18n";
@@ -132,7 +134,11 @@ export function ProjectGraph(
                         ))
                       ) : (
                         <>
-                          {node.meta}
+                          {props.readState === "loading" ? (
+                            <LoadingSkeleton label={t("projectView.loading")} variant="inline" />
+                          ) : (
+                            node.meta
+                          )}
                           {node.badge ? (
                             <span className={`project-chip is-${node.badge.kind}`}>{node.badge.label}</span>
                           ) : null}
@@ -148,7 +154,9 @@ export function ProjectGraph(
         </div>
       ))}
       {!props.model.nodes.length && props.readState === "loading" ? (
-        <p role="status">{t("projectView.loading")}</p>
+        <div className="project-loading-grid">
+          <LoadingSkeleton label={t("projectView.loading")} variant="cards" rows={4} />
+        </div>
       ) : null}
       {!props.model.nodes.length && (props.readState ?? "ready") === "ready" ? <p>{t("projectView.empty")}</p> : null}
     </div>

@@ -12,7 +12,11 @@ steps: [1. Open Add Marketplace, 2. Choose the source type, 3. Read the register
 
 ## 1. Open Add Marketplace
 
-From `Workspace`, choose `＋ Add`, then `Marketplace`. The sheet opens on `External source` for repositories published by others.
+On first launch, `Welcome to Omni` shows a map with three places: your marketplace, your projects, and your agents. Under `Your marketplace`, choose `Connect existing` to open the personal marketplace flow directly. `Create my marketplace` opens the creation form with a file and Git preview.
+
+You can fill the places in any order. Completed places become real nodes. After the first step, the compact setup line includes `Hide`; use `Help`, then `Show setup` to bring the remaining places back.
+
+You can also choose `＋ Add`, then `Marketplace`. With no personal marketplace connected, the sheet opens on `My first marketplace`. Once one exists, it opens on `External source` for repositories published by others.
 
 Connecting a local folder registers it in Omni. It does not install its skills into a project.
 
@@ -22,7 +26,7 @@ What you will see: the Add menu with `Project`, `Marketplace`, and `New skill`.
 
 ## 2. Choose the source type
 
-For someone else's local repository, keep `External source` and choose `Choose a folder…`. For your first personal marketplace, choose `Another marketplace of mine`, then `Choose a folder…` under `Git repository`.
+For someone else's local repository, choose `External source`, then `Choose a folder…`. For your first personal marketplace, keep `My first marketplace`, then choose `Choose a folder…` under `Git repository`.
 
 Select the existing repository in the system picker. Confirming that picker starts registration immediately; there is no separate `Connect marketplace` page.
 

@@ -34,6 +34,7 @@ export type ExternalLibrarySettings = Readonly<{ updates: "auto" | "ask" }>;
 export const DEFAULT_EXTERNAL_LIBRARY_SETTINGS: ExternalLibrarySettings = { updates: "auto" };
 export type Settings = Readonly<{
   schemaVersion: 8;
+  workspaceSetupHidden?: boolean;
   login?: Readonly<{ openAtLogin: boolean }>;
   git: Readonly<{ commitChanges: boolean }>;
   agents: Readonly<{
@@ -47,6 +48,7 @@ export type Settings = Readonly<{
 }>;
 export const SETTINGS_IPC_CHANNELS = { get: "omni:settings:get", set: "omni:settings:set" } as const;
 export type SettingsSetRequest = Readonly<{
+  workspaceSetupHidden?: boolean;
   commitChanges: boolean;
   agents: Readonly<{
     approval: Readonly<{ personalMarketplace: ApprovalMode; projects: ApprovalMode }>;
@@ -183,9 +185,14 @@ function parseAgents(value: unknown): Settings["agents"] {
 }
 export function parseSettingsSetRequest(value: unknown): SettingsSetRequest {
   const request = record(value, "Settings request");
-  keys(request, ["commitChanges", "agents", "ai", "features", "externalLibrary"], "Settings request");
+  keys(
+    request,
+    ["commitChanges", "agents", "ai", "features", "externalLibrary", "workspaceSetupHidden"],
+    "Settings request",
+  );
   if (typeof request.commitChanges !== "boolean") throw new Error("commitChanges must be a boolean.");
   return {
+    ...parseWorkspaceSetupPreference(request),
     commitChanges: request.commitChanges,
     agents: parseAgents(request.agents),
     ai: parseAi(request.ai),
@@ -199,13 +206,18 @@ export function parseEmptySettingsRequest(value: unknown): void {
 }
 export function parseSettingsResponse(value: unknown): Settings {
   const response = record(value, "Settings response");
-  keys(response, ["schemaVersion", "git", "agents", "ai", "features", "externalLibrary", "login"], "Settings response");
+  keys(
+    response,
+    ["schemaVersion", "git", "agents", "ai", "features", "externalLibrary", "login", "workspaceSetupHidden"],
+    "Settings response",
+  );
   const git = record(response.git, "Settings git settings");
   keys(git, ["commitChanges"], "Settings git settings");
   if (response.schemaVersion !== 8 || typeof git.commitChanges !== "boolean")
     throw new Error("Settings response is invalid.");
   return {
     schemaVersion: 8,
+    ...parseWorkspaceSetupPreference(response),
     ...(response.login === undefined ? {} : { login: parseLoginDecision(response.login) }),
     git: { commitChanges: git.commitChanges },
     agents: parseAgents(response.agents),
@@ -213,6 +225,11 @@ export function parseSettingsResponse(value: unknown): Settings {
     features: parseFeatures(response.features),
     externalLibrary: parseExternalLibrary(response.externalLibrary),
   };
+}
+function parseWorkspaceSetupPreference(value: RecordValue): Readonly<{ workspaceSetupHidden?: boolean }> {
+  if (value.workspaceSetupHidden === undefined) return {};
+  if (typeof value.workspaceSetupHidden !== "boolean") throw new Error("Workspace setup visibility must be a boolean.");
+  return { workspaceSetupHidden: value.workspaceSetupHidden };
 }
 function parseExternalLibrary(value: unknown): ExternalLibrarySettings {
   const settings = record(value, "External library settings");

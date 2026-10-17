@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { harnessLabel } from "../project-view-model";
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactElement } from "react";
 
@@ -182,7 +183,7 @@ export function SkillCopyComparisonWorkbench(
         tabIndex={0}
       >
         {comparison.state.status === "loading" ? (
-          <p aria-live="polite">{t("skillManagement.comparisonLoading")}</p>
+          <LoadingSkeleton label={t("skillManagement.comparisonLoading")} variant="document" />
         ) : null}
         {comparison.state.status === "unavailable" ? (
           <p className="changes-error" role="alert">

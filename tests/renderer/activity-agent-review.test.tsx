@@ -80,14 +80,18 @@ describe("activity agent review findings", () => {
     rendered = render(
       <AgentsView api={{ getActivitySnapshot: vi.fn(() => pendingSnapshot) } as unknown as DesktopApi} />,
     );
-    expect(rendered.container.textContent).toContain("Loading…");
+    expect(rendered.container.querySelector("[data-testid=loading-skeleton]")?.getAttribute("aria-label")).toBe(
+      "Loading Activity",
+    );
     expect(rendered.container.textContent).not.toContain("No agent sessions right now");
     act(() => rendered?.root.unmount());
 
     rendered = render(
       <WorktreesView api={{ getActivitySnapshot: vi.fn(() => pendingSnapshot) } as unknown as DesktopApi} />,
     );
-    expect(rendered.container.textContent).toContain("Loading…");
+    expect(rendered.container.querySelector("[data-testid=loading-skeleton]")?.getAttribute("aria-label")).toBe(
+      "Loading Activity",
+    );
     expect(rendered.container.textContent).not.toContain("No worktrees right now");
     act(() => rendered?.root.unmount());
 

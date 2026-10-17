@@ -1,4 +1,5 @@
 export const canvas = {
+  loadingSurface: "Loading {surface}",
   managedSkillCount: "{count} from my marketplace",
   notRead: "Not read yet",
   personalMarketplace: "My marketplace · {name}",

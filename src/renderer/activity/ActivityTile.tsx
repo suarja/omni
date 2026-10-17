@@ -17,7 +17,7 @@ export function ActivityTile({
   badgeTone?: BadgeTone;
   dataTestId: string;
   icon: IconName;
-  meta: string;
+  meta: ReactNode;
   name: string;
   onClick: () => void;
 }>): ReactElement {

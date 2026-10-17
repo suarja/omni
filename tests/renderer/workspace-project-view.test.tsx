@@ -62,7 +62,9 @@ it("shows neutral counters for unobserved workspace roots without acquiring gran
   const api = await render(snapshot);
   for (const title of ["Project One", "Personal Skills"]) {
     const node = [...container.querySelectorAll(".canvas-node-row")].find((node) => node.textContent?.includes(title))!;
-    expect(node.querySelector(".canvas-node-meta")?.textContent).toBe("Pas encore lu");
+    expect(node.querySelector(".canvas-node-meta [aria-busy=true]")?.getAttribute("aria-label")).toBe(
+      "Chargement : Espace de travail",
+    );
     expect(node.querySelector(".canvas-node-meta.is-faint")).not.toBeNull();
     expect(node.querySelector('[data-glyph="project"], [data-glyph="marketplace"]')).not.toBeNull();
     expect(node.querySelector(".project-chip.is-update")).toBeNull();
@@ -192,7 +194,7 @@ it("does not show an isolated root-unavailable heading on workspace", async () =
     roots: initial.roots.map((root) => ({ ...root, evidence: { status: "unavailable", reason: "missing" } })),
   };
   await render(snapshot, apiFor(snapshot), "en");
-  expect(container.querySelector(".canvas-stage-heading")?.textContent).not.toContain("This root is unavailable.");
+  expect(container.querySelector(".canvas-stage")?.textContent).not.toContain("This root is unavailable.");
 });
 it("reports an archive conflict without claiming that every missing project was removed", async () => {
   const snapshot = withMissingProjects();

@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { RegisterProjectWorkbench } from "./RegisterProjectWorkbench";
 import { activeWorkshop } from "../../../domain/source-roles";
 import type { ReactElement } from "react";
@@ -289,5 +290,5 @@ export function RouteChangesWorkbench({
       />
     );
   }
-  return unavailable(t("bootstrap.loadingDescription"), t("bootstrap.loading"));
+  return <LoadingSkeleton label={t("bootstrap.loading")} />;
 }

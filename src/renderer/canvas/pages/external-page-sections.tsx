@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import type { ExternalSourceDetails, ExternalSource } from "../../../shared/external-library-ipc";
 import type { ExternalDiscovery } from "../../../shared/external-library-ui-ipc";
 import { translateCount, type TranslationFunction } from "../../i18n";
@@ -146,13 +147,17 @@ function macSection(input: Inputs, discoveries: ReadonlyMap<string, ExternalDisc
     nodes: mac.map((item) => {
       const discovered = discoveries.get(item.repo);
       const count =
-        discovered?.status === "ready"
-          ? discovered.skills.length
-            ? translateCount(t, "externalLibrary.skillCount", discovered.skills.length)
-            : t("externalLibrary.commandsOnly")
-          : discovered?.status === "failed"
-            ? discovered.error.message
-            : t("canvas.notRead");
+        discovered?.status === "ready" ? (
+          discovered.skills.length ? (
+            translateCount(t, "externalLibrary.skillCount", discovered.skills.length)
+          ) : (
+            t("externalLibrary.commandsOnly")
+          )
+        ) : discovered?.status === "failed" ? (
+          discovered.error.message
+        ) : (
+          <LoadingSkeleton label={t("canvas.loadingSurface", { surface: item.repo })} variant="inline" />
+        );
       return {
         id: `mac:${item.repo}`,
         title: item.repo,

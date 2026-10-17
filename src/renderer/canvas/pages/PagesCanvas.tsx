@@ -1,3 +1,4 @@
+import { LoadingBoundary } from "../../components/ui/Skeleton";
 import { SavedPageOperation } from "./SavedPageOperation";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactElement, type ReactNode } from "react";
 import { createResourceCatalogue } from "../../../domain/resource-catalogue";
@@ -154,24 +155,28 @@ function PageCanvas(props: ResourceCanvasProps & Readonly<{ model: Model }>): Re
         <div className="project-stage-heading page-stage-heading">
           <strong className="stage-title">{model.title}</strong>
           <Glossary concept={page.kind === "marketplace" ? "marketplace" : "library"} />
-          <span className="stage-note">{model.note}</span>
+          <span className="stage-note">{model.loading ? null : model.note}</span>
           <div className="page-head-actions">{model.actions}</div>
         </div>
         <CanvasViewport viewportRef={viewportRef} controls={camera} disabled={busy}>
-          <PageGraph
-            sections={model.sections}
-            tops={graph.tops}
-            nodeTops={graph.nodeTops}
-            onMeasure={measure}
-            height={graph.layout.bounds.bottom}
-            banner={model.banner}
-          />
+          <LoadingBoundary
+            key={key}
+            loading={model.loading}
+            label={t("canvas.loadingSurface", { surface: model.title })}
+            variant="cards"
+            minHeight={300}
+          >
+            <PageGraph
+              sections={model.sections}
+              tops={graph.tops}
+              nodeTops={graph.nodeTops}
+              onMeasure={measure}
+              height={graph.layout.bounds.bottom}
+              banner={model.banner}
+            />
+          </LoadingBoundary>
         </CanvasViewport>
-        {model.loading ? (
-          <p className="page-status" role="status">
-            {t("externalLibrary.loading")}
-          </p>
-        ) : null}
+
         {model.error ? (
           <p className="page-status external-error" role="alert">
             {model.error}

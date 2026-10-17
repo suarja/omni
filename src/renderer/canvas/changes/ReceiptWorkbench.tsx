@@ -8,7 +8,7 @@ import { Callout } from "../../components/ui/Callout";
 import { Card } from "../../components/ui/Card";
 import { WorkflowFooter } from "./WorkflowFooter";
 import { ItemList } from "../../components/ui/ItemList";
-import { LoadingItem } from "../../components/ui/LoadingItem";
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { useI18n } from "../../i18n";
 import type { Route } from "../../navigation";
 import { isReceiptRestorable, operationLabel } from "../../review/CompletedOperations";
@@ -102,7 +102,11 @@ export function ReceiptWorkbench({
   if (!loaded)
     return (
       <WorkflowWorkbench
-        title={receipt ? operationLabel(receipt, t, language) : t(loaded ? "receipt.unavailable" : "receipt.loading")}
+        title={
+          receipt
+            ? operationLabel(receipt, t, language)
+            : t(loaded ? "receipt.unavailable" : "reviewExtras.completedTitle")
+        }
         busy={false}
         subtitle={receipt ? description(receipt, t, language) : undefined}
         hasResult={Boolean(receipt)}
@@ -112,7 +116,7 @@ export function ReceiptWorkbench({
         <div>
           <Card>
             <ItemList variant="nested">
-              <LoadingItem label={t("receipt.loading")} />
+              <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("receipt.files") })} />
             </ItemList>
           </Card>
         </div>
@@ -121,7 +125,11 @@ export function ReceiptWorkbench({
   if (!receipt)
     return (
       <WorkflowWorkbench
-        title={receipt ? operationLabel(receipt, t, language) : t(loaded ? "receipt.unavailable" : "receipt.loading")}
+        title={
+          receipt
+            ? operationLabel(receipt, t, language)
+            : t(loaded ? "receipt.unavailable" : "reviewExtras.completedTitle")
+        }
         busy={false}
         subtitle={receipt ? description(receipt, t, language) : undefined}
         hasResult={Boolean(receipt)}
@@ -143,7 +151,11 @@ export function ReceiptWorkbench({
   const restorable = isReceiptRestorable(receipt, receipts);
   return (
     <WorkflowWorkbench
-      title={receipt ? operationLabel(receipt, t, language) : t(loaded ? "receipt.unavailable" : "receipt.loading")}
+      title={
+        receipt
+          ? operationLabel(receipt, t, language)
+          : t(loaded ? "receipt.unavailable" : "reviewExtras.completedTitle")
+      }
       busy={false}
       subtitle={receipt ? description(receipt, t, language) : undefined}
       hasResult={Boolean(receipt)}

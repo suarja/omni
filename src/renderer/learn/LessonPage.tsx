@@ -1,3 +1,4 @@
+import { LoadingSkeleton, Skeleton } from "../components/ui/Skeleton";
 import { useEffect, useRef, useState, type ReactElement } from "react";
 
 import type { DesktopApi } from "../../shared/ipc";
@@ -155,7 +156,27 @@ export function LessonPage({
     return () => observer.disconnect();
   }, [lesson, resolvedKind]);
 
-  if (loading) return <p className="academy-loading">{t("learn.loading")}</p>;
+  if (loading && !lesson)
+    return (
+      <div className="academy-lesson-page">
+        <div className="academy-breadcrumb">{t("learn.heading")}</div>
+        <LoadingSkeleton
+          label={t("learn.loading")}
+          variant="document"
+          rows={6}
+          shapes={
+            <>
+              <header className="academy-lesson-head">
+                <Skeleton shape="line" width="65%" height="var(--font-size-title)" />
+              </header>
+              <div className="academy-lesson-body">
+                <Skeleton height={360} />
+              </div>
+            </>
+          }
+        />
+      </div>
+    );
   if (!lesson) return <p className="academy-loading">{t("learn.lessonNotFound")}</p>;
   const heroShot = splitLessonBody(lesson.body).find((block) => block.kind === "screenshot")?.name;
   return (

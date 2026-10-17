@@ -33,9 +33,31 @@ export const canvasSetup = {
   done: "Terminer",
   back: "Retour aux choix",
   skip: "Passer pour le moment",
-  emptyTitle: "Votre espace de travail commence par ce que vous connectez",
-  emptyDescription:
-    "Choisissez une marketplace pour vos skills réutilisables ou ajoutez un projet pour examiner ses ressources locales.",
+  welcomeTitle: "Bienvenue dans Omni",
+  welcomeDescription:
+    "Votre espace de travail est une carte des skills de vos agents. Remplissez les trois emplacements ci-dessous ; rien ne change dans vos dossiers sans un aperçu.",
+  progress: "{count} sur 3",
+  setupProgress: "Configuration · {count} sur 3",
+  step: "Étape {count}",
+  hideSetup: "Masquer",
+  showSetup: "Afficher la configuration",
+  setupStateUnavailable:
+    "L’état ou les préférences de configuration n’ont pas pu être chargés ou enregistrés. Réessayez ou rouvrez l’application.",
+  createMyMarketplace: "Créer ma marketplace",
+  connectMyMarketplace: "Connecter l’existante",
+  places: {
+    marketplace: {
+      title: "Votre marketplace",
+      subtitle: "Skills réutilisables, dans Git",
+      description: "Le lieu des skills que vous réutilisez dans vos projets.",
+    },
+    project: {
+      title: "Vos projets",
+      subtitle: "Les dossiers de code où travaillent les agents",
+      description: "Omni cartographie les skills de chaque projet, sans rien y écrire.",
+    },
+    agents: { title: "Vos agents", subtitle: "Demandez à Omni le bon skill" },
+  },
   marketplaceDescription: "Choisissez un dossier de marketplace sur cet appareil.",
   ownershipLabel: "Comment utiliserez-vous ce dossier ?",
   personalMarketplace: "Ma marketplace",

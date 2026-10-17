@@ -7,7 +7,7 @@ import { Button } from "../components/ui/Button";
 import { Card, CardHeader } from "../components/ui/Card";
 import { IconWrap } from "../components/ui/IconWrap";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingBoundary, LoadingSkeleton } from "../components/ui/Skeleton";
 import { PageHead } from "../components/ui/PageHead";
 import { TreeList, type TreeNode } from "../components/ui/TreeList";
 import { tCount, useI18n } from "../i18n";
@@ -138,32 +138,38 @@ export function WorktreesView({
           }
           title={t("activity.worktreesHeading")}
         />
-        <ItemList>
-          {!loaded ? (
-            <LoadingItem label={t("activity.loading")} />
-          ) : groups.length ? (
-            groups.map((candidate) => (
-              <ListItem
-                dataTestId={`activity-project-${candidate.projectId}`}
-                key={candidate.projectId}
-                leading={<IconWrap name="folder" size="sm" />}
-                name={candidate.projectName}
-                onClick={() =>
-                  onNavigateToRoute({
-                    screen: "activity-worktrees",
-                    projectId: candidate.projectId,
-                  })
-                }
-                side={t("activity.lastActivityAgo", {
-                  elapsed: formatElapsed(candidate.lastActivityDays * 86_400, language),
-                })}
-                sub={projectSummary(candidate.worktrees, language, t)}
-              />
-            ))
-          ) : (
-            <ListItem dim name={t("activity.worktreesEmpty")} />
-          )}
-        </ItemList>
+        <LoadingBoundary
+          loading={!loaded}
+          label={t("canvas.loadingSurface", { surface: t("canvas.activity") })}
+          minHeight={216}
+        >
+          <ItemList>
+            {!loaded ? (
+              <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.activity") })} />
+            ) : groups.length ? (
+              groups.map((candidate) => (
+                <ListItem
+                  dataTestId={`activity-project-${candidate.projectId}`}
+                  key={candidate.projectId}
+                  leading={<IconWrap name="folder" size="sm" />}
+                  name={candidate.projectName}
+                  onClick={() =>
+                    onNavigateToRoute({
+                      screen: "activity-worktrees",
+                      projectId: candidate.projectId,
+                    })
+                  }
+                  side={t("activity.lastActivityAgo", {
+                    elapsed: formatElapsed(candidate.lastActivityDays * 86_400, language),
+                  })}
+                  sub={projectSummary(candidate.worktrees, language, t)}
+                />
+              ))
+            ) : (
+              <ListItem dim name={t("activity.worktreesEmpty")} />
+            )}
+          </ItemList>
+        </LoadingBoundary>
       </div>
     );
   }
@@ -171,9 +177,16 @@ export function WorktreesView({
   if (!loaded) {
     return (
       <div className="shell-page destination-page activity-page">
-        <ItemList>
-          <LoadingItem label={t("activity.loading")} />
-        </ItemList>
+        <PageHead title={t("activity.worktreesHeading")} />
+        <LoadingBoundary
+          loading={!loaded}
+          label={t("canvas.loadingSurface", { surface: t("canvas.activity") })}
+          minHeight={216}
+        >
+          <ItemList>
+            <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.activity") })} />
+          </ItemList>
+        </LoadingBoundary>
       </div>
     );
   }

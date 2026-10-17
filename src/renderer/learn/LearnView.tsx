@@ -1,3 +1,5 @@
+import { AcademyLoadingShapes } from "./AcademyLoadingShapes";
+import { LoadingBoundary } from "../components/ui/Skeleton";
 import { useEffect, useState, type ReactElement } from "react";
 
 import type { DesktopApi } from "../../shared/ipc";
@@ -64,42 +66,63 @@ export function LearnView({ api = null, lessons: suppliedLessons, onNavigateToRo
   return (
     <div className="shell-page destination-page academy-page" data-testid="learn-page">
       <PageHead description={t("learn.description")} title={t("learn.heading")} />
-      {loading ? <p className="academy-loading">{t("learn.loading")}</p> : null}
+
       <section data-testid="learn-courses">
         <SectionHeading hint={t("learn.coursesDescription")} title={t("learn.courses")} />
-        <div className="academy-course-list">
-          {courses.map((lesson) => (
-            <CourseCard
-              key={lesson.slug}
-              lesson={lesson}
-              onOpen={() => openLesson(lesson, language, onNavigateToRoute)}
-            />
-          ))}
-        </div>
+        <LoadingBoundary
+          loading={loading && !lessons.length}
+          label={t("canvas.loadingSurface", { surface: t("learn.courses") })}
+          shapes={<AcademyLoadingShapes kind="courses" />}
+          minHeight={460}
+        >
+          <div className="academy-course-list">
+            {courses.map((lesson) => (
+              <CourseCard
+                key={lesson.slug}
+                lesson={lesson}
+                onOpen={() => openLesson(lesson, language, onNavigateToRoute)}
+              />
+            ))}
+          </div>
+        </LoadingBoundary>
       </section>
       <section data-testid="learn-tutorials">
         <SectionHeading hint={t("learn.tutorialsDescription")} title={t("learn.tutorials")} />
-        <div className="academy-tutorial-grid">
-          {tutorials.map((lesson) => (
-            <TutorialCard
-              key={lesson.slug}
-              lesson={lesson}
-              onOpen={() => openLesson(lesson, language, onNavigateToRoute)}
-            />
-          ))}
-        </div>
+        <LoadingBoundary
+          loading={loading && !lessons.length}
+          label={t("canvas.loadingSurface", { surface: t("learn.tutorials") })}
+          shapes={<AcademyLoadingShapes kind="tutorials" />}
+          minHeight={220}
+        >
+          <div className="academy-tutorial-grid">
+            {tutorials.map((lesson) => (
+              <TutorialCard
+                key={lesson.slug}
+                lesson={lesson}
+                onOpen={() => openLesson(lesson, language, onNavigateToRoute)}
+              />
+            ))}
+          </div>
+        </LoadingBoundary>
       </section>
       <section data-testid="learn-topics">
         <SectionHeading hint={t("learn.topicsDescription")} title={t("learn.topics")} />
-        <div className="academy-topic-grid">
-          {topics.map((lesson) => (
-            <TopicTile
-              key={lesson.slug}
-              lesson={lesson}
-              onOpen={() => openLesson(lesson, language, onNavigateToRoute)}
-            />
-          ))}
-        </div>
+        <LoadingBoundary
+          loading={loading && !lessons.length}
+          label={t("canvas.loadingSurface", { surface: t("learn.topics") })}
+          shapes={<AcademyLoadingShapes kind="topics" />}
+          minHeight={70}
+        >
+          <div className="academy-topic-grid">
+            {topics.map((lesson) => (
+              <TopicTile
+                key={lesson.slug}
+                lesson={lesson}
+                onOpen={() => openLesson(lesson, language, onNavigateToRoute)}
+              />
+            ))}
+          </div>
+        </LoadingBoundary>
       </section>
     </div>
   );

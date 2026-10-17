@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0
+
+A real first screen, and calm loading everywhere.
+
+- First run shows the workspace map before it is filled: your marketplace, your projects and your
+  agents around Omni, each with its step. Every step can be done in any order, hidden, and shown
+  again from Help. The map, its Omni center and its links stay once setup is done.
+- Every surface loads with skeletons shaped like the final layout, after a short delay, with no
+  text in the corner and no layout jump; background refreshes keep the current content.
+- Canvases open already framed: nothing moves when late data arrives.
+- The External library appears only once it has a source; a first marketplace opens on the
+  personal tab.
+
 ## 0.3.0
 
 The app is now called Omni.

@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useEffect, useRef, useState, type ReactElement } from "react";
 import { version } from "../../../package.json";
 import { AGENT_HARNESSES, agentName, statusForHarness } from "../agents/agent-utils";
@@ -134,7 +135,13 @@ export function AgentsCard(
             <span className={`dot ${row.dot}`} aria-hidden="true" />
             <div className="grow">
               <b>{agentName(harness)}</b>
-              <small>{row.line}</small>
+              <small>
+                {props.loaded ? (
+                  row.line
+                ) : (
+                  <LoadingSkeleton label={t("agentsSetup.activityChecking")} variant="inline" />
+                )}
+              </small>
             </div>
             {observed?.detected && !observed.registered ? (
               <button

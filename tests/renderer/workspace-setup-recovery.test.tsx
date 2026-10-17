@@ -50,7 +50,7 @@ describe("workspace setup recovery", () => {
     const setup = setupInputs();
     const registerSource = vi.spyOn(setup.commands, "registerSource").mockResolvedValue({ status: "cancelled" });
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-marketplace']");
+    click(rendered.container, "[data-testid='workspace-setup-connect-marketplace']");
     click(rendered.container, "[data-testid='canvas-setup-choice-external']");
     click(rendered.container, "[data-testid='canvas-setup-connect-source']");
     await flush();
@@ -102,7 +102,7 @@ describe("workspace setup recovery", () => {
       registry: registryView(),
     });
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-project']");
+    click(rendered.container, "[data-testid='workspace-setup-project']");
     click(rendered.container, "[data-testid='canvas-setup-inspect-project']");
     await flush();
     click(rendered.container, "[data-testid='canvas-setup-register-project']");
@@ -135,7 +135,7 @@ describe("workspace setup recovery", () => {
     });
     const observeEntry = vi.spyOn(setup.commands, "observeEntry").mockResolvedValue(undefined);
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-marketplace']");
+    click(rendered.container, "[data-testid='workspace-setup-connect-marketplace']");
     click(rendered.container, "[data-testid='canvas-setup-choice-existing']");
     click(rendered.container, "[data-testid='canvas-setup-connect-source']");
     await flush();
@@ -152,7 +152,7 @@ describe("workspace setup recovery", () => {
       .spyOn(setup.commands, "registerProject")
       .mockRejectedValue(new Error("private transport data"));
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-project']");
+    click(rendered.container, "[data-testid='workspace-setup-project']");
     click(rendered.container, "[data-testid='canvas-setup-inspect-project']");
     await flush();
     click(rendered.container, "[data-testid='canvas-setup-register-project']");
@@ -179,7 +179,7 @@ describe("workspace setup recovery", () => {
     });
     const observeEntry = vi.spyOn(setup.commands, "observeEntry").mockResolvedValue(undefined);
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-project']");
+    click(rendered.container, "[data-testid='workspace-setup-project']");
     click(rendered.container, "[data-testid='canvas-setup-inspect-project']");
     await flush();
     click(rendered.container, "[data-testid='canvas-setup-register-project']");
@@ -209,7 +209,7 @@ describe("workspace setup recovery", () => {
     vi.mocked(setup.api!.inspectProject!).mockReturnValue(inspection.promise);
     const registerProject = vi.spyOn(setup.commands, "registerProject");
     await act(async () => renderResourceCanvas(rendered.root, setup));
-    click(rendered.container, "[data-testid='canvas-setup-empty-project']");
+    click(rendered.container, "[data-testid='workspace-setup-project']");
     click(rendered.container, "[data-testid='canvas-setup-inspect-project']");
     click(rendered.container, ".add-resource-sheet .sh-close");
     expect(rendered.container.querySelector("[data-testid='canvas-setup-sheet']")).toBeNull();

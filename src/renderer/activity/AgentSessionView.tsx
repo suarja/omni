@@ -1,3 +1,4 @@
+import { ExpandableText } from "./ExpandableText";
 import { useEffect, useMemo, useState, type ReactElement, type ReactNode } from "react";
 
 import type { AgentProcess, AgentSession, ActivitySnapshot, Worktree } from "../../shared/activity-ipc";
@@ -7,7 +8,7 @@ import { Button } from "../components/ui/Button";
 import { Card, CardHeader } from "../components/ui/Card";
 import { IconWrap } from "../components/ui/IconWrap";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingBoundary, LoadingSkeleton } from "../components/ui/Skeleton";
 import { Menu } from "../components/ui/Menu";
 import { PageHead } from "../components/ui/PageHead";
 import { TreeList, type TreeNode } from "../components/ui/TreeList";
@@ -28,31 +29,6 @@ import { subtreeTotals } from "./process-totals";
 import { useActivitySnapshot } from "./useActivitySnapshot";
 
 type TaskRow = Readonly<{ key: string; name: string; sub: ReactNode }>;
-
-function ExpandableText({ text, t }: Readonly<{ text: string; t: ReturnType<typeof useI18n>["t"] }>): ReactElement {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <span>
-      <span
-        style={
-          expanded
-            ? undefined
-            : { display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 3, overflow: "hidden" }
-        }
-      >
-        {text}
-      </span>{" "}
-      <button
-        aria-expanded={expanded}
-        className="activity-inline-link"
-        onClick={() => setExpanded((value) => !value)}
-        type="button"
-      >
-        {expanded ? t("activity.taskShowLess") : t("activity.taskShowMore")}
-      </button>
-    </span>
-  );
-}
 
 function taskRows(
   session: AgentSession,
@@ -347,7 +323,11 @@ export function AgentSessionView({
   if (!session) {
     return (
       <div className="shell-page destination-page activity-page">
-        <ListItem dim name={t("activity.sessionUnavailable")} />
+        {loaded ? (
+          <ListItem dim name={t("activity.sessionUnavailable")} />
+        ) : (
+          <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("activity.agentsHeading") })} />
+        )}
       </div>
     );
   }
@@ -456,13 +436,14 @@ export function AgentSessionView({
       ) : null}
       <Card>
         <CardHeader hint={t("activity.percentOfOneCore")} title={t("activity.processesHeading")} />
-        {loaded ? (
+        <LoadingBoundary
+          loading={!loaded}
+          label={t("canvas.loadingSurface", { surface: t("canvas.activity") })}
+          variant="settings"
+          minHeight={192}
+        >
           <TreeList defaultExpandedDepth={2} nodes={tree} onSelect={setSelectedId} selectedId={selectedId} />
-        ) : (
-          <ItemList variant="nested">
-            <LoadingItem label={t("activity.loading")} />
-          </ItemList>
-        )}
+        </LoadingBoundary>
         {action && api?.applyActivity ? (
           <ActivityActionCard
             action={action}

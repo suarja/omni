@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useEffect, useState, type ReactElement } from "react";
 import { renderRoute, type AppShellProps } from "./routes";
 import { createCanvasSession } from "../canvas/spatial/canvas-session";
@@ -14,6 +15,7 @@ function BootstrapState({
   onRetry,
 }: Readonly<{ error: RegistryError | null; onRetry: () => void }>): ReactElement {
   const { t } = useI18n();
+  if (!error) return <LoadingSkeleton label={t("bootstrap.loading")} variant="cards" />;
   return (
     <EmptyState
       actions={

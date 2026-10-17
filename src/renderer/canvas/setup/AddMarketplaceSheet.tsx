@@ -24,8 +24,11 @@ export function AddMarketplaceSheet(
   const { t } = useI18n();
   const cancel = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    if (!props.state.ownership) props.actions.setOwnership("external");
-  }, [props.state.ownership]);
+    if (!props.state.ownership)
+      props.actions.setOwnership(
+        props.initialRepository || activeWorkshop(props.setup.snapshot.registry) ? "external" : "personal",
+      );
+  }, [props.state.ownership, props.initialRepository, props.setup.snapshot.registry]);
   useEffect(() => {
     cancel.current?.focus();
   }, []);
@@ -101,7 +104,11 @@ export function AddMarketplaceSheet(
               }
             >
               {t(
-                ownership === "external" ? "addResource.external" : current ? "storefronts.addTab" : "addResource.mine",
+                ownership === "external"
+                  ? "addResource.external"
+                  : current
+                    ? "storefronts.addTab"
+                    : "addResource.firstMine",
               )}
             </button>
           ))}

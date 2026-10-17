@@ -19,15 +19,24 @@ export function useResourceDocument(
   cancel: () => void;
 }> {
   const generation = useRef(0);
+  const selectedKey = useRef<string | null>(null);
   const [state, setState] = useState<ResourceDocumentState>({ status: "idle" });
   const cancel = useCallback((): void => {
     generation.current += 1;
+    selectedKey.current = null;
     setState({ status: "idle" });
   }, []);
   const read = useCallback(
     (entry: EntryRef, relativePath: string): void => {
       const requestId = ++generation.current;
-      setState({ status: "loading" });
+      const key = JSON.stringify([entry.kind, entry.id, relativePath]);
+      const sameDocument = selectedKey.current === key;
+      selectedKey.current = key;
+      setState((current) =>
+        sameDocument && current.status === "result" && current.document.response.status === "read"
+          ? current
+          : { status: "loading" },
+      );
       void (async () => {
         const readArtifact = input.api?.readArtifact;
         if (!readArtifact) {

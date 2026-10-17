@@ -68,7 +68,7 @@ describe("Catalogue tab and entry page", () => {
     }));
     const onNavigateToRoute = vi.fn<(route: Route) => void>();
     rendered = render(<CatalogueTab api={{ searchCatalogue }} onNavigateToRoute={onNavigateToRoute} />);
-    expect(rendered.container.querySelector("[data-testid='catalogue-loading']")).not.toBeNull();
+    expect(rendered.container.querySelector("[data-testid='loading-skeleton']")).not.toBeNull();
 
     await settle();
 

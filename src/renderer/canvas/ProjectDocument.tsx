@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useEffect, type ReactElement } from "react";
 import type { ResourceCanvasProps } from "./resource-canvas-types";
 import { useResourceDocument } from "./use-resource-document";
@@ -24,7 +25,9 @@ export function ProjectDocument(
   return (
     <div className={props.raw ? "skill-document-container" : "canvas-document"}>
       {props.path && !props.raw ? <code>{props.path}</code> : props.path ? null : <p>{t("projectView.noContent")}</p>}
-      {state.status === "loading" ? <p aria-live="polite">{t("canvas.loading")}</p> : null}
+      {state.status === "loading" ? (
+        <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.document") })} variant="document" />
+      ) : null}
       {response?.status === "read" && props.raw ? (
         <pre className="skill-document">{response.content}</pre>
       ) : response?.status === "read" ? (

@@ -1,3 +1,4 @@
+import { LoadingBoundary, LoadingSkeleton } from "../../components/ui/Skeleton";
 import { storefrontDestination } from "../../../domain/storefront-destination";
 import { useState, type ReactElement } from "react";
 import { activeWorkshop } from "../../../domain/source-roles";
@@ -23,6 +24,7 @@ export function StorefrontSheet(): ReactElement | null {
   const { canvas, storefrontId, storefronts } = rail;
   const source = canvas.snapshot.registry.sources.find((source) => source.ref.id === storefrontId);
   const details = storefronts.details.get(storefrontId);
+  const initialLoading = storefronts.loading && !details;
   const ready = details?.status === "ready" ? details : undefined;
   const report = storefronts.drift?.storefronts.find((item) => item.sourceId === storefrontId);
   const behind = report?.plugins.filter((plugin) => plugin.status === "ready" && plugin.behind) ?? [];
@@ -127,91 +129,112 @@ export function StorefrontSheet(): ReactElement | null {
           })}{" "}
           <Glossary concept="publish" />
         </h3>
-        <div className="storefront-rows">
-          {(report?.plugins ?? []).map((drift) => {
-            const publication = ready?.publications.find((record) => record.pluginId === drift.pluginId);
-            const origin = ready?.inspection.plugins.find((plugin) => plugin.pluginId === drift.pluginId)?.origin;
-            const workshopPlugin = plugins.find((plugin) => pluginIdFor(plugin.id) === drift.pluginId);
-            return (
-              <div className="storefront-row" key={drift.pluginId}>
-                <div className="rn">
-                  <b>{drift.pluginId}</b>
-                  <small title={origin?.sourcePath}>
-                    {publication || origin
-                      ? t("storefronts.origin", {
-                          count: workshopPlugin?.count ?? 0,
-                          workshop,
-                          plugin: drift.pluginId,
-                          date: publicationDate(publication?.publishedTime ?? origin?.publishedTime, language),
-                        })
-                      : t("canvas.notRead")}
-                  </small>
-                  <div className="storefront-chips">
-                    <span
-                      className={`project-chip ${drift.status !== "ready" ? "is-local" : drift.behind ? "is-update" : "is-installed"}`}
-                    >
-                      {drift.status !== "ready"
-                        ? drift.message
-                        : drift.behind
-                          ? t("storefronts.changedSkills", { count: changedSkillCount(drift) })
-                          : t("storefronts.upToDate")}
-                    </span>
-                  </div>
-                </div>
-                {drift.status === "ready" && drift.behind ? (
-                  <button
-                    className="canvas-secondary-button is-small"
-                    type="button"
-                    onClick={() => publish(drift.pluginId)}
-                  >
-                    {t("storefronts.update")}
-                  </button>
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-        {ready?.inspection.plugins
-          .filter((plugin) => !report?.plugins.some((drift) => drift.pluginId === plugin.pluginId))
-          .map((plugin) => (
-            <div className="storefront-row" key={plugin.pluginId}>
-              <div className="rn">
-                <b>{plugin.name}</b>
-                <small>{t("storefronts.unrecognized", { plugin: plugin.name })}</small>
-              </div>
-            </div>
-          ))}
-        {report && !report.plugins.length && !ready?.inspection.plugins.length ? <p>{t("storefronts.empty")}</p> : null}
-        <button
-          className="canvas-secondary-button is-small is-ghost storefront-add"
-          type="button"
-          onClick={() => publish()}
+        <LoadingBoundary
+          loading={initialLoading}
+          label={t("canvas.loadingSurface", { surface: source?.displayName ?? t("projectView.marketplace") })}
+          minHeight={216}
         >
-          {t("storefronts.publishAnother")}
-        </button>
+          <div className="storefront-rows">
+            {(report?.plugins ?? []).map((drift) => {
+              const publication = ready?.publications.find((record) => record.pluginId === drift.pluginId);
+              const origin = ready?.inspection.plugins.find((plugin) => plugin.pluginId === drift.pluginId)?.origin;
+              const workshopPlugin = plugins.find((plugin) => pluginIdFor(plugin.id) === drift.pluginId);
+              return (
+                <div className="storefront-row" key={drift.pluginId}>
+                  <div className="rn">
+                    <b>{drift.pluginId}</b>
+                    <small title={origin?.sourcePath}>
+                      {publication || origin
+                        ? t("storefronts.origin", {
+                            count: workshopPlugin?.count ?? 0,
+                            workshop,
+                            plugin: drift.pluginId,
+                            date: publicationDate(publication?.publishedTime ?? origin?.publishedTime, language),
+                          })
+                        : t("canvas.notRead")}
+                    </small>
+                    <div className="storefront-chips">
+                      <span
+                        className={`project-chip ${drift.status !== "ready" ? "is-local" : drift.behind ? "is-update" : "is-installed"}`}
+                      >
+                        {drift.status !== "ready"
+                          ? drift.message
+                          : drift.behind
+                            ? t("storefronts.changedSkills", { count: changedSkillCount(drift) })
+                            : t("storefronts.upToDate")}
+                      </span>
+                    </div>
+                  </div>
+                  {drift.status === "ready" && drift.behind ? (
+                    <button
+                      className="canvas-secondary-button is-small"
+                      type="button"
+                      onClick={() => publish(drift.pluginId)}
+                    >
+                      {t("storefronts.update")}
+                    </button>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+          {ready?.inspection.plugins
+            .filter((plugin) => !report?.plugins.some((drift) => drift.pluginId === plugin.pluginId))
+            .map((plugin) => (
+              <div className="storefront-row" key={plugin.pluginId}>
+                <div className="rn">
+                  <b>{plugin.name}</b>
+                  <small>{t("storefronts.unrecognized", { plugin: plugin.name })}</small>
+                </div>
+              </div>
+            ))}
+          {report && !report.plugins.length && !ready?.inspection.plugins.length ? (
+            <p>{t("storefronts.empty")}</p>
+          ) : null}
+          <button
+            className="canvas-secondary-button is-small is-ghost storefront-add"
+            type="button"
+            onClick={() => publish()}
+          >
+            {t("storefronts.publishAnother")}
+          </button>
+        </LoadingBoundary>
       </section>
       <section className="sec">
         <h3>{t("storefronts.repository")}</h3>
         <dl className="storefront-kv">
           <dt>{t(ready?.inspection.githubRepository ? "storefronts.github" : "storefronts.repository")}</dt>
           <dd>
-            {storefrontDestination(ready?.inspection) || t("canvas.notRead")}
+            {initialLoading ? (
+              <LoadingSkeleton label={t("storefronts.repository")} variant="inline" />
+            ) : (
+              storefrontDestination(ready?.inspection) || t("canvas.notRead")
+            )}
             {ready?.inspection.githubRepository ? ` · ${t("storefronts.repositoryPublic")}` : ""}
           </dd>
           <dt>{t("storefronts.folder")}</dt>
           <dd>{source?.displayRoot}</dd>
           <dt>{t("storefronts.license")}</dt>
-          <dd>{ready?.license ?? t("canvas.notRead")}</dd>
+          <dd>
+            {initialLoading ? (
+              <LoadingSkeleton label={t("storefronts.license")} variant="inline" />
+            ) : (
+              (ready?.license ?? t("canvas.notRead"))
+            )}
+          </dd>
           <dt>{t("storefronts.last")}</dt>
           <dd>
-            {lastPublication
-              ? `${publicationTimestamp(lastPublication.publishedTime, language)} · ${t(lastReceipt?.publication?.state === "pushed" ? "storefronts.pushed" : lastReceipt?.publication?.state === "committed-not-pushed" ? "storefronts.notPushed" : "storefronts.unknownPush")}`
-              : t("storefronts.noPublication")}
+            {initialLoading ? (
+              <LoadingSkeleton label={t("storefronts.last")} variant="inline" />
+            ) : lastPublication ? (
+              `${publicationTimestamp(lastPublication.publishedTime, language)} · ${t(lastReceipt?.publication?.state === "pushed" ? "storefronts.pushed" : lastReceipt?.publication?.state === "committed-not-pushed" ? "storefronts.notPushed" : "storefronts.unknownPush")}`
+            ) : (
+              t("storefronts.noPublication")
+            )}
           </dd>
         </dl>
       </section>
       <p className="sh-sub">{t("storefronts.writeHint")}</p>
-      {storefronts.loading ? <p role="status">{t("reviewExtras.loading")}</p> : null}
       {storefronts.error || details?.status === "blocked" || error ? (
         <p role="alert">{error ?? (details?.status === "blocked" ? details.message : t("storefronts.unavailable"))}</p>
       ) : null}

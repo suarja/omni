@@ -80,7 +80,7 @@ it("serializes an unfinished library read and coalesces later revisions into one
   expect(container.textContent).toContain("Latest revision");
   expect(api.readExternalSource).toHaveBeenCalledTimes(4);
   expect(api.listExternalSourcesOnMac).toHaveBeenCalledTimes(2);
-  expect(api.getSettings).toHaveBeenCalledTimes(2);
+  expect(api.getSettings).toHaveBeenCalledTimes(3);
 });
 
 it("refreshes after a finished check and after a review event", async () => {

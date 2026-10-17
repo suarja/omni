@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useEffect, useState, type ReactElement } from "react";
 
 import type { DesktopApi } from "../../shared/ipc";
@@ -50,7 +51,7 @@ function DiffContent({
     };
   }, [api, operationId, relativePath, t]);
   if (state === "loading") {
-    return <span>{t("receipt.loading")}</span>;
+    return <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("receipt.files") })} variant="document" />;
   }
   if (state.status === "unavailable") return <span>{state.reason}</span>;
   return (

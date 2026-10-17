@@ -1,3 +1,4 @@
+import { LoadingBoundary, LoadingSkeleton } from "../../components/ui/Skeleton";
 import { ExternalReviewChecks } from "../external-library/ReviewChecks";
 import { StorefrontReviewChecks } from "../storefronts/StorefrontReviewChecks";
 import { useState, type ReactElement } from "react";
@@ -101,36 +102,42 @@ export function RailReviewSheet(props: Readonly<{ onApplyingChange: (active: boo
       >
         <section className="rail-section">
           <h3>{t("rail.requests")}</h3>
-          {requests.error ? (
-            <AgentRequestsError t={t} />
-          ) : requests.loading ? (
-            <p role="status">{t("reviewExtras.loading")}</p>
-          ) : !requests.requests.length ? (
-            <p>{t("rail.requestsEmpty")}</p>
-          ) : (
-            requests.requests.map((request) => (
-              <div className="rail-item" key={request.requestId}>
-                <span className="rail-tile is-review">
-                  <CanvasGlyph name="skill" />
-                </span>
-                <div>
-                  <strong>{agentRequestAction(request, t)}</strong>
-                  <small>
-                    {agentRequesterLabel(request, t)} · {agentRelativeTime(request.createdAt, t)}
-                  </small>
-                  <p>{agentApprovalReason(request.approvalReason, t)}</p>
+          <LoadingBoundary
+            loading={requests.loading}
+            label={t("canvas.loadingSurface", { surface: t("rail.requests") })}
+            minHeight={216}
+          >
+            {requests.error ? (
+              <AgentRequestsError t={t} />
+            ) : requests.loading ? (
+              <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.review") })} variant="rows" />
+            ) : !requests.requests.length ? (
+              <p>{t("rail.requestsEmpty")}</p>
+            ) : (
+              requests.requests.map((request) => (
+                <div className="rail-item" key={request.requestId}>
+                  <span className="rail-tile is-review">
+                    <CanvasGlyph name="skill" />
+                  </span>
+                  <div>
+                    <strong>{agentRequestAction(request, t)}</strong>
+                    <small>
+                      {agentRequesterLabel(request, t)} · {agentRelativeTime(request.createdAt, t)}
+                    </small>
+                    <p>{agentApprovalReason(request.approvalReason, t)}</p>
+                  </div>
+                  <button
+                    className="canvas-secondary-button is-small is-primary"
+                    type="button"
+                    onClick={() => navigate(agentRequestRoute(request))}
+                  >
+                    {t("rail.open")}
+                  </button>
                 </div>
-                <button
-                  className="canvas-secondary-button is-small is-primary"
-                  type="button"
-                  onClick={() => navigate(agentRequestRoute(request))}
-                >
-                  {t("rail.open")}
-                </button>
-              </div>
-            ))
-          )}
-          <p className="sh-sub">{t("rail.requestsExplanation")}</p>
+              ))
+            )}
+            <p className="sh-sub">{t("rail.requestsExplanation")}</p>
+          </LoadingBoundary>
         </section>
         <section className="rail-section">
           <h3>{t("rail.checks")}</h3>

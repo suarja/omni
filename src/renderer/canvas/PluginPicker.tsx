@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { useId, type ReactElement } from "react";
 import { useI18n, tCount } from "../i18n";
 import type { PersonalPlugin } from "./personal-marketplace";
@@ -31,10 +32,8 @@ export function PluginPicker(
   return (
     <>
       <div className="skill-plugin-picker">
-        {props.loading ? (
-          <div className="skill-plugin-pick" role="status">
-            {t("skillActions.marketplaceLoading")}
-          </div>
+        {props.loading && !props.plugins.length ? (
+          <LoadingSkeleton label={t("skillActions.marketplaceLoading")} />
         ) : null}
         <label className="skill-plugin-pick">
           <input
@@ -49,7 +48,7 @@ export function PluginPicker(
             <small>{t("skillActions.newPluginHint")}</small>
           </span>
         </label>
-        {(props.loading ? [] : props.plugins).map((plugin) => (
+        {props.plugins.map((plugin) => (
           <label className="skill-plugin-pick" data-testid={`plugin-picker-existing-${plugin.id}`} key={plugin.id}>
             <input
               type="radio"

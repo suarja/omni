@@ -4,7 +4,7 @@ import type { OperationReceipt } from "../../shared/operations-ipc";
 import { Badge } from "../components/ui/Badge";
 import { IconWrap } from "../components/ui/IconWrap";
 import { ItemList, ListItem } from "../components/ui/ItemList";
-import { LoadingItem } from "../components/ui/LoadingItem";
+import { LoadingBoundary, LoadingSkeleton } from "../components/ui/Skeleton";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { tCount, useI18n } from "../i18n";
 import type { Route } from "../navigation";
@@ -269,23 +269,29 @@ export function CompletedOperations({
   return (
     <section data-testid={testId}>
       <SectionHeading count={ordered.length} title={t(title)} />
-      <ItemList>
-        {!loaded ? (
-          <LoadingItem label={t("reviewExtras.loading")} />
-        ) : ordered.length ? (
-          ordered.map((receipt) => (
-            <CompletedOperationRow
-              key={receipt.operationId}
-              language={language}
-              onNavigateToRoute={onNavigateToRoute}
-              receipt={receipt}
-              t={t}
-            />
-          ))
-        ) : (
-          <ListItem dim name={t("reviewExtras.completedEmpty")} />
-        )}
-      </ItemList>
+      <LoadingBoundary
+        loading={!loaded}
+        label={t("canvas.loadingSurface", { surface: t("canvas.review") })}
+        minHeight={216}
+      >
+        <ItemList>
+          {!loaded ? (
+            <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.review") })} />
+          ) : ordered.length ? (
+            ordered.map((receipt) => (
+              <CompletedOperationRow
+                key={receipt.operationId}
+                language={language}
+                onNavigateToRoute={onNavigateToRoute}
+                receipt={receipt}
+                t={t}
+              />
+            ))
+          ) : (
+            <ListItem dim name={t("reviewExtras.completedEmpty")} />
+          )}
+        </ItemList>
+      </LoadingBoundary>
     </section>
   );
 }

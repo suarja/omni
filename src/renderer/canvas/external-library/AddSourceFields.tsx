@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { licenceLabel } from "./presentation";
 import { discoverMacSource, useMacDiscovery } from "./use-mac-discovery";
 import { parseExternalDiscovery, type ExternalDiscovery } from "../../../shared/external-library-ui-ipc";
@@ -193,7 +194,7 @@ export function AddSourceFields(
             ))}
         </div>
       </div>
-      {discovering ? <p role="status">{t("externalLibrary.checking")}</p> : null}
+      {discovering ? <LoadingSkeleton label={t("externalLibrary.checking")} variant="rows" /> : null}
       {found?.source ? (
         <section className="external-section">
           <h3>{t("externalLibrary.discovery")}</h3>

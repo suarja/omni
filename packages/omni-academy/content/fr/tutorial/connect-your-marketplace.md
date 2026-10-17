@@ -12,7 +12,11 @@ steps: [1. Ouvrir Ajouter Marketplace, 2. Choisir le type de source, 3. Lire la 
 
 ## 1. Ouvrir Ajouter Marketplace
 
-Depuis `Espace de travail`, choisissez `＋ Ajouter`, puis `Marketplace`. La fiche s’ouvre sur `Source externe` pour les dépôts publiés par d’autres.
+Au premier lancement, `Bienvenue dans Omni` affiche une carte avec trois emplacements : votre marketplace, vos projets et vos agents. Sous `Votre marketplace`, choisissez `Connecter l’existante` pour ouvrir directement le parcours personnel. `Créer ma marketplace` ouvre le formulaire de création avec un aperçu des fichiers et des effets Git.
+
+Vous pouvez remplir les emplacements dans l’ordre de votre choix. Chaque emplacement terminé devient un vrai nœud. Après la première étape, la ligne de configuration propose `Masquer` ; utilisez `Aide`, puis `Afficher la configuration` pour retrouver les emplacements restants.
+
+Vous pouvez aussi choisir `＋ Ajouter`, puis `Marketplace`. Sans marketplace personnelle connectée, la fiche s’ouvre sur `Ma première marketplace`. Si une marketplace existe déjà, elle s’ouvre sur `Source externe` pour les dépôts publiés par d’autres.
 
 Connecter un dossier local l’enregistre dans Omni. Cela n’installe pas ses skills dans un projet.
 
@@ -22,7 +26,7 @@ Ce que vous verrez : le menu Ajouter avec `Projet`, `Marketplace` et `Nouveau sk
 
 ## 2. Choisir le type de source
 
-Pour le dépôt local de quelqu’un d’autre, gardez `Source externe` et choisissez `Choisir un dossier…`. Pour votre première marketplace personnelle, choisissez `Une autre marketplace à moi`, puis `Choisir un dossier…` sous `Dépôt Git`.
+Pour le dépôt local de quelqu’un d’autre, choisissez `Source externe`, puis `Choisir un dossier…`. Pour votre première marketplace personnelle, gardez `Ma première marketplace`, puis choisissez `Choisir un dossier…` sous `Dépôt Git`.
 
 Sélectionnez le dépôt existant dans le sélecteur système. Sa validation démarre directement l’enregistrement ; il n’y a pas de page de confirmation supplémentaire.
 

@@ -1,3 +1,7 @@
+import { CanvasLoadingSkeleton } from "./CanvasLoadingSkeleton";
+import { WorkspaceSetupHeader, WorkspaceSetupMap, type WorkspaceMapIntent } from "./setup/WorkspaceSetupMap";
+import type { WorkspaceMapState } from "./setup/use-workspace-map";
+import type { WorkspaceMapGeometry } from "./setup/workspace-map-layout";
 import { useEmptyCanvasPress } from "./use-empty-canvas-press";
 import { workspaceObservationLocations } from "./rail/workspace-relations";
 import { useState, type RefObject, type ReactElement } from "react";
@@ -33,11 +37,13 @@ export function CanvasStage(
     comparisonOpen: boolean;
     projection: CanvasProjection;
     layout: CanvasLayout;
+    workspaceMap?: WorkspaceMapState;
+    mapGeometry?: WorkspaceMapGeometry;
     canvas?: ResourceCanvasProps;
     selection: Readonly<{ ref: ResourceRef; relativePath?: string }> | null;
     viewportRef: RefObject<HTMLDivElement | null>;
     camera: CameraControls;
-    onSetup: (intent: "marketplace" | "project" | "agents", opener: HTMLElement) => void;
+    onSetup: (intent: WorkspaceMapIntent, opener: HTMLElement) => void;
     onSelectGroup: (groupId: string | null) => void;
     onGroupDetails: (group: ProjectSkillGroup, opener: HTMLButtonElement) => void;
     onOpenSkillCopies: (node: LogicalSkillNode, tab: "document" | "metadata") => void;
@@ -50,6 +56,9 @@ export function CanvasStage(
   const metadata = useWorkspaceNodeMetadata(props.canvas, props.contextIsWorkspace);
   const observationLocations =
     props.contextIsWorkspace && props.canvas ? workspaceObservationLocations(props.canvas.snapshot) : [];
+  const hasMap = Boolean(props.contextIsWorkspace && props.mapGeometry?.center);
+  const mapVisible = Boolean(hasMap && !props.workspaceMap?.hidden && (props.workspaceMap?.progress.count ?? 0) < 3);
+  const mapLoading = Boolean(props.canvas?.registryLoading || props.workspaceMap?.loading);
   const [missing, setMissing] = useState<readonly ResourceRecord[] | null>(null);
   const emptyPress = useEmptyCanvasPress(() => {
     setMissing(null);
@@ -72,64 +81,31 @@ export function CanvasStage(
   return (
     <main
       {...emptyPress}
-      className={`canvas-stage${props.contextIsWorkspace ? " is-workspace" : ""}`}
+      className={`canvas-stage${props.contextIsWorkspace ? " is-workspace" : ""}${hasMap ? " has-workspace-map" : ""}`}
       inert={props.setupApplying || props.canvasOverlayOpen}
     >
-      <div className="canvas-stage-heading">
-        <p className="stage-title">{props.contextIsWorkspace ? t("canvas.workspace") : props.currentLabel}</p>
-        <span>
-          {props.contextIsWorkspace && props.listing.status === "unavailable"
-            ? null
-            : props.listing.status === "partial"
-              ? props.contextIsWorkspace && observationLocations.length === 0
-                ? t("canvas.loading")
-                : `${t("canvas.partial")}${props.contextIsWorkspace ? ` ${observationLocations.join("; ")}` : ""}`
-              : props.listing.status === "loading" ||
-                  (props.contextIsWorkspace && props.listing.status === "unobserved")
-                ? t("canvas.loading")
-                : props.listing.status === "unobserved"
-                  ? t("canvas.unobserved")
-                  : props.listing.status === "unavailable"
-                    ? t("canvas.unavailable")
-                    : null}
-        </span>
-      </div>
-      {props.contextIsWorkspace && props.listing.children.length === 0 ? (
-        <section className="canvas-setup-empty" data-testid="canvas-setup-empty-state">
-          <h1>{t("canvasSetup.emptyTitle")}</h1>
-          <p>{t("canvasSetup.emptyDescription")}</p>
-          <div className="canvas-setup-actions">
-            <button
-              data-testid="canvas-setup-empty-marketplace"
-              disabled={!props.setupAvailable}
-              onClick={(event) => props.onSetup("marketplace", event.currentTarget)}
-              title={!props.setupAvailable ? t("canvasSetup.apiUnavailable") : undefined}
-              type="button"
-            >
-              {t("canvasSetup.addMarketplace")}
-            </button>
-            <button
-              className="is-secondary"
-              data-testid="canvas-setup-empty-project"
-              disabled={!props.setupAvailable}
-              onClick={(event) => props.onSetup("project", event.currentTarget)}
-              title={!props.setupAvailable ? t("canvasSetup.apiUnavailable") : undefined}
-              type="button"
-            >
-              {t("canvasSetup.addProject")}
-            </button>
-            <button
-              className="is-secondary"
-              data-testid="canvas-setup-empty-agents"
-              disabled={!props.setupAvailable}
-              onClick={(event) => props.onSetup("agents", event.currentTarget)}
-              type="button"
-            >
-              {t("canvasSetup.connectAgents")}
-            </button>
-          </div>
-          {!props.setupAvailable ? <p className="canvas-setup-unavailable">{t("canvasSetup.apiUnavailable")}</p> : null}
-        </section>
+      {!mapVisible || props.listing.status === "partial" ? (
+        <div className="canvas-stage-heading">
+          {!mapVisible ? (
+            <p className="stage-title">{props.contextIsWorkspace ? t("canvas.workspace") : props.currentLabel}</p>
+          ) : null}
+          <span>
+            {props.listing.status === "partial" && observationLocations.length
+              ? `${t("canvas.partial")} ${observationLocations.join("; ")}`
+              : !props.contextIsWorkspace && props.listing.status === "unavailable"
+                ? t("canvas.unavailable")
+                : null}
+          </span>
+        </div>
+      ) : null}
+      {mapVisible && !mapLoading && props.workspaceMap ? <WorkspaceSetupHeader state={props.workspaceMap} /> : null}
+      {props.contextIsWorkspace && props.workspaceMap?.error ? (
+        <p className="workspace-setup-error" role="alert">
+          {t("canvasSetup.setupStateUnavailable")}
+        </p>
+      ) : null}
+      {mapVisible && !mapLoading && !props.setupAvailable ? (
+        <p className="workspace-setup-unavailable">{t("canvasSetup.apiUnavailable")}</p>
       ) : null}
       {props.contextIsWorkspace || props.listing.center ? (
         <CanvasViewport
@@ -137,6 +113,18 @@ export function CanvasStage(
           disabled={props.setupApplying || props.comparisonOpen}
           viewportRef={props.viewportRef}
         >
+          {props.canvas?.registryLoading && !props.listing.children.length && !props.mapGeometry ? (
+            <CanvasLoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.workspace") })} />
+          ) : null}
+          {props.mapGeometry && props.workspaceMap ? (
+            <WorkspaceSetupMap
+              state={props.workspaceMap}
+              geometry={props.mapGeometry}
+              loading={mapLoading}
+              available={props.setupAvailable}
+              onSetup={props.onSetup}
+            />
+          ) : null}
           <CanvasGraph
             projection={props.projection}
             layout={props.layout}

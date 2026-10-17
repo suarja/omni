@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { translateCount } from "../i18n";
 import { externalLibraryRef } from "./external-library/workspace";
 import { needsComparison, waitsForUpdate } from "./external-library/presentation";
@@ -39,6 +40,8 @@ export function useWorkspaceNodeMetadata(
             ) : null}
             {report.unavailablePlugins ? <> · {t("canvas.notRead")}</> : null}
           </>
+        ) : rail?.storefronts.loading ? (
+          <LoadingSkeleton label={t("canvas.loadingSurface", { surface: source.displayName })} variant="inline" />
         ) : (
           t("canvas.notRead")
         ),

@@ -55,7 +55,8 @@ it("reads the personal source once when its sheet opens, even with a cached obse
     await act(async () => render());
     expect(onObserveAdoptionSource).toHaveBeenCalledTimes(1);
     expect(observeEntry).not.toHaveBeenCalled();
-    expect(container.textContent).toContain("Lecture de la marketplace…");
+    expect(container.textContent).toContain("Plugins · 2");
+    expect(container.querySelector("[data-testid=loading-skeleton]")).toBeNull();
     expect(container.textContent).not.toContain("Plugins · 0");
     await act(async () =>
       complete({

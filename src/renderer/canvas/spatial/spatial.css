@@ -19,7 +19,6 @@
 .canvas-camera-controls output { min-width: 47px; color: var(--canvas-muted); font-size: var(--canvas-meta); font-variant-numeric: tabular-nums; text-align: center; }
 .canvas-camera-controls > span { width: 1px; height: 18px; margin: 0 3px; background: var(--canvas-rule); }
 .canvas-camera-controls:focus-within { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
-.canvas-setup-empty { position: relative; z-index: 2; pointer-events: auto; }
 @media (pointer: coarse) { .canvas-camera-controls button { width: 38px; height: 38px; } }
 @media (max-width: 620px) {
   .canvas-stage-heading { top: 8px; right: 14px; left: 14px; }

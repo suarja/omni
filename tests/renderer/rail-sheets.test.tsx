@@ -410,7 +410,10 @@ it("draws workspace wires from managed relationships even before their projects 
     readWorkspaceSkillUses: vi.fn(async () => ({ status: "ready" as const, uses: [use] })),
   };
   await render(api);
-  expect(container.querySelectorAll(".canvas-wire")).toHaveLength(2);
+  expect(
+    container.querySelectorAll(".canvas-wire:not([data-wire-id^='setup:']):not([data-wire-id^='workspace:'])"),
+  ).toHaveLength(2);
+  expect(container.querySelectorAll(".canvas-wire[data-wire-id^='workspace:']")).toHaveLength(3);
   expect(grant).not.toHaveBeenCalled();
   expect(api.readProjectSkills).not.toHaveBeenCalled();
   expect(api.observeSource).not.toHaveBeenCalled();

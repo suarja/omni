@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../components/ui/Skeleton";
 import { harnessLabel } from "./project-view-model";
 import { useEffect, useMemo, useState, type ReactElement } from "react";
 import type { EntryRef, Observation } from "../../domain/project-source-registry";
@@ -336,7 +337,9 @@ export function SkillCopiesSheet(
               <code title={path}>{path}</code>
             </div>
           ) : null}
-          {state.status === "loading" ? <p aria-live="polite">{t("canvas.loading")}</p> : null}
+          {state.status === "loading" ? (
+            <LoadingSkeleton label={t("canvas.loadingSurface", { surface: t("canvas.document") })} variant="document" />
+          ) : null}
           {documentMessage ? <p className="canvas-error">{documentMessage}</p> : null}
           {response?.status === "read" ? (
             <AssetContent

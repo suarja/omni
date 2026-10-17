@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import type { ReactElement } from "react";
 
 import type { ResourceSnapshot } from "../../../domain/resource-catalogue";
@@ -88,7 +89,7 @@ export function CopyManagementEffects(
           {props.error}
         </p>
       ) : null}
-      {props.busy ? <p aria-live="polite">{t("skillManagement.loading")}</p> : null}
+      {props.busy ? <LoadingSkeleton label={t("skillManagement.loading")} variant="rows" /> : null}
       {!props.reviewCurrent ? (
         <p className="changes-error" role="alert">
           {t("skillManagement.copyChangedSinceReview")}
