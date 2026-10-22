@@ -1,3 +1,4 @@
+import { AppUpdateRestartControl } from "../settings/AppUpdateRestartControl";
 import { projectExternalLibrary } from "./external-library/workspace";
 import { activeWorkshop } from "../../domain/source-roles";
 import { addWorkspaceUseRelations } from "./rail/workspace-relations";
@@ -438,7 +439,7 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
     clearSkillSheet();
     setSetupWriteActive(false);
     if (intent === "agents") {
-      rail?.open("settings");
+      rail?.open(rail.delivery.status?.plugins.behind ? "delivery" : "settings");
     } else if (intent === "create-marketplace" || intent === "connect-marketplace") {
       setup.actions.openPersonalMarketplace(intent === "create-marketplace" ? "create" : "connect");
     } else setup.actions.open(intent);
@@ -558,6 +559,7 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
           >
             {t("projectView.help")}
           </button>
+          <AppUpdateRestartControl api={props.railServices?.api ?? props.api} />
           <button
             aria-label={t("canvas.refresh")}
             className="canvas-icon-button"
@@ -649,7 +651,17 @@ export function ResourceCanvasContent(props: ResourceCanvasProps): ReactElement 
           }
           trigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
           navigation.reveal(node.resource, node.relativePath);
-          props.onNavigate(routeForResource(node.resource.ref));
+          const ref = node.resource.ref;
+          const drift =
+            ref.kind === "entry" && ref.entry.kind === "project"
+              ? rail?.delivery.status?.projects.find((project) => project.projectId === ref.entry.id)
+              : undefined;
+          const route = routeForResource(ref);
+          props.onNavigate(
+            drift && (drift.conflicts || drift.updates || drift.unavailable) && route.screen === "resource-canvas"
+              ? { ...route, initialProjectSheet: "project" }
+              : route,
+          );
         }}
         onOpenSkillCopies={(node, tab) => {
           if (setupApplyingRef.current) return;

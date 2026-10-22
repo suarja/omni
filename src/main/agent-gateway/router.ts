@@ -31,8 +31,6 @@ import { createSettingsStore, settingsFilePath } from "../settings-store";
 import type { AgentRequestsStore } from "./requests-store";
 import { createOperationStore, type OperationStore } from "../operation-store";
 import { bindingsFilePath, createBindingsStore } from "../bindings-store";
-import { createSkillRelationshipStore } from "../skill-reconciliation/store";
-import { isManagedBinding } from "../skill-management/legacy-binding-guard";
 import { createCatalogueRouter, type CatalogueRouterOptions } from "./router-catalogue";
 import { displayCwd, empty, fail, id, keys, object, optionalBoolean, path, text } from "./router-inputs";
 import { previewSkill } from "./router-skill";
@@ -143,13 +141,26 @@ export function createAgentRouter(options: RouterOptions) {
   const status = async (): Promise<AgentStatusResponse> => {
     const registry = registryReady(await options.registry.listRegistry());
     const personal = activeWorkshop(registry);
+    const delivery = await options.operations.getWorkshopDelivery?.();
+    const storefronts = await readAgentStorefronts(options.userDataPath, registry);
     return {
       status: "ready",
       appVersion: options.appVersion ?? app.getVersion(),
       ...(options.build ? { build: options.build } : {}),
       ...(options.profilePath ? { profilePath: options.profilePath } : {}),
       ...(options.appPath ? { appPath: options.appPath } : {}),
-      ...(await readAgentStorefronts(options.userDataPath, registry)),
+      ...storefronts,
+      ...(delivery
+        ? {
+            workshop:
+              storefronts.workshop && delivery.workshop
+                ? { ...storefronts.workshop, drift: delivery.workshop.sync }
+                : storefronts.workshop,
+            installedPlugins: delivery.plugins,
+            projectDrift: delivery.projects,
+            deliveryDiagnostics: delivery.diagnostics,
+          }
+        : {}),
       personalMarketplace: personal ? { id: personal.ref.id, name: personal.displayName } : null,
       projects: await Promise.all(
         registry.projects
@@ -186,39 +197,14 @@ export function createAgentRouter(options: RouterOptions) {
   const driftReport = async (params: unknown): Promise<AgentDriftResponse> => {
     const request = object(params, "drift_report parameters");
     keys(request, ["projectId"], "drift_report parameters");
-    const registry = registryReady(await options.registry.listRegistry());
-    const projects =
-      request.projectId === undefined
-        ? registry.projects.filter((project) => project.archivedAt === undefined)
-        : [registry.projects.find((project) => project.ref.id === id(request.projectId, "Project id"))].filter(
-            (project): project is NonNullable<typeof project> => Boolean(project),
-          );
-    const loaded = await bindingsStore.read();
-    if (loaded.status !== "ready") throw fail("Bindings are unavailable.");
-    const relationships = await createSkillRelationshipStore(
-      join(options.userDataPath, "omni", "skill-relationships.json"),
-    ).read();
-    if (relationships.status !== "ready")
-      throw fail("Skill relationships are unavailable; inspect the store before reading legacy drift.");
-    const result: Array<AgentDriftResponse["bindings"][number]> = [];
-    for (const project of projects) {
-      for (const binding of loaded.bindings.filter(
-        (candidate) => candidate.projectId === project.ref.id && !isManagedBinding(candidate, relationships.state.uses),
-      )) {
-        result.push({
-          bindingId: binding.bindingId,
-          projectId: project.ref.id,
-          harness: binding.harnessId,
-          projectAvailable: isActiveAvailableProject(project),
-          ...(isActiveAvailableProject(project)
-            ? {}
-            : { reason: project.archivedAt ? "archived" : project.availability }),
-          state: isActiveAvailableProject(project) ? await resolveBindingState(binding) : "unavailable",
-          artifactPath: binding.artifactPath,
-        });
-      }
-    }
-    return { status: "ready", bindings: result };
+    return readProjectDrift(
+      {
+        userDataPath: options.userDataPath,
+        registry: options.registry,
+        bindings: options.bindings,
+      },
+      request.projectId === undefined ? undefined : id(request.projectId, "Project id"),
+    );
   };
   const skillInventory = createSkillInventoryReader({
     registry: options.registry,
@@ -506,3 +492,4 @@ export function createAgentRouter(options: RouterOptions) {
     },
   };
 }
+import { readProjectDrift } from "../workshop-delivery/project-drift";

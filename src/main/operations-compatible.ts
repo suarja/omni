@@ -1,3 +1,4 @@
+import { workshopPushWarnings } from "./workshop-delivery/plan";
 import { StorefrontTargetError } from "../domain/source-roles";
 import { randomUUID } from "node:crypto";
 import { join } from "node:path";
@@ -356,7 +357,7 @@ export function createCompatibleOperations(
       kind: "make-compatible",
       displayTarget: request.packageId ?? marketplace.name,
       actions: previewActions.map(actionView),
-      git: { mode, warnings },
+      git: { mode, warnings: workshopPushWarnings(mode, warnings) },
       visibleIn,
       report,
     };
@@ -452,9 +453,8 @@ export function createCompatibleOperations(
         manifests: stored.manifests,
         ...(request.provenance ? { provenance: request.provenance } : {}),
       };
-      const saved = await options.operationStore.append(receipt);
-      if (saved.status !== "ready") throw new Error("The compatibility receipt could not be persisted safely.");
-      return { status: "applied", receipt };
+      const delivered = await persistWorkshopReceipt(receipt, stored.root, options);
+      return { status: "applied", receipt: delivered };
     } catch (error: unknown) {
       for (const path of merged) await restoreBackup(stored.root, backupRoot, path).catch(() => false);
       for (const action of completed.filter((item) => item.kind === "write-file" && !item.beforeHash)) {
@@ -486,3 +486,4 @@ export function createCompatibleOperations(
 
   return { preview, apply };
 }
+import { persistWorkshopReceipt } from "./workshop-delivery/receipt";

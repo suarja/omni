@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.3
+
+Omni shows what your agents really get.
+
+- Approved changes to your marketplace are pushed to GitHub right away, branch only, never forced.
+  A failed push shows its reason with Retry; a diverged history is never rewritten.
+- The workspace shows your marketplace's sync state, installed Claude Code and Codex plugins that
+  are behind your marketplace (with an approved one-click update), and projects with conflicts or
+  pending updates.
+- "Restart to update" is now a primary button in the window toolbar as soon as an update is ready.
+
 ## 0.5.2
 
 The window is just the window.

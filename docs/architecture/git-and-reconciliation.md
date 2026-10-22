@@ -27,8 +27,13 @@ channel.
 
 The approved V1 deterministic write may commit the exact paths Omni writes when the
 user's commit setting is enabled. Repository initialization is also an explicit previewed
-operation. Omni never pushes, merges, rebases, creates branches, or resolves conflicts
-implicitly. Every Git write belongs to an approved operation with a result record.
+operation. An approved operation that commits in the active workshop also pushes its branch
+to its configured upstream, including earlier unpushed commits. Its preview discloses that
+effect. Push results are recorded separately from the local write in the receipt. A failed
+push preserves committed files and offers a newly previewed Retry. Diverged or behind history
+requires manual reconciliation. Omni never force-pushes, merges, rebases, creates branches,
+or resolves conflicts implicitly. Project and storefront commits keep their own policies.
+Every Git write belongs to an approved operation with a result record.
 
 Omni disables repository and global Git hooks and configured filesystem-monitor
 executables for its Git commands. Hooks can execute

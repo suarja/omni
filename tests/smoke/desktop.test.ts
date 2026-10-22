@@ -233,6 +233,7 @@ describe("desktop preload contract", () => {
         "onAppUpdatesChanged",
         "restartForUpdate",
         "getStackProfile",
+        "getWorkshopDelivery",
         "hashArtifacts",
         "listAcademyLessons",
         "listAgentJobs",

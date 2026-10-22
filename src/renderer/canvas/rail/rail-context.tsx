@@ -1,3 +1,4 @@
+import { useWorkshopDelivery } from "../delivery/use-workshop-delivery";
 import { usePersonalMarketplace } from "../use-personal-marketplace";
 import { useWorkspaceMap } from "../setup/use-workspace-map";
 import {
@@ -42,7 +43,8 @@ export type RailSurface =
   | "storefront"
   | "publish"
   | "external-library"
-  | "marketplace-skill";
+  | "marketplace-skill"
+  | "delivery";
 export type PublishSelection = Readonly<{
   pluginId?: string;
   storefrontId?: string;
@@ -111,6 +113,7 @@ function useRailState(canvas: ResourceCanvasProps) {
   );
   const [newSkillPackageId, setNewSkillPackageId] = useState<string | undefined>();
   const maintenance = useAgentMaintenance(canvas.railServices?.api ?? canvas.api, () => setSurface("activity"));
+  const delivery = useWorkshopDelivery(canvas.railServices?.api ?? canvas.api, canvas.snapshot);
   const contextKey = JSON.stringify(canvas.context);
   useEffect(() => {
     setSurface(
@@ -302,6 +305,7 @@ function useRailState(canvas: ResourceCanvasProps) {
     menuOpen,
     requests,
     maintenance,
+    delivery,
     open,
     close,
     toggleMenu,

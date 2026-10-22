@@ -1,3 +1,4 @@
+import { AppUpdateRestartControl } from "../../settings/AppUpdateRestartControl";
 import { LoadingBoundary } from "../../components/ui/Skeleton";
 import { SavedPageOperation } from "./SavedPageOperation";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactElement, type ReactNode } from "react";
@@ -145,6 +146,7 @@ function PageCanvas(props: ResourceCanvasProps & Readonly<{ model: Model }>): Re
           <button className="canvas-secondary-button" type="button" aria-pressed={help} onClick={() => setHelp(!help)}>
             {t("projectView.help")}
           </button>
+          <AppUpdateRestartControl api={props.railServices?.api ?? props.api} />
         </div>
       </header>
       <main

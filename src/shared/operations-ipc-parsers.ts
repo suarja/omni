@@ -83,6 +83,7 @@ function parsePlan(value: unknown): OperationPlan {
       "harnesses",
       "steps",
       "publication",
+      "workshopDelivery",
     ],
     "Operation plan",
   );
@@ -97,6 +98,25 @@ function parsePlan(value: unknown): OperationPlan {
   const steps = plan.steps === undefined ? undefined : parsePlanSteps(plan.steps);
   return {
     planId: readOpaque(plan.planId, "Plan id"),
+    ...(plan.workshopDelivery === undefined
+      ? {}
+      : {
+          workshopDelivery: z
+            .object({
+              fingerprint: z.string().regex(/^[a-f0-9]{64}$/u),
+              commands: z.array(
+                z
+                  .object({
+                    executable: z.enum(["claude", "codex"]),
+                    args: z.array(z.string()),
+                    cwd: z.string().optional(),
+                  })
+                  .strict(),
+              ),
+            })
+            .strict()
+            .parse(plan.workshopDelivery),
+        }),
     kind: plan.kind,
     displayTarget: readDisplayPath(plan.displayTarget, "Operation target"),
     ...(plan.packageId === undefined ? {} : { packageId: readRelativePath(plan.packageId) }),
@@ -249,6 +269,7 @@ export function parsePreviewOperationRequest(
   value: unknown,
 ):
   | ConnectMarketplaceRequest
+  | WorkshopDeliveryRequest
   | LinkStorefrontRequest
   | RegisterProjectRequest
   | PublishPluginRequest
@@ -266,6 +287,8 @@ export function parsePreviewOperationRequest(
   | WriteHarnessSettingRequest
   | AddToProjectRequest {
   const request = assertRecord(value, "Operation preview request");
+  if (request.kind === "retry-workshop-push" || request.kind === "update-workshop-plugins")
+    return workshopDeliveryRequestSchema.parse(request);
   if (request.kind === "connect-marketplace") return connectMarketplaceSchema.parse(request);
   if (request.kind === "link-storefront") return linkStorefrontSchema.parse(request);
   if (request.kind === "register-project") return registerProjectSchema.parse(request);
@@ -372,3 +395,5 @@ export function parseApplyOperationResponse(value: unknown): ApplyOperationRespo
     throw new Error("Operation apply status is invalid.");
   return { status: response.status, receipt: parseOperationReceipt(response.receipt) };
 }
+import { workshopDeliveryRequestSchema, type WorkshopDeliveryRequest } from "./workshop-delivery-ipc";
+import { z } from "zod";

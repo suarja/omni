@@ -1,10 +1,10 @@
 import { LoadingSkeleton } from "../components/ui/Skeleton";
-import { translateCount } from "../i18n";
+import { workshopSyncLabel } from "./delivery/sync-label";
 import { externalLibraryRef } from "./external-library/workspace";
 import { needsComparison, waitsForUpdate } from "./external-library/presentation";
 import type { ReactNode } from "react";
 import type { ResourceCanvasProps } from "./resource-canvas-types";
-import { useI18n } from "../i18n";
+import { translateCount, useI18n } from "../i18n";
 import { useCanvasRail } from "./rail/rail-context";
 import { canvasNodeMetadata } from "./canvas-node-metadata";
 
@@ -78,6 +78,62 @@ export function useWorkspaceNodeMetadata(
             {base} · <span className="project-chip is-update">{t("externalLibrary.updates", { count })}</span>
           </>,
         );
+    }
+  }
+  if (active && rail?.delivery.status) {
+    const delivery = rail.delivery.status;
+    if (delivery.workshop) {
+      const key = JSON.stringify({ kind: "entry", entry: { kind: "source", id: delivery.workshop.sourceId } });
+      const base = metadata.get(key),
+        sync = delivery.workshop.sync;
+      metadata.set(
+        key,
+        <>
+          {base}
+          {" · "}
+          <span
+            className={sync.status === "current" ? "" : "project-chip is-modified delivery-node-chip"}
+            data-testid="workshop-sync-chip"
+          >
+            {workshopSyncLabel(sync, t)}
+          </span>
+        </>,
+      );
+    }
+    for (const project of delivery.projects) {
+      if (!project.conflicts && !project.updates && !project.unavailable) continue;
+      const key = JSON.stringify({ kind: "entry", entry: { kind: "project", id: project.projectId } }),
+        base = metadata.get(key);
+      metadata.set(
+        key,
+        <>
+          {base}
+          {project.conflicts ? (
+            <>
+              {" · "}
+              <span className="project-chip is-modified" data-testid={`project-conflicts-${project.projectId}`}>
+                {translateCount(t, "delivery.conflicts", project.conflicts)}
+              </span>
+            </>
+          ) : null}
+          {project.updates ? (
+            <>
+              {" · "}
+              <span className="project-chip is-update" data-testid={`project-updates-${project.projectId}`}>
+                {translateCount(t, "delivery.updates", project.updates)}
+              </span>
+            </>
+          ) : null}
+          {project.unavailable ? (
+            <>
+              {" · "}
+              <span className="project-chip is-modified">
+                {translateCount(t, "delivery.unread", project.unavailable)}
+              </span>
+            </>
+          ) : null}
+        </>,
+      );
     }
   }
   return metadata;

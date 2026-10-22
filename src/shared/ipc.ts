@@ -30,6 +30,7 @@ import type { ExternalLibraryDesktopApi } from "./external-library-ipc";
 
 export interface DesktopApi
   extends
+    Partial<WorkshopDeliveryDesktopApi>,
     RegistryDesktopApi,
     Partial<StorefrontsDesktopApi>,
     Partial<ExternalLibraryDesktopApi>,
@@ -58,3 +59,4 @@ export interface DesktopApi
     Partial<SkillManagementDesktopApi>,
     Partial<SkillReconciliationDesktopApi>,
     Partial<SkillCopyComparisonDesktopApi> {}
+import type { WorkshopDeliveryDesktopApi } from "./workshop-delivery-ipc";

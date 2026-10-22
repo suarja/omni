@@ -15,6 +15,8 @@ export function operationLabel(
   t: ReturnType<typeof useI18n>["t"],
   language: "en" | "fr",
 ): string {
+  if (receipt.kind === "retry-workshop-push") return t("delivery.retry");
+  if (receipt.kind === "update-workshop-plugins") return t("delivery.update");
   if (receipt.agentSetup) {
     const agents = receiptHarnessNames(receipt, language);
     return t(

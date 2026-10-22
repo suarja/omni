@@ -1,4 +1,5 @@
 import { LoadingSkeleton } from "../components/ui/Skeleton";
+import { WorkshopDeliveryLink } from "./delivery/WorkshopDeliveryLink";
 import { useCanvasRail } from "./rail/rail-context";
 import { PluginPublicationActions, PluginPublicationChips } from "./storefronts/PluginPublicationActions";
 import { useEffect, useRef, useState, type ReactElement } from "react";
@@ -149,6 +150,7 @@ export function MyMarketplaceSheet(
           </>
         }
       >
+        <WorkshopDeliveryLink />
         <section className="project-sheet-section">
           {loading && !marketplace?.inventory ? (
             <LoadingSkeleton label={t("skillActions.marketplaceLoading")} variant="rows" />

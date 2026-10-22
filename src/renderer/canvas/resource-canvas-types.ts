@@ -24,7 +24,7 @@ export type ResourceCanvasProps = Readonly<{
   initialMarketplaceSkill?: import("./pages/page-navigation").MarketplaceSkillSelection;
   onForward?: () => void;
   initialRailSurface?: RailSurface;
-  initialProjectSheet?: "add";
+  initialProjectSheet?: "add" | "project";
   initialSettingsRoute?: Extract<Route, { screen: "settings-ai-connection" | "settings-ai-function" }>;
   routeSheet?: ReactNode;
   diagnostic?: string;

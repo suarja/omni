@@ -1,3 +1,4 @@
+import { workshopPushWarnings } from "./workshop-delivery/plan";
 import { resolveObservedPackage } from "../domain/observed-package-resolution";
 import { buildNewPluginProjections } from "./new-plugin-projections";
 import { randomUUID } from "node:crypto";
@@ -234,7 +235,7 @@ export async function buildWriteSkillPlan(
     displayTarget: packageInfo.relativeRoot,
     packageId: newPackage ? `packages/${newPackage.name}` : args.packageId,
     actions: actions.map(actionView),
-    git: args.git,
+    git: { ...args.git, warnings: workshopPushWarnings(args.git.mode, args.git.warnings) },
     ...(args.findings?.length ? { findings: args.findings } : {}),
     visibleIn: ["omni", "claude-code", "codex"],
     ...(newPackage ? { notes: [`New plugin ${newPackage.name}: ${newPackage.description}`] } : {}),

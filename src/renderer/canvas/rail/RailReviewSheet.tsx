@@ -3,7 +3,7 @@ import { ExternalReviewChecks } from "../external-library/ReviewChecks";
 import { StorefrontReviewChecks } from "../storefronts/StorefrontReviewChecks";
 import { useState, type ReactElement } from "react";
 import { createResourceCatalogue } from "../../../domain/resource-catalogue";
-import { useI18n, tCount } from "../../i18n";
+import { translateCount, useI18n, tCount } from "../../i18n";
 import {
   agentApprovalReason,
   agentRequestAction,
@@ -42,6 +42,9 @@ export function RailReviewSheet(props: Readonly<{ onApplyingChange: (active: boo
       : [],
   );
   const services = canvas.railServices;
+  const drift =
+    rail.delivery.status?.projects.filter((project) => project.conflicts || project.updates || project.unavailable) ??
+    [];
   const checks = projectSkills.flatMap((data) =>
     data.skills.flatMap((row) => {
       const project =
@@ -101,6 +104,39 @@ export function RailReviewSheet(props: Readonly<{ onApplyingChange: (active: boo
         onClose={rail.close}
       >
         <section className="rail-section">
+          {drift.map((project) => (
+            <div className="rail-item" key={`drift:${project.projectId}`}>
+              <div className="grow">
+                <strong>
+                  {canvas.snapshot.registry.projects.find((entry) => entry.ref.id === project.projectId)?.displayName ??
+                    project.projectId}
+                </strong>
+                <p>
+                  {[
+                    project.conflicts ? translateCount(t, "delivery.conflicts", project.conflicts) : null,
+                    project.updates ? translateCount(t, "delivery.updates", project.updates) : null,
+                    project.unavailable ? translateCount(t, "delivery.unread", project.unavailable) : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+              </div>
+              <button
+                className="canvas-secondary-button"
+                type="button"
+                onClick={() => {
+                  rail.close();
+                  canvas.onNavigate({
+                    screen: "resource-canvas",
+                    context: { kind: "entry", entry: { kind: "project", id: project.projectId } },
+                    initialProjectSheet: "project",
+                  });
+                }}
+              >
+                {t("delivery.openProjects")}
+              </button>
+            </div>
+          ))}
           <h3>{t("rail.requests")}</h3>
           <LoadingBoundary
             loading={requests.loading}

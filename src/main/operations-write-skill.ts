@@ -368,9 +368,8 @@ export function createWriteSkillOperations(options: WriteSkillOptions): Readonly
             }
           : {}),
       };
-      const saved = await options.operationStore.append(receipt);
-      if (saved.status !== "ready") throw new Error("The skill receipt could not be persisted safely.");
-      return { status: "applied", receipt };
+      const delivered = await persistWorkshopReceipt(receipt, stored.root, options);
+      return { status: "applied", receipt: delivered };
     } catch (error: unknown) {
       for (const path of backupPaths) await restoreBackup(stored.root, backupRoot, path).catch(() => false);
       for (const action of createdFiles)
@@ -393,3 +392,4 @@ export function createWriteSkillOperations(options: WriteSkillOptions): Readonly
   };
   return { preview, prepare, recoveryReference, apply };
 }
+import { persistWorkshopReceipt } from "./workshop-delivery/receipt";

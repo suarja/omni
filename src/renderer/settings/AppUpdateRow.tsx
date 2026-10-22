@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type ReactElement } from "react";
+import { useEffect, useRef, type ReactElement } from "react";
+import { AppUpdateRestartControl } from "./AppUpdateRestartControl";
 import { useI18n } from "../i18n";
 import { useOptionalCanvasToast } from "../canvas/CanvasToast";
 import { useAppUpdates, type UpdateApi } from "./use-app-updates";
@@ -6,22 +7,13 @@ import { useAppUpdates, type UpdateApi } from "./use-app-updates";
 export function AppUpdateRow({ api }: Readonly<{ api: UpdateApi }>): ReactElement {
   const { t } = useI18n();
   const { state, busy, error, toggle } = useAppUpdates(api);
-  const [restartError, setRestartError] = useState(false);
   return (
     <div className="item" data-testid="settings-app-updates">
       <div className="grow">
         <b>{t("uxSettings.installUpdates")}</b>
         <small>{t(state?.available ? "uxSettings.updatesHint" : "uxSettings.updatesUnavailable")}</small>
-        {error || restartError || state?.error ? <small role="alert">{t("uxSettings.updatesError")}</small> : null}
-        {state?.downloaded ? (
-          <button
-            className="canvas-secondary-button is-small"
-            type="button"
-            onClick={() => void api?.restartForUpdate?.().catch(() => setRestartError(true))}
-          >
-            {t("uxSettings.restartUpdate")}
-          </button>
-        ) : null}
+        {error || state?.error ? <small role="alert">{t("uxSettings.updatesError")}</small> : null}
+        <AppUpdateRestartControl api={api} />
       </div>
       <button
         className="canvas-switch"

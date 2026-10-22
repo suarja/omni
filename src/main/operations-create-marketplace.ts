@@ -1,3 +1,4 @@
+import { workshopPushWarnings } from "./workshop-delivery/plan";
 import { randomUUID } from "node:crypto";
 import { chmod, lstat, mkdir, realpath, rename, rm, stat, unlink, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
@@ -220,7 +221,7 @@ export function createMarketplaceOperations(
       kind: "create-marketplace",
       displayTarget: slug,
       actions: actions.map(({ absolutePath: _absolutePath, content: _content, ...action }) => action),
-      git: { mode, warnings },
+      git: { mode, warnings: workshopPushWarnings(mode, warnings) },
     };
     plans.set(plan.planId, { plan, parentPath: parent.path, targetPath, actions, name: request.name.trim() });
     return { status: "ready", plan };
@@ -307,9 +308,11 @@ export function createMarketplaceOperations(
           .filter((action) => action.manifest)
           .map((action) => ({ relativePath: action.relativePath, afterHash: hashContent(action.content ?? "") })),
       };
-      const persisted = await store.append(receipt);
-      if (persisted.status !== "ready") throw new Error("The operation receipt could not be persisted safely.");
-      return { status: "applied", receipt };
+      const delivered = await persistWorkshopReceipt(receipt, stored.targetPath, {
+        userDataPath,
+        operationStore: store,
+      });
+      return { status: "applied", receipt: delivered };
     } catch (error: unknown) {
       await rollback(
         createdFiles,
@@ -331,3 +334,4 @@ export function createMarketplaceOperations(
   };
   return { pickParent, preview, apply };
 }
+import { persistWorkshopReceipt } from "./workshop-delivery/receipt";

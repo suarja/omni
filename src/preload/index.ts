@@ -203,6 +203,7 @@ import {
 } from "../shared/skill-copy-comparison-ipc";
 
 const api: DesktopApi = {
+  getWorkshopDelivery: async () => parseWorkshopDelivery(await ipcRenderer.invoke(WORKSHOP_DELIVERY_CHANNEL, {})),
   onOpenAgentRequest: (listener) => {
     const receive = (_event: unknown, value: unknown): void => {
       let requestId: string;
@@ -584,3 +585,4 @@ const api: DesktopApi = {
 };
 
 contextBridge.exposeInMainWorld("omni", api);
+import { WORKSHOP_DELIVERY_CHANNEL, parseWorkshopDelivery } from "../shared/workshop-delivery-ipc";

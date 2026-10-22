@@ -216,6 +216,7 @@ export type AgentSourceSummary = Readonly<{
   drift:
     | Readonly<{ status: "ready"; toPublish: number; conflicts: number; unavailablePlugins: number }>
     | Readonly<{ status: "unavailable" }>
+    | import("./workshop-delivery-ipc").WorkshopSyncState
     | null;
 }>;
 export type AgentMarketplaceResponse = Readonly<{
@@ -227,6 +228,9 @@ export type AgentMarketplaceResponse = Readonly<{
   storefronts?: readonly AgentSourceSummary[];
 }>;
 export type AgentStatusResponse = Readonly<{
+  installedPlugins?: import("./workshop-delivery-ipc").WorkshopDeliveryStatus["plugins"];
+  projectDrift?: import("./workshop-delivery-ipc").WorkshopDeliveryStatus["projects"];
+  deliveryDiagnostics?: readonly string[];
   status: "ready";
   appVersion: string;
   build?: Readonly<{

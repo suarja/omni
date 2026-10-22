@@ -1,3 +1,4 @@
+import { workshopPushWarnings } from "./workshop-delivery/plan";
 import { planDisconnectedAgentRestore } from "./operations-disconnect-agents-restore";
 import { planExactAgentSettingsRestore } from "./agent-settings-restore";
 import { agentHomeDir } from "./agent-harnesses";
@@ -421,7 +422,7 @@ export function createRestoreOperations(options: RestoreOptions): Readonly<{
       kind: "restore-import",
       displayTarget: packageId,
       actions: actions.map(({ absolutePath: _path, content: _content, ...action }) => action),
-      git: { mode, warnings },
+      git: { mode, warnings: workshopPushWarnings(mode, warnings) },
     };
     plans.set(plan.planId, { plan, original, root: marketplace.root, actions });
     return { status: "ready", plan };
@@ -562,11 +563,10 @@ export function createRestoreOperations(options: RestoreOptions): Readonly<{
         registered: null,
         restores: stored.original.operationId,
       };
-      const persisted = await options.operationStore.append(receipt);
-      if (persisted.status !== "ready") throw new Error("The restore receipt could not be persisted safely.");
+      const delivered = await persistWorkshopReceipt(receipt, stored.root, options);
       const marked = await options.operationStore.markRestored(stored.original.operationId);
       if (marked.status !== "ready") throw new Error("The original import receipt could not be updated safely.");
-      return { status: "applied", receipt };
+      return { status: "applied", receipt: delivered };
     } catch (error: unknown) {
       // A restore cannot undo itself: deleted files are gone. Report exactly what happened.
       const diagnostic =
@@ -597,3 +597,4 @@ export function createRestoreOperations(options: RestoreOptions): Readonly<{
   };
   return { preview, prepare, apply };
 }
+import { persistWorkshopReceipt } from "./workshop-delivery/receipt";

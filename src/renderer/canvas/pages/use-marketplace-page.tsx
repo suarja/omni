@@ -1,4 +1,5 @@
 import type { ReactElement, ReactNode } from "react";
+import { WorkshopDeliveryLink } from "../delivery/WorkshopDeliveryLink";
 import { useI18n } from "../../i18n";
 import { useCanvasRail } from "../rail/rail-context";
 import { sourcePackagePath } from "../use-owned-skill-choices";
@@ -109,6 +110,7 @@ export function useMarketplacePage(): Readonly<{
     loading: loading && !inventory,
     actions: (
       <>
+        <WorkshopDeliveryLink />
         <button
           className="canvas-secondary-button is-small"
           type="button"

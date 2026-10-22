@@ -52,6 +52,14 @@ ProviderAction
 The adapter may use an official CLI, API, or host integration. The reconciler must not
 write into a private cache or run a hook itself.
 
+Workshop delivery observes Claude Code's plugin index and marketplace records and Codex's
+marketplace/plugin configuration and versioned caches. Repository identity must match the
+workshop's GitHub repository. Comparisons use the pushed commit, never an unpushed version.
+Codex does not record an installed Git SHA, so an unambiguous version and its actual files
+are compared with the pushed plugin tree. Missing or ambiguous evidence stays unknown.
+Provider updates use an approved operation with exact commands, scope, stale-preview checks,
+and a result for every command. Partial failures remain visible; Omni never edits caches.
+
 ## Validation gates
 
 Real observations must first prove that cache presence, selected version, activation, and

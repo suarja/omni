@@ -7,6 +7,7 @@ import type { RegistryView } from "../../domain/project-source-registry";
 import type { AgentSourceSummary } from "../../shared/agents-ipc";
 import { createStorefrontService } from "../storefronts/service";
 import { readGitText } from "../git-read";
+import { readWorkshopSync } from "../workshop-delivery/sync";
 export async function readAgentStorefronts(
   userDataPath: string,
   view: RegistryView,
@@ -36,7 +37,9 @@ export async function readAgentStorefronts(
       ...(repository ? { githubRepository: repository } : {}),
       drift:
         role === "workshop"
-          ? null
+          ? registration
+            ? await readWorkshopSync(registration.locator.canonicalPath)
+            : { status: "unavailable" }
           : report
             ? {
                 status: "ready",

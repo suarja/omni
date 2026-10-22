@@ -1,6 +1,6 @@
 {
   "name": "omni",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Use Omni as the source of truth for reusable skills, projects, and agent setup.",
   "author": {
     "name": "Omni"

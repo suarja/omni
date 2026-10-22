@@ -19,7 +19,7 @@ export type Route =
       initialExternalSelection?: import("./canvas/pages/page-navigation").ExternalSelection;
       initialMarketplaceSkill?: import("./canvas/pages/page-navigation").MarketplaceSkillSelection;
       initialRailSurface?: RailSurface;
-      initialProjectSheet?: "add";
+      initialProjectSheet?: "add" | "project";
       initialSettingsRoute?: Extract<Route, { screen: "settings-ai-connection" | "settings-ai-function" }>;
       initialOperation?: OperationRoute;
       initialPublicationRequest?: import("../shared/agents-ipc").AgentRequest;

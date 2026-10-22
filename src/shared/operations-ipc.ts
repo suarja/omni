@@ -56,6 +56,8 @@ export type { AddToProjectRequest } from "./operations-add-to-project-ipc";
 // One list of operation kinds: the type and both parsers derive from it.
 export const OPERATION_KINDS = [
   "connect-marketplace",
+  "retry-workshop-push",
+  "update-workshop-plugins",
   "undo-connect-marketplace",
   "link-storefront",
   "archive-storefront",
@@ -135,6 +137,10 @@ export type OperationPlan = Readonly<{
   }>[];
   steps?: readonly OperationStep[];
   publication?: PublicationPlanSummary;
+  workshopDelivery?: Readonly<{
+    fingerprint: string;
+    commands: readonly import("./workshop-delivery-ipc").PluginUpdateCommand[];
+  }>;
 }>;
 
 export type OperationStep =
@@ -143,6 +149,8 @@ export type OperationStep =
 export type OperationActionReceipt = OperationAction & Readonly<{ status: OperationActionStatus }>;
 
 export type OperationReceipt = Readonly<{
+  workshopPush?: import("./workshop-delivery-ipc").WorkshopPushResult;
+  pluginUpdates?: readonly import("./workshop-delivery-ipc").PluginCommandResult[];
   operationId: string;
   kind: OperationKind;
   status: "applied" | "failed";
@@ -263,6 +271,7 @@ export interface OperationsDesktopApi {
       | CreateStorefrontRequest
       | RetryPushRequest
       | PreviewMarketplaceRequest
+      | import("./workshop-delivery-ipc").WorkshopDeliveryRequest
       | PreviewApplyPlanRequest
       | ConnectMarketplaceRequest
       | LinkStorefrontRequest

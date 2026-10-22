@@ -1,3 +1,4 @@
+import { workshopPushWarnings } from "./workshop-delivery/plan";
 import { StorefrontTargetError } from "../domain/source-roles";
 import { buildNewPluginProjections, PluginProjectionError } from "./new-plugin-projections";
 import { readImportedSkillOrigin } from "./import-skill-origin";
@@ -378,7 +379,7 @@ export function createImportOperations(
       kind: "import-artifact",
       displayTarget: packagePath,
       actions: actions.map(actionView),
-      git: { mode, warnings },
+      git: { mode, warnings: workshopPushWarnings(mode, warnings) },
       visibleIn,
       ...(isNewPackage
         ? { notes: [`New plugin ${request.target.newPackageName}: ${request.target.description}`] }
@@ -500,9 +501,8 @@ export function createImportOperations(
           })),
         manifests: stored.manifests,
       };
-      const persisted = await options.operationStore.append(receipt);
-      if (persisted.status !== "ready") throw new Error("The import receipt could not be persisted safely.");
-      return { status: "applied", receipt };
+      const delivered = await persistWorkshopReceipt(receipt, stored.root, options);
+      return { status: "applied", receipt: delivered };
     } catch (error: unknown) {
       for (const action of modifiedManifests.reverse())
         if (action.beforeContent !== undefined)
@@ -555,3 +555,4 @@ export function createImportOperations(
 
   return { preview, apply };
 }
+import { persistWorkshopReceipt } from "./workshop-delivery/receipt";

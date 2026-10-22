@@ -1,4 +1,5 @@
 import { LoadingSkeleton } from "../components/ui/Skeleton";
+import { AppUpdateRestartControl } from "../settings/AppUpdateRestartControl";
 import { ProjectLegend } from "./ProjectLegend";
 import { findRowUse } from "./external-library/presentation";
 import { activeWorkshop } from "../../domain/source-roles";
@@ -321,6 +322,7 @@ export function ProjectCanvas(props: ResourceCanvasProps & Readonly<{ projectId:
           <button type="button" className="canvas-secondary-button" aria-pressed={help} onClick={() => setHelp(!help)}>
             {t("projectView.help")}
           </button>
+          <AppUpdateRestartControl api={props.railServices?.api ?? props.api} />
           <button
             type="button"
             className="canvas-icon-button"

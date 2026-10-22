@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { DeliveryReceipt } from "../canvas/delivery/DeliveryReceipt";
 
 import type { OperationReceipt } from "../../shared/operations-ipc";
 import { Card, CardHeader } from "../components/ui/Card";
@@ -27,6 +28,7 @@ export function ReceiptDetails({
   const { language, t } = useI18n();
   return (
     <>
+      <DeliveryReceipt receipt={receipt} />
       <ReceiptFiles api={api} receipt={receipt} />
       {receipt.children?.length ? (
         <Card data-testid="receipt-children-card">

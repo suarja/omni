@@ -113,6 +113,7 @@ type OperationsIpcOptions = Readonly<{
 }>;
 
 export type OperationsIpcServices = Readonly<{
+  getWorkshopDelivery?: () => Promise<WorkshopDeliveryStatus>;
   externalLibrary?: ExternalLibraryService;
   previewOperation(request: unknown): Promise<PreviewMarketplaceResponse>;
   applyOperation(request: unknown): Promise<ApplyOperationResponse | undefined>;
@@ -498,6 +499,26 @@ export function registerOperationsIpcHandlers(
     gitCli: git,
     ...(options.fileWriter ? { fileWriter: options.fileWriter } : {}),
   });
+  const getWorkshopDelivery = (): Promise<WorkshopDeliveryStatus> =>
+    readWorkshopDelivery({
+      userDataPath,
+      home: options.homeDir!,
+      operationStore: store,
+      readDrift: () =>
+        options.bindings
+          ? readProjectDrift({
+              userDataPath,
+              registry,
+              bindings: options.bindings,
+            })
+          : Promise.resolve({ status: "ready", bindings: [] }),
+    });
+  const deliveryOperations = createWorkshopDeliveryOperations({
+    userDataPath,
+    home: options.homeDir!,
+    operationStore: store,
+    read: getWorkshopDelivery,
+  });
   const guard =
     <T>(handler: (request: unknown) => Promise<T>) =>
     async (event: Electron.IpcMainInvokeEvent, request: unknown): Promise<T> => {
@@ -511,6 +532,8 @@ export function registerOperationsIpcHandlers(
 
   const previewOperation = async (rawRequest: unknown): Promise<PreviewMarketplaceResponse> => {
     const request = parsePreviewOperationRequest(rawRequest);
+    if (request.kind === "retry-workshop-push" || request.kind === "update-workshop-plugins")
+      return deliveryOperations.preview(request);
     if (request.kind === "connect-marketplace") return marketplaceConnection.preview(request);
     if (request.kind === "link-storefront") return storefrontLink.preview(request);
     if (request.kind === "register-project") return projectRegistration.preview(request);
@@ -651,6 +674,7 @@ export function registerOperationsIpcHandlers(
     return applied;
   };
   const applyOperation = async (rawRequest: unknown) =>
+    (await deliveryOperations.apply(rawRequest)) ??
     (await marketplaceConnection.apply(rawRequest)) ??
     (await storefrontLink.apply(rawRequest)) ??
     (await projectRegistration.apply(rawRequest)) ??
@@ -698,6 +722,21 @@ export function registerOperationsIpcHandlers(
     return parseReceiptDiffResponse(await receiptDiffOperations.get(request));
   };
   ipcMain.handle(OPERATIONS_IPC_CHANNELS.receiptDiff, guard(getReceiptDiff));
+  ipcMain.handle(
+    WORKSHOP_DELIVERY_CHANNEL,
+    guard(async (request) => {
+      parseEmptyOperationsRequest(request);
+      return parseWorkshopDelivery(await getWorkshopDelivery());
+    }),
+  );
   externalLibrary.bindOperations(skillManagement);
-  return { previewOperation, applyOperation, getReceiptDiff, skillManagement, externalLibrary };
+  return { previewOperation, applyOperation, getReceiptDiff, skillManagement, externalLibrary, getWorkshopDelivery };
 }
+import { readWorkshopDelivery } from "./workshop-delivery/service";
+import { readProjectDrift } from "./workshop-delivery/project-drift";
+import { createWorkshopDeliveryOperations } from "./workshop-delivery/operations";
+import {
+  WORKSHOP_DELIVERY_CHANNEL,
+  parseWorkshopDelivery,
+  type WorkshopDeliveryStatus,
+} from "../shared/workshop-delivery-ipc";

@@ -1,0 +1,26 @@
+.workshop-delivery-panel { display: grid; gap: 24px; color: var(--canvas-ink); }
+.workshop-delivery-panel section { min-width: 0; }
+.workshop-delivery-panel h3, .delivery-receipt h3 { margin: 0 0 12px; font-size: var(--font-size-section); font-family: var(--font-display); font-weight: 400; color: var(--canvas-ink); text-transform: none; letter-spacing: normal; }
+.workshop-delivery-panel h4 { margin: 20px 0 10px; font-size: var(--font-size-body); }
+.workshop-delivery-panel p { margin: 8px 0; line-height: 1.5; overflow-wrap: anywhere; }
+.workshop-delivery-panel pre { max-width: 100%; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--canvas-muted); font-size: var(--font-size-meta); line-height: 1.5; }
+.delivery-installation { margin-bottom: 18px; }
+.delivery-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.delivery-preview, .delivery-receipt { padding: 14px; background: var(--canvas-surface); border: 1px solid var(--canvas-rule); border-radius: 10px; overflow-wrap: anywhere; }
+.workspace-delivery-status { position: absolute; top: 76px; left: 28px; right: 24px; z-index: 3; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; pointer-events: none; }
+.workspace-delivery-status button { pointer-events: auto; }
+.app-update-restart { display: inline-flex; align-items: center; gap: 6px; }
+.app-update-attention { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: currentColor; }
+.delivery-node-chip { max-width: 100%; min-width: 0; white-space: normal; line-height: 1.3; overflow-wrap: anywhere; }
+.canvas-node-row:has(.delivery-node-chip) .canvas-node-body { flex: 1; }
+.workspace-connected-agents .canvas-node-meta:has(.delivery-node-chip) { display: flex; flex-wrap: wrap; gap: 4px; white-space: normal; overflow: visible; }
+.app-update-restart [role="alert"] { max-width: 180px; font-size: var(--font-size-meta); color: var(--canvas-ink); }
+@media (max-width: 620px) { .workspace-delivery-status { left: 70px; right: 12px; } .app-update-restart button { white-space: normal; } }
+@media (max-width: 620px) {
+  .resource-canvas:has(.app-update-restart) .canvas-header { height: 92px; padding-top: 10px; align-items: flex-start; }
+  .resource-canvas:has(.app-update-restart) .canvas-header .canvas-breadcrumbs { max-width: 44px; }
+  .resource-canvas:has(.app-update-restart) .canvas-header-actions > button { white-space: nowrap; }
+  .canvas-header .app-update-restart { position: absolute; top: 48px; left: 10px; right: 10px; min-width: 0; justify-content: flex-end; }
+  .canvas-header .app-update-restart button { white-space: nowrap; }
+  .resource-canvas:has(.app-update-restart) .canvas-stage { top: calc(var(--titlebar-height) + 140px); }
+}

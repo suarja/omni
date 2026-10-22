@@ -1,3 +1,4 @@
+import { delivery } from "./en/delivery";
 import { externalLibrary } from "./en/external-library";
 import { storefronts } from "./en/storefronts";
 import { addResource } from "./en/add-resource";
@@ -42,6 +43,7 @@ function defineEnglish<const Value extends TranslationTree>(value: Value): Widen
 }
 
 export const en = defineEnglish({
+  delivery,
   workspace,
   navigation,
   bootstrap,

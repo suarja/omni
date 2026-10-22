@@ -1,3 +1,4 @@
+import { WorkspaceDeliveryStatus } from "./delivery/WorkspaceDeliveryStatus";
 import { CanvasLoadingSkeleton } from "./CanvasLoadingSkeleton";
 import { WorkspaceSetupHeader, WorkspaceSetupMap, type WorkspaceMapIntent } from "./setup/WorkspaceSetupMap";
 import type { WorkspaceMapState } from "./setup/use-workspace-map";
@@ -114,6 +115,7 @@ export function CanvasStage(
           {t("canvasSetup.setupStateUnavailable")}
         </p>
       ) : null}
+      {props.contextIsWorkspace ? <WorkspaceDeliveryStatus /> : null}
       {mapVisible && !mapLoading && !props.setupAvailable ? (
         <p className="workspace-setup-unavailable">{t("canvasSetup.apiUnavailable")}</p>
       ) : null}

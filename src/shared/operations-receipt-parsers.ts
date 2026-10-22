@@ -133,6 +133,8 @@ export function parseOperationReceipt(value: unknown): OperationReceipt {
       "legacyBridge",
       "publication",
       "externalSkill",
+      "workshopPush",
+      "pluginUpdates",
     ],
     "Operation receipt",
   );
@@ -340,6 +342,10 @@ export function parseOperationReceipt(value: unknown): OperationReceipt {
     throw new Error("Receipt failed step is invalid.");
   return {
     operationId: readOpaque(receipt.operationId, "Operation id"),
+    ...(receipt.workshopPush === undefined ? {} : { workshopPush: workshopPushSchema.parse(receipt.workshopPush) }),
+    ...(receipt.pluginUpdates === undefined
+      ? {}
+      : { pluginUpdates: pluginCommandResultSchema.array().parse(receipt.pluginUpdates) }),
     kind: receipt.kind,
     status: receipt.status,
     appliedAt: readText(receipt.appliedAt, "Applied at"),
@@ -615,3 +621,4 @@ function parseReceiptManifests(value: unknown): NonNullable<OperationReceipt["ma
 function isOperationKind(value: unknown): value is OperationReceipt["kind"] {
   return typeof value === "string" && (OPERATION_KINDS as readonly string[]).includes(value);
 }
+import { workshopPushSchema, pluginCommandResultSchema } from "./workshop-delivery-ipc";

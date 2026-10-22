@@ -1,3 +1,4 @@
+import { workshopPushWarnings } from "./workshop-delivery/plan";
 import { StorefrontTargetError } from "../domain/source-roles";
 import { receiptDiagnostic } from "./operation-diagnostics";
 import { randomUUID } from "node:crypto";
@@ -157,10 +158,12 @@ export function createDescribePluginOperations(options: Options): Readonly<{
         actions: actions.map(({ absolutePath: _path, content: _content, beforeContent: _before, ...view }) => view),
         git: {
           mode,
-          warnings:
+          warnings: workshopPushWarnings(
+            mode,
             mode === "enclosing-repository"
               ? ["The marketplace is inside another repository; Git metadata will not be written."]
               : [],
+          ),
         },
       };
       plans.set(plan.planId, {
@@ -229,10 +232,9 @@ export function createDescribePluginOperations(options: Options): Readonly<{
       ...(request.provenance ? { provenance: request.provenance } : {}),
       ...(diagnostic ? { diagnostic } : {}),
     };
-    const persisted = await options.operationStore.append(receipt);
-    if (persisted.status !== "ready")
-      throw new Error("The plugin description receipt could not be saved. Preserve its backup and refresh History.");
-    return { status: receipt.status, receipt };
+    const delivered = await persistWorkshopReceipt(receipt, stored.root, options);
+    return { status: delivered.status, receipt: delivered };
   };
   return { preview, apply };
 }
+import { persistWorkshopReceipt } from "./workshop-delivery/receipt";

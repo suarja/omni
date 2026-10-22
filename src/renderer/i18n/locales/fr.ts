@@ -1,3 +1,4 @@
+import { delivery } from "./fr/delivery";
 import { externalLibrary } from "./fr/external-library";
 import { storefronts } from "./fr/storefronts";
 import { addResource } from "./fr/add-resource";
@@ -27,6 +28,7 @@ import { canvas } from "./fr/canvas";
 import { canvasSetup } from "./fr/canvas-setup";
 
 export const fr: Translations = {
+  delivery,
   workspace,
   navigation,
   bootstrap,

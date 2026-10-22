@@ -1,3 +1,4 @@
+import { WorkshopDeliverySheet } from "../delivery/WorkshopDeliverySheet";
 import { MarketplaceSkillSheet } from "../pages/MarketplaceSkillSheet";
 import { ExternalLibraryLayer } from "../external-library/ExternalLibraryLayer";
 import { PublishSheet } from "../storefronts/PublishSheet";
@@ -141,6 +142,7 @@ export function CanvasRailLayer(
           />
         ) : null}
         {rail.surface === "storefront" ? <StorefrontSheet /> : null}
+        {rail.surface === "delivery" ? <WorkshopDeliverySheet onApplyingChange={props.onApplyingChange} /> : null}
         {rail.surface === "publish" ? <PublishSheet onApplyingChange={props.onApplyingChange} /> : null}
         {rail.surface === "draft" ? (
           <NewSkillSheet

@@ -243,6 +243,7 @@ describe("sandboxed preload boundary", () => {
         "onAppUpdatesChanged",
         "restartForUpdate",
         "getStackProfile",
+        "getWorkshopDelivery",
         "hashArtifacts",
         "listAgentJobs",
         "listAgentRequests",

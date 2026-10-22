@@ -1,9 +1,10 @@
+import { useCanvasRail } from "../rail/rail-context";
 import { MarketplaceRecovery } from "./MarketplaceRecovery";
 import { useState, type CSSProperties, type ReactElement } from "react";
 import iconUrl from "../../../../resources/brand/icon.svg?url";
 import markUrl from "../../../../resources/brand/mark.svg?url";
 import { agentName } from "../../agents/agent-utils";
-import { useI18n } from "../../i18n";
+import { translateCount, useI18n } from "../../i18n";
 import { LoadingSkeleton } from "../../components/ui/Skeleton";
 import { CanvasGlyph } from "../CanvasGlyph";
 import { Icon } from "../../components/Icon";
@@ -74,6 +75,7 @@ function placeStyle(place: WorkspaceSetupPlace): CSSProperties {
 
 function SetupPlace({ place, ...props }: MapProps & Readonly<{ place: WorkspaceSetupPlace }>): ReactElement {
   const { t } = useI18n();
+  const rail = useCanvasRail();
   const [hasRecoveryOffer, setHasRecoveryOffer] = useState(false);
   const step = place.step;
   const current = props.state.progress.current === step;
@@ -118,6 +120,11 @@ function SetupPlace({ place, ...props }: MapProps & Readonly<{ place: WorkspaceS
               <p>{t(`canvasSetup.places.${step}.subtitle`)}</p>
             </div>
           </div>
+          {step === "agents" && rail?.delivery.status?.plugins.behind ? (
+            <p className="project-chip is-modified">
+              {translateCount(t, "delivery.pluginsBehind", rail.delivery.status.plugins.behind)}
+            </p>
+          ) : null}
           {step !== "agents" ? (
             <p className="workspace-setup-place-copy">{t(`canvasSetup.places.${step}.description`)}</p>
           ) : null}
@@ -148,6 +155,7 @@ function SetupPlace({ place, ...props }: MapProps & Readonly<{ place: WorkspaceS
 }
 
 export function WorkspaceSetupMap(props: MapProps): ReactElement {
+  const rail = useCanvasRail();
   const { t } = useI18n();
   return (
     <div className="workspace-setup-map">
@@ -184,6 +192,11 @@ export function WorkspaceSetupMap(props: MapProps): ReactElement {
               <span className="canvas-node-label">{t("canvasSetup.places.agents.title")}</span>
               <span className="canvas-node-meta">
                 {props.state.progress.connected.map((agent) => agentName(agent.harness)).join(" · ")}
+                {rail?.delivery.status?.plugins.behind ? (
+                  <span className="project-chip is-modified delivery-node-chip" data-testid="agents-plugins-behind">
+                    {translateCount(t, "delivery.pluginsBehind", rail.delivery.status.plugins.behind)}
+                  </span>
+                ) : null}
               </span>
             </span>
           </button>
